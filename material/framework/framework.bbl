@@ -1,0 +1,16 @@
+\begin{thebibliography}{1}
+
+\bibitem{mnih2015human-level}
+Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei~A Rusu, Joel Veness,
+  Marc~G Bellemare, Alex Graves, Martin Riedmiller, Andreas Fidjeland, Georg
+  Ostrovski, et~al.
+\newblock Human-level control through deep reinforcement learning.
+\newblock {\em Nature}, 518(7540):529, 2015.
+
+\bibitem{sutton1999between}
+Richard Sutton, Doina Precup, and Satinder Singh.
+\newblock Between mdps and semi-mdps: a framework for temporal abstraction in
+  reinforcement learning.
+\newblock {\em Artificial Intelligence}, 112:181--211, 1999.
+
+\end{thebibliography}

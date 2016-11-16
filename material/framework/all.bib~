@@ -1,0 +1,7 @@
+@article{sutton1999between,
+title={Between MDPs and semi-MDPs: a framework for temporal abstraction in reinforcement learning},
+author={Sutton, Richard and Precup, Doina and Singh, Satinder},
+journal={Artificial Intelligence},
+volume={112},
+pages={181--211},
+year={1999}}

@@ -1,0 +1,2752 @@
+<!DOCTYPE html>
+<!-- saved from url=(0029)http://localhost:6006/#events -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><style>body {transition: opacity ease-in 0.2s; } 
+body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
+</style><!-- Shady DOM styles for custom-style --><!-- Shady DOM styles for dom-template --><!-- Shady DOM styles for dom-repeat --><!-- Shady DOM styles for array-selector --><!-- Shady DOM styles for dom-if --><!-- Shady DOM styles for iron-request --><!-- Shady DOM styles for iron-ajax --><!-- Shady DOM styles for iron-collapse --><style scope="iron-collapse">iron-collapse {
+  display: block;
+      transition-duration: 300ms;
+      overflow: visible;
+}
+
+iron-collapse.iron-collapse-closed {
+  display: none;
+}
+
+iron-collapse:not(.iron-collapse-opened) {
+  overflow: hidden;
+}</style><!-- Shady DOM styles for iron-list --><!-- Shady DOM styles for paper-material --><!-- Shady DOM styles for paper-ripple --><style scope="paper-ripple">paper-ripple {
+  display: block;
+        position: absolute;
+        border-radius: inherit;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        
+        pointer-events: none;
+}
+
+paper-ripple[animating] {
+  -webkit-transform: translate(0, 0);
+        transform: translate3d(0, 0, 0);
+}
+
+#background.paper-ripple, #waves.paper-ripple, .wave-container.paper-ripple, .wave.paper-ripple {
+  pointer-events: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+}
+
+#background.paper-ripple, .wave.paper-ripple {
+  opacity: 0;
+}
+
+#waves.paper-ripple, .wave.paper-ripple {
+  overflow: hidden;
+}
+
+.wave-container.paper-ripple, .wave.paper-ripple {
+  border-radius: 50%;
+}
+
+paper-ripple.circle #background.paper-ripple, paper-ripple.circle #waves.paper-ripple {
+  border-radius: 50%;
+}
+
+paper-ripple.circle .wave-container.paper-ripple {
+  overflow: hidden;
+}</style><!-- Shady DOM styles for paper-button --><style scope="paper-button-0">.paper-button-0 {
+  display: block;
+        position: relative;
+}
+
+.paper-button-0[elevation="1"] {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
+                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+.paper-button-0[elevation="2"] {
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+                  0 1px 10px 0 rgba(0, 0, 0, 0.12),
+                  0 2px 4px -1px rgba(0, 0, 0, 0.4);
+}
+
+.paper-button-0[elevation="3"] {
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+                  0 1px 18px 0 rgba(0, 0, 0, 0.12),
+                  0 3px 5px -1px rgba(0, 0, 0, 0.4);
+}
+
+.paper-button-0[elevation="4"] {
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                  0 3px 14px 2px rgba(0, 0, 0, 0.12),
+                  0 5px 5px -3px rgba(0, 0, 0, 0.4);
+}
+
+.paper-button-0[elevation="5"] {
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
+                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+.paper-button-0[animated] {
+  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.paper-button-0 {
+  display: inline-block;
+        position: relative;
+        box-sizing: border-box;
+        min-width: 5.14em;
+        margin: 0 0.29em;
+        background: transparent;
+        text-align: center;
+        font: inherit;
+        text-transform: uppercase;
+        outline-width: 0;
+        border-radius: 3px;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: pointer;
+        z-index: 0;
+        padding: 0.7em 0.57em;;
+}
+
+.paper-button-0[raised].keyboard-focus {
+  font-weight: bold;;
+}
+
+.paper-button-0:not([raised]).keyboard-focus {
+  font-weight: bold;;
+}
+
+.paper-button-0[disabled] {
+  background: #eaeaea;
+        color: #a8a8a8;
+        cursor: auto;
+        pointer-events: none;;
+}
+
+.paper-button-0 paper-ripple.paper-button {
+  color:;
+}
+
+.paper-button-0  * {
+  text-transform: inherit;
+}</style><!-- Shady DOM styles for iron-meta --><!-- Shady DOM styles for iron-meta-query --><!-- Shady DOM styles for paper-checkbox --><style scope="paper-checkbox-2">.paper-checkbox-2 {
+  display: inline-block;
+        white-space: nowrap;
+        cursor: pointer;font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+        line-height: 0;
+}
+
+.paper-checkbox-2:focus {
+  outline: none;
+}
+
+.paper-checkbox-2 .hidden.paper-checkbox {
+  display: none;
+}
+
+.paper-checkbox-2 #checkboxContainer.paper-checkbox {
+  display: inline-block;
+        position: relative;
+        width: 18px;
+        height: 18px;
+        min-width: 18px;
+        vertical-align: middle;
+        background-color: transparent;
+}
+
+.paper-checkbox-2 #ink.paper-checkbox {
+  position: absolute;
+
+        
+        top: calc(0px - (2.66 * 18px - 18px) / 2);
+        left: calc(0px - (2.66 * 18px - 18px) / 2);
+        width: calc(2.66 * 18px);
+        height: calc(2.66 * 18px);
+        color: #b71c1c;
+        opacity: 0.6;
+        pointer-events: none;
+}
+
+[dir="rtl"] .paper-checkbox-2 #ink.paper-checkbox, .paper-checkbox-2[dir="rtl"] #ink.paper-checkbox {
+  right: calc(0px - (2.66 * 18px - 18px) / 2);
+        left: auto;
+}
+
+.paper-checkbox-2 #ink[checked].paper-checkbox {
+  color: #f44336;
+}
+
+.paper-checkbox-2 #checkbox.paper-checkbox {
+  position: relative;
+        box-sizing: border-box;
+        height: 100%;
+        border: solid 2px;
+        border-color: #b71c1c;
+        border-radius: 2px;
+        pointer-events: none;
+        -webkit-transition: background-color 140ms, border-color 140ms;
+        transition: background-color 140ms, border-color 140ms;
+}
+
+.paper-checkbox-2 #checkbox.checked.paper-checkbox #checkmark.paper-checkbox {
+  -webkit-animation: checkmark-expand-paper-checkbox-2 140ms ease-out forwards;
+        animation: checkmark-expand-paper-checkbox-2 140ms ease-out forwards;
+}
+
+@-webkit-keyframes checkmark-expand-paper-checkbox-2 {
+0% {
+  -webkit-transform: scale(0, 0) rotate(45deg);
+}
+
+100% {
+  -webkit-transform: scale(1, 1) rotate(45deg);
+}
+
+}
+
+@keyframes checkmark-expand-paper-checkbox-2 {
+0% {
+  transform: scale(0, 0) rotate(45deg);
+}
+
+100% {
+  transform: scale(1, 1) rotate(45deg);
+}
+
+}
+
+.paper-checkbox-2 #checkbox.checked.paper-checkbox {
+  background-color: #f44336;
+        border-color: #f44336;
+}
+
+.paper-checkbox-2 #checkmark.paper-checkbox {
+  position: absolute;
+        width: 36%;
+        height: 70%;
+        border-style: solid;
+        border-top: none;
+        border-left: none;
+        border-right-width: calc(2/15 * 18px);
+        border-bottom-width: calc(2/15 * 18px);
+        border-color: white;
+        -webkit-transform-origin: 97% 86%;
+        transform-origin: 97% 86%;
+        box-sizing: content-box;
+}
+
+[dir="rtl"] .paper-checkbox-2 #checkmark.paper-checkbox, .paper-checkbox-2[dir="rtl"] #checkmark.paper-checkbox {
+  -webkit-transform-origin: 50% 14%;
+        transform-origin: 50% 14%;
+}
+
+.paper-checkbox-2 #checkboxLabel.paper-checkbox {
+  position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        padding-left: 8px;
+        white-space: normal;
+        line-height: normal;
+        color: #212121;
+}
+
+[dir="rtl"] .paper-checkbox-2 #checkboxLabel.paper-checkbox, .paper-checkbox-2[dir="rtl"] #checkboxLabel.paper-checkbox {
+  padding-right: 8px;
+        padding-left: 0;
+}
+
+.paper-checkbox-2 #checkboxLabel[hidden].paper-checkbox {
+  display: none;
+}
+
+.paper-checkbox-2[disabled] #checkbox.paper-checkbox {
+  opacity: 0.5;
+        border-color: #b71c1c;
+}
+
+.paper-checkbox-2[disabled][checked] #checkbox.paper-checkbox {
+  background-color: #b71c1c;
+        opacity: 0.5;
+}
+
+.paper-checkbox-2[disabled] #checkboxLabel.paper-checkbox {
+  opacity: 0.65;
+}
+
+.paper-checkbox-2 #checkbox.invalid.paper-checkbox:not(.checked) {
+  border-color: --error-color;
+}</style><style scope="paper-checkbox-1">.paper-checkbox-1 {
+  display: inline-block;
+        white-space: nowrap;
+        cursor: pointer;font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+        line-height: 0;
+}
+
+.paper-checkbox-1:focus {
+  outline: none;
+}
+
+.paper-checkbox-1 .hidden.paper-checkbox {
+  display: none;
+}
+
+.paper-checkbox-1 #checkboxContainer.paper-checkbox {
+  display: inline-block;
+        position: relative;
+        width: 18px;
+        height: 18px;
+        min-width: 18px;
+        vertical-align: middle;
+        background-color: transparent;
+}
+
+.paper-checkbox-1 #ink.paper-checkbox {
+  position: absolute;
+
+        
+        top: calc(0px - (2.66 * 18px - 18px) / 2);
+        left: calc(0px - (2.66 * 18px - 18px) / 2);
+        width: calc(2.66 * 18px);
+        height: calc(2.66 * 18px);
+        color: #01579b;
+        opacity: 0.6;
+        pointer-events: none;
+}
+
+[dir="rtl"] .paper-checkbox-1 #ink.paper-checkbox, .paper-checkbox-1[dir="rtl"] #ink.paper-checkbox {
+  right: calc(0px - (2.66 * 18px - 18px) / 2);
+        left: auto;
+}
+
+.paper-checkbox-1 #ink[checked].paper-checkbox {
+  color: #03a9f4;
+}
+
+.paper-checkbox-1 #checkbox.paper-checkbox {
+  position: relative;
+        box-sizing: border-box;
+        height: 100%;
+        border: solid 2px;
+        border-color: #01579b;
+        border-radius: 2px;
+        pointer-events: none;
+        -webkit-transition: background-color 140ms, border-color 140ms;
+        transition: background-color 140ms, border-color 140ms;
+}
+
+.paper-checkbox-1 #checkbox.checked.paper-checkbox #checkmark.paper-checkbox {
+  -webkit-animation: checkmark-expand-paper-checkbox-1 140ms ease-out forwards;
+        animation: checkmark-expand-paper-checkbox-1 140ms ease-out forwards;
+}
+
+@-webkit-keyframes checkmark-expand-paper-checkbox-1 {
+0% {
+  -webkit-transform: scale(0, 0) rotate(45deg);
+}
+
+100% {
+  -webkit-transform: scale(1, 1) rotate(45deg);
+}
+
+}
+
+@keyframes checkmark-expand-paper-checkbox-1 {
+0% {
+  transform: scale(0, 0) rotate(45deg);
+}
+
+100% {
+  transform: scale(1, 1) rotate(45deg);
+}
+
+}
+
+.paper-checkbox-1 #checkbox.checked.paper-checkbox {
+  background-color: #03a9f4;
+        border-color: #03a9f4;
+}
+
+.paper-checkbox-1 #checkmark.paper-checkbox {
+  position: absolute;
+        width: 36%;
+        height: 70%;
+        border-style: solid;
+        border-top: none;
+        border-left: none;
+        border-right-width: calc(2/15 * 18px);
+        border-bottom-width: calc(2/15 * 18px);
+        border-color: white;
+        -webkit-transform-origin: 97% 86%;
+        transform-origin: 97% 86%;
+        box-sizing: content-box;
+}
+
+[dir="rtl"] .paper-checkbox-1 #checkmark.paper-checkbox, .paper-checkbox-1[dir="rtl"] #checkmark.paper-checkbox {
+  -webkit-transform-origin: 50% 14%;
+        transform-origin: 50% 14%;
+}
+
+.paper-checkbox-1 #checkboxLabel.paper-checkbox {
+  position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        padding-left: 8px;
+        white-space: normal;
+        line-height: normal;
+        color: #212121;
+}
+
+[dir="rtl"] .paper-checkbox-1 #checkboxLabel.paper-checkbox, .paper-checkbox-1[dir="rtl"] #checkboxLabel.paper-checkbox {
+  padding-right: 8px;
+        padding-left: 0;
+}
+
+.paper-checkbox-1 #checkboxLabel[hidden].paper-checkbox {
+  display: none;
+}
+
+.paper-checkbox-1[disabled] #checkbox.paper-checkbox {
+  opacity: 0.5;
+        border-color: #01579b;
+}
+
+.paper-checkbox-1[disabled][checked] #checkbox.paper-checkbox {
+  background-color: #01579b;
+        opacity: 0.5;
+}
+
+.paper-checkbox-1[disabled] #checkboxLabel.paper-checkbox {
+  opacity: 0.65;
+}
+
+.paper-checkbox-1 #checkbox.invalid.paper-checkbox:not(.checked) {
+  border-color: --error-color;
+}</style><style scope="paper-checkbox-0">.paper-checkbox-0 {
+  display: inline-block;
+        white-space: nowrap;
+        cursor: pointer;font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+        line-height: 0;
+}
+
+.paper-checkbox-0:focus {
+  outline: none;
+}
+
+.paper-checkbox-0 .hidden.paper-checkbox {
+  display: none;
+}
+
+.paper-checkbox-0 #checkboxContainer.paper-checkbox {
+  display: inline-block;
+        position: relative;
+        width: 18px;
+        height: 18px;
+        min-width: 18px;
+        vertical-align: middle;
+        background-color: transparent;
+}
+
+.paper-checkbox-0 #ink.paper-checkbox {
+  position: absolute;
+
+        
+        top: calc(0px - (2.66 * 18px - 18px) / 2);
+        left: calc(0px - (2.66 * 18px - 18px) / 2);
+        width: calc(2.66 * 18px);
+        height: calc(2.66 * 18px);
+        color: #212121;
+        opacity: 0.6;
+        pointer-events: none;
+}
+
+[dir="rtl"] .paper-checkbox-0 #ink.paper-checkbox, .paper-checkbox-0[dir="rtl"] #ink.paper-checkbox {
+  right: calc(0px - (2.66 * 18px - 18px) / 2);
+        left: auto;
+}
+
+.paper-checkbox-0 #ink[checked].paper-checkbox {
+  color: #3f51b5;
+}
+
+.paper-checkbox-0 #checkbox.paper-checkbox {
+  position: relative;
+        box-sizing: border-box;
+        height: 100%;
+        border: solid 2px;
+        border-color: #757575;
+        border-radius: 2px;
+        pointer-events: none;
+        -webkit-transition: background-color 140ms, border-color 140ms;
+        transition: background-color 140ms, border-color 140ms;
+}
+
+.paper-checkbox-0 #checkbox.checked.paper-checkbox #checkmark.paper-checkbox {
+  -webkit-animation: checkmark-expand-paper-checkbox-0 140ms ease-out forwards;
+        animation: checkmark-expand-paper-checkbox-0 140ms ease-out forwards;
+}
+
+@-webkit-keyframes checkmark-expand-paper-checkbox-0 {
+0% {
+  -webkit-transform: scale(0, 0) rotate(45deg);
+}
+
+100% {
+  -webkit-transform: scale(1, 1) rotate(45deg);
+}
+
+}
+
+@keyframes checkmark-expand-paper-checkbox-0 {
+0% {
+  transform: scale(0, 0) rotate(45deg);
+}
+
+100% {
+  transform: scale(1, 1) rotate(45deg);
+}
+
+}
+
+.paper-checkbox-0 #checkbox.checked.paper-checkbox {
+  background-color: #757575;
+        border-color: #757575;
+}
+
+.paper-checkbox-0 #checkmark.paper-checkbox {
+  position: absolute;
+        width: 36%;
+        height: 70%;
+        border-style: solid;
+        border-top: none;
+        border-left: none;
+        border-right-width: calc(2/15 * 18px);
+        border-bottom-width: calc(2/15 * 18px);
+        border-color: white;
+        -webkit-transform-origin: 97% 86%;
+        transform-origin: 97% 86%;
+        box-sizing: content-box;
+}
+
+[dir="rtl"] .paper-checkbox-0 #checkmark.paper-checkbox, .paper-checkbox-0[dir="rtl"] #checkmark.paper-checkbox {
+  -webkit-transform-origin: 50% 14%;
+        transform-origin: 50% 14%;
+}
+
+.paper-checkbox-0 #checkboxLabel.paper-checkbox {
+  position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        padding-left: 8px;
+        white-space: normal;
+        line-height: normal;
+        color: #212121;
+}
+
+[dir="rtl"] .paper-checkbox-0 #checkboxLabel.paper-checkbox, .paper-checkbox-0[dir="rtl"] #checkboxLabel.paper-checkbox {
+  padding-right: 8px;
+        padding-left: 0;
+}
+
+.paper-checkbox-0 #checkboxLabel[hidden].paper-checkbox {
+  display: none;
+}
+
+.paper-checkbox-0[disabled] #checkbox.paper-checkbox {
+  opacity: 0.5;
+        border-color: #757575;
+}
+
+.paper-checkbox-0[disabled][checked] #checkbox.paper-checkbox {
+  background-color: #757575;
+        opacity: 0.5;
+}
+
+.paper-checkbox-0[disabled] #checkboxLabel.paper-checkbox {
+  opacity: 0.65;
+}
+
+.paper-checkbox-0 #checkbox.invalid.paper-checkbox:not(.checked) {
+  border-color: --error-color;
+}</style><!-- Shady DOM styles for iron-a11y-announcer --><style scope="iron-a11y-announcer">iron-a11y-announcer {
+  display: inline-block;
+      position: fixed;
+      clip: rect(0px,0px,0px,0px);
+}</style><!-- Shady DOM styles for iron-input --><!-- Shady DOM styles for paper-input-char-counter --><!-- Shady DOM styles for paper-input-container --><style scope="paper-input-container-0">.paper-input-container-0 {
+  display: block;
+        padding: 8px 0;;
+}
+
+.paper-input-container-0[inline] {
+  display: inline-block;
+}
+
+.paper-input-container-0[disabled] {
+  pointer-events: none;
+        opacity: 0.33;;
+}
+
+.paper-input-container-0 .floated-label-placeholder.paper-input-container {
+  font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.011em;
+      line-height: 20px;
+}
+
+.paper-input-container-0 .underline.paper-input-container {
+  position: relative;
+}
+
+.paper-input-container-0 .focused-line.paper-input-container {
+  position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+        background: #f57c00;
+        height: 2px;
+        -webkit-transform-origin: center center;
+        transform-origin: center center;
+        -webkit-transform: scale3d(0,1,1);
+        transform: scale3d(0,1,1);;
+}
+
+.paper-input-container-0 .underline.is-highlighted.paper-input-container .focused-line.paper-input-container {
+  -webkit-transform: none;
+        transform: none;
+        -webkit-transition: -webkit-transform 0.25s;
+        transition: transform 0.25s;;
+}
+
+.paper-input-container-0 .underline.is-invalid.paper-input-container .focused-line.paper-input-container {
+  background: #db4437;
+        -webkit-transform: none;
+        transform: none;
+        -webkit-transition: -webkit-transform 0.25s;
+        transition: transform 0.25s;;
+}
+
+.paper-input-container-0 .unfocused-line.paper-input-container {
+  position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+        height: 1px;
+        background: #737373;;
+}
+
+.paper-input-container-0[disabled] .unfocused-line.paper-input-container {
+  border-bottom: 1px dashed;
+        border-color: #737373;
+        background: transparent;;
+}
+
+.paper-input-container-0 .label-and-input-container.paper-input-container {
+  -ms-flex: 1 1 auto;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;position: relative;
+        width: 100%;
+        max-width: 100%;
+}
+
+.paper-input-container-0 .input-content.paper-input-container {
+  display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -ms-flex-direction: row;
+      -webkit-flex-direction: row;
+      flex-direction: row;-ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+
+        position: relative;
+}
+
+.paper-input-container-0 .input-content.paper-input-container  label,.paper-input-container-0  .input-content.paper-input-container  .paper-input-label {
+  position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        font: inherit;
+        color: #737373;white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;font-size: 14px;
+}
+
+.paper-input-container-0 .input-content.label-is-floating.paper-input-container  label,.paper-input-container-0  .input-content.label-is-floating.paper-input-container  .paper-input-label {
+  -webkit-transform: translateY(-75%) scale(0.75);
+        transform: translateY(-75%) scale(0.75);
+        -webkit-transition: -webkit-transform 0.25s, width 0.25s;
+        transition: transform 0.25s, width 0.25s;
+        -webkit-transform-origin: left top;
+        transform-origin: left top;
+
+        
+        width: 133%;;;
+}
+
+[dir="rtl"] .paper-input-container-0 .input-content.label-is-floating.paper-input-container  label, .paper-input-container-0[dir="rtl"] .input-content.label-is-floating.paper-input-container  label, [dir="rtl"] .paper-input-container-0 .input-content.label-is-floating.paper-input-container  .paper-input-label,  .paper-input-container-0[dir="rtl"] .input-content.label-is-floating.paper-input-container  .paper-input-label {
+  width: 100%;
+        -webkit-transform-origin: right top;
+        transform-origin: right top;
+}
+
+.paper-input-container-0 .input-content.label-is-highlighted.paper-input-container  label,.paper-input-container-0  .input-content.label-is-highlighted.paper-input-container  .paper-input-label {
+  color: #f57c00;;
+}
+
+.paper-input-container-0 .input-content.is-invalid.paper-input-container  label,.paper-input-container-0  .input-content.is-invalid.paper-input-container  .paper-input-label {
+  color: #db4437;
+}
+
+.paper-input-container-0 .input-content.label-is-hidden.paper-input-container  label,.paper-input-container-0  .input-content.label-is-hidden.paper-input-container  .paper-input-label {
+  visibility: hidden;
+}
+
+.paper-input-container-0 .input-content.paper-input-container  input,.paper-input-container-0  .input-content.paper-input-container  textarea,.paper-input-container-0  .input-content.paper-input-container  iron-autogrow-textarea,.paper-input-container-0  .input-content.paper-input-container  .paper-input-input {
+  position: relative; 
+        outline: none;
+        box-shadow: none;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        background: transparent;
+        border: none;
+        color: #212121;
+        -webkit-appearance: none;
+        text-align: inherit;font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;font-size: 14px;
+}
+
+.paper-input-container-0  [prefix] {
+  font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;;-ms-flex: none;
+      -webkit-flex: none;
+      flex: none;
+}
+
+.paper-input-container-0  [suffix] {
+  font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;;-ms-flex: none;
+      -webkit-flex: none;
+      flex: none;
+}
+
+.paper-input-container-0 .input-content.paper-input-container  input {
+  min-width: 0;
+}
+
+.paper-input-container-0 .input-content.paper-input-container  textarea {
+  resize: none;
+}
+
+.paper-input-container-0 .add-on-content.paper-input-container {
+  position: relative;
+}
+
+.paper-input-container-0 .add-on-content.is-invalid.paper-input-container  * {
+  color: #db4437;
+}
+
+.paper-input-container-0 .add-on-content.is-highlighted.paper-input-container  * {
+  color: #f57c00;
+}</style><!-- Shady DOM styles for paper-input-error --><!-- Shady DOM styles for paper-input --><style scope="paper-input-0">.paper-input-0 {
+  display: block;
+}
+
+.paper-input-0 input.paper-input::-webkit-input-placeholder {
+  color: #737373;
+}
+
+.paper-input-0 input.paper-input:-moz-placeholder {
+  color: #737373;
+}
+
+.paper-input-0 input.paper-input::-moz-placeholder {
+  color: #737373;
+}
+
+.paper-input-0 input.paper-input:-ms-input-placeholder {
+  color: #737373;
+}</style><!-- Shady DOM styles for iron-overlay-backdrop --><!-- Shady DOM styles for opaque-animation --><!-- Shady DOM styles for iron-dropdown --><style scope="iron-dropdown">iron-dropdown {
+  position: fixed;
+}
+
+#contentWrapper.iron-dropdown  > * {
+  overflow: auto;
+}
+
+#contentWrapper.animating.iron-dropdown  > * {
+  overflow: hidden;
+}</style><!-- Shady DOM styles for fade-in-animation --><!-- Shady DOM styles for fade-out-animation --><!-- Shady DOM styles for paper-menu-grow-height-animation --><!-- Shady DOM styles for paper-menu-grow-width-animation --><!-- Shady DOM styles for paper-menu-shrink-width-animation --><!-- Shady DOM styles for paper-menu-shrink-height-animation --><!-- Shady DOM styles for paper-menu-button --><!-- Shady DOM styles for iron-icon --><style scope="iron-icon-0">.iron-icon-0 {
+  display: -ms-inline-flexbox;
+      display: -webkit-inline-flex;
+      display: inline-flex;-ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;-ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      position: relative;
+
+      vertical-align: middle;
+
+      fill: currentcolor;
+      stroke: none;
+
+      width: 100%;
+      height: 100%;
+}</style><!-- Shady DOM styles for iron-iconset-svg --><!-- Shady DOM styles for paper-dropdown-menu --><!-- Shady DOM styles for paper-header-panel --><style scope="paper-header-panel-0">.paper-header-panel-0 {
+  ;display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -ms-flex-direction: column;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+
+        position: relative;
+        height: 100%;;
+}
+
+.paper-header-panel-0 #mainContainer.paper-header-panel {
+  -ms-flex: 1 1 0.000000001px;
+      -webkit-flex: 1;
+      flex: 1;
+      -webkit-flex-basis: 0.000000001px;
+      flex-basis: 0.000000001px;
+
+        position: relative;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+}
+
+.paper-header-panel-0 #mainPanel.paper-header-panel {
+  display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -ms-flex-direction: column;
+      -webkit-flex-direction: column;
+      flex-direction: column;-ms-flex: 1 1 0.000000001px;
+      -webkit-flex: 1;
+      flex: 1;
+      -webkit-flex-basis: 0.000000001px;
+      flex-basis: 0.000000001px;
+
+        position: relative;
+        min-height: 0;;
+}
+
+.paper-header-panel-0[mode=scroll] #mainContainer.paper-header-panel {
+  ;
+
+        overflow: visible;
+}
+
+.paper-header-panel-0[mode=scroll] {
+  overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+}
+
+.paper-header-panel-0[mode=cover] #mainContainer.paper-header-panel {
+  ;
+
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+}
+
+.paper-header-panel-0[mode=cover] #mainPanel.paper-header-panel {
+  position: static;
+}
+
+.paper-header-panel-0[mode=standard] #mainContainer.paper-header-panel {
+  ;
+}
+
+.paper-header-panel-0[mode=seamed] #mainContainer.paper-header-panel {
+  ;
+}
+
+.paper-header-panel-0[mode=waterfall] #mainContainer.paper-header-panel {
+  ;
+}
+
+.paper-header-panel-0[mode=waterfall-tall] #mainContainer.paper-header-panel {
+  ;
+}
+
+.paper-header-panel-0 #dropShadow.paper-header-panel {
+  height: 6px;
+          bottom: -6px;
+          box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.4);
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        pointer-events: none;
+
+        -webkit-transition: opacity 0.5s;
+        transition: opacity 0.5s;
+
+        opacity: 0;
+}
+
+.paper-header-panel-0 #dropShadow.has-shadow.paper-header-panel {
+  opacity: 1;
+}</style><!-- Shady DOM styles for paper-icon-button --><style scope="paper-icon-button-0">.paper-icon-button-0 {
+  display: inline-block;
+        position: relative;
+        padding: 8px;
+        outline: none;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        cursor: pointer;
+        z-index: 0;
+        line-height: 1;
+        
+        width: 40px;
+        height: 40px;
+
+        
+        box-sizing: border-box !important;;
+}
+
+.paper-icon-button-0 #ink.paper-icon-button {
+  color: #212121;
+        opacity: 0.6;
+}
+
+.paper-icon-button-0[disabled] {
+  color: #9b9b9b;
+        pointer-events: none;
+        cursor: auto;;
+}
+
+.paper-icon-button-0:hover {
+  ;
+}
+
+.paper-icon-button-0 iron-icon.paper-icon-button {
+  ;
+}</style><!-- Shady DOM styles for paper-item --><!-- Shady DOM styles for paper-menu --><!-- Shady DOM styles for paper-progress --><!-- Shady DOM styles for paper-radio-button --><!-- Shady DOM styles for paper-radio-group --><style scope="paper-radio-group">paper-radio-group {
+  display: inline-block;
+}
+
+paper-radio-group  > * {
+  padding: 12px;
+}</style><!-- Shady DOM styles for paper-slider --><!-- Shady DOM styles for paper-toggle-button --><!-- Shady DOM styles for paper-toolbar --><style scope="paper-toolbar-0">.paper-toolbar-0 {
+  display: block;
+        position: relative;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+
+        
+        height: 64px;
+
+        background: #3f51b5;
+        color: #ffffff;;
+}
+
+.paper-toolbar-0.animate {
+  transition: height 0.18s ease-in;
+}
+
+.paper-toolbar-0.medium-tall {
+  height: calc(64px * 2);;
+}
+
+.paper-toolbar-0.tall {
+  height: calc(64px * 3);;
+}
+
+.paper-toolbar-0 .toolbar-tools.paper-toolbar {
+  position: relative;
+        height: 64px;
+        padding: 0 16px;
+        pointer-events: none;display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -ms-flex-direction: row;
+      -webkit-flex-direction: row;
+      flex-direction: row;-ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;;
+}
+
+@media (max-width: 600px) {
+.paper-toolbar-0 {
+  height: 56px;
+}
+
+.paper-toolbar-0.medium-tall {
+  height: calc(56px * 2);
+}
+
+.paper-toolbar-0.tall {
+  height: calc(56px * 3);
+}
+
+.paper-toolbar-0 .toolbar-tools.paper-toolbar {
+  height: 56px;
+}
+
+}
+
+.paper-toolbar-0 #topBar.paper-toolbar {
+  position: relative;
+}
+
+.paper-toolbar-0 #middleBar.paper-toolbar {
+  position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+}
+
+.paper-toolbar-0.tall #middleBar.paper-toolbar, .paper-toolbar-0.medium-tall #middleBar.paper-toolbar {
+  -webkit-transform: translateY(100%);
+        transform: translateY(100%);
+}
+
+.paper-toolbar-0 #bottomBar.paper-toolbar {
+  position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+}
+
+.paper-toolbar-0 .toolbar-tools.paper-toolbar  > *:not([disabled]) {
+  pointer-events: auto;
+}
+
+.paper-toolbar-0 .toolbar-tools.paper-toolbar  .title {
+  font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 1;
+        pointer-events: none;-ms-flex: 1 1 0.000000001px;
+      -webkit-flex: 1;
+      flex: 1;
+      -webkit-flex-basis: 0.000000001px;
+      flex-basis: 0.000000001px;;
+}
+
+.paper-toolbar-0 .toolbar-tools.paper-toolbar  paper-icon-button[icon=menu] {
+  margin-right: 24px;
+}
+
+.paper-toolbar-0 .toolbar-tools.paper-toolbar  > .title,.paper-toolbar-0  .toolbar-tools.paper-toolbar [select=".middle"] > .title,.paper-toolbar-0  .toolbar-tools.paper-toolbar [select=".bottom"] > .title {
+  margin-left: 56px;
+}
+
+.paper-toolbar-0 .toolbar-tools.paper-toolbar  > paper-icon-button + .title,.paper-toolbar-0  .toolbar-tools.paper-toolbar [select=".middle"] paper-icon-button + .title,.paper-toolbar-0  .toolbar-tools.paper-toolbar [select=".bottom"] paper-icon-button + .title {
+  margin-left: 0;
+}
+
+.paper-toolbar-0 .toolbar-tools.paper-toolbar  > .fit {
+  position: absolute;
+        top: auto;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: auto;
+        margin: 0;
+}
+
+.paper-toolbar-0 .start-justified.paper-toolbar {
+  -ms-flex-pack: start;
+      -webkit-justify-content: flex-start;
+      justify-content: flex-start;
+}
+
+.paper-toolbar-0 .center-justified.paper-toolbar {
+  -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+}
+
+.paper-toolbar-0 .end-justified.paper-toolbar {
+  -ms-flex-pack: end;
+      -webkit-justify-content: flex-end;
+      justify-content: flex-end;
+}
+
+.paper-toolbar-0 .around-justified.paper-toolbar {
+  -ms-flex-pack: distribute;
+      -webkit-justify-content: space-around;
+      justify-content: space-around;
+}
+
+.paper-toolbar-0 .justified.paper-toolbar {
+  -ms-flex-pack: justify;
+      -webkit-justify-content: space-between;
+      justify-content: space-between;
+}</style><!-- Shady DOM styles for paper-tab --><style scope="paper-tab-0">.paper-tab-0 {
+  display: -ms-inline-flexbox;
+      display: -webkit-inline-flex;
+      display: inline-flex;-ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;-ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;-ms-flex: 1 1 0.000000001px;
+      -webkit-flex: 1;
+      flex: 1;
+      -webkit-flex-basis: 0.000000001px;
+      flex-basis: 0.000000001px;
+
+        position: relative;
+        padding: 0 12px;
+        overflow: hidden;
+        cursor: pointer;;
+}
+
+.paper-tab-0:focus {
+  outline: none;
+}
+
+.paper-tab-0[link] {
+  padding: 0;
+}
+
+.paper-tab-0 .tab-content.paper-tab {
+  height: 100%;
+        transform: translateZ(0);
+          -webkit-transform: translateZ(0);
+        transition: opacity 0.1s cubic-bezier(0.4, 0.0, 1, 1);display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -ms-flex-direction: row;
+      -webkit-flex-direction: row;
+      flex-direction: row;-ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;-ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;-ms-flex: 1 1 auto;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;;
+}
+
+.paper-tab-0:not(.iron-selected) > .tab-content.paper-tab {
+  opacity: 0.8;;
+}
+
+.paper-tab-0:focus .tab-content.paper-tab {
+  opacity: 1;
+        font-weight: 700;
+}
+
+.paper-tab-0 paper-ripple.paper-tab {
+  color: #ffff8d;
+}
+
+.paper-tab-0 .tab-content.paper-tab  > a {
+  -ms-flex: 1 1 0.000000001px;
+      -webkit-flex: 1;
+      flex: 1;
+      -webkit-flex-basis: 0.000000001px;
+      flex-basis: 0.000000001px;
+}</style><!-- Shady DOM styles for paper-tabs --><style scope="paper-tabs-0">.paper-tabs-0 {
+  display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;-ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+
+        height: 48px;
+        font-size: 14px;
+        font-weight: 500;
+        overflow: hidden;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);;
+}
+
+[dir=rtl] .paper-tabs-0, .paper-tabs-0[dir=rtl] {
+  display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -ms-flex-direction: row-reverse;
+      -webkit-flex-direction: row-reverse;
+      flex-direction: row-reverse;
+}
+
+.paper-tabs-0 #tabsContainer.paper-tabs {
+  position: relative;
+        height: 100%;
+        white-space: nowrap;
+        overflow: hidden;-ms-flex: 1 1 0.000000001px;
+      -webkit-flex: 1;
+      flex: 1;
+      -webkit-flex-basis: 0.000000001px;
+      flex-basis: 0.000000001px;
+}
+
+.paper-tabs-0 #tabsContent.paper-tabs {
+  height: 100%;
+}
+
+.paper-tabs-0 #tabsContent.scrollable.paper-tabs {
+  position: absolute;
+        white-space: nowrap;
+}
+
+.paper-tabs-0 #tabsContent.horizontal.paper-tabs {
+  display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -ms-flex-direction: row;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+}
+
+.paper-tabs-0 .hidden.paper-tabs {
+  display: none;
+}
+
+.paper-tabs-0 .not-visible.paper-tabs {
+  opacity: 0;
+        cursor: default;
+}
+
+.paper-tabs-0 paper-icon-button.paper-tabs {
+  width: 48px;
+        height: 48px;
+        padding: 12px;
+        margin: 0 4px;
+}
+
+.paper-tabs-0 #selectionBar.paper-tabs {
+  position: absolute;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+          -webkit-transform: scale(0);
+        transform: scale(0);
+          -webkit-transform-origin: left center;
+        transform-origin: left center;
+          transition: -webkit-transform;
+        transition: transform;;
+}
+
+.paper-tabs-0 #selectionBar.align-bottom.paper-tabs {
+  top: 0;
+        bottom: auto;
+}
+
+.paper-tabs-0 #selectionBar.expand.paper-tabs {
+  transition-duration: 0.15s;
+        transition-timing-function: cubic-bezier(0.4, 0.0, 1, 1);
+}
+
+.paper-tabs-0 #selectionBar.contract.paper-tabs {
+  transition-duration: 0.18s;
+        transition-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+.paper-tabs-0 #tabsContent.paper-tabs  > *:not(#selectionBar) {
+  height: 100%;
+}</style><!-- Shady DOM styles for tf-tooltip-coordinator --><!-- Shady DOM styles for tf-multi-checkbox --><style scope="tf-multi-checkbox-0">.tf-multi-checkbox-0 .scrollbar.tf-multi-checkbox::-webkit-scrollbar-track {
+  visibility: hidden;
+}
+
+.tf-multi-checkbox-0 .scrollbar.tf-multi-checkbox::-webkit-scrollbar {
+  width: 10px;
+}
+
+.tf-multi-checkbox-0 .scrollbar.tf-multi-checkbox::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,.3);
+        background-color: #9e9e9e;
+        color: #212121;
+}
+
+.tf-multi-checkbox-0 .scrollbar.tf-multi-checkbox {
+  box-sizing: border-box;
+}
+
+.tf-multi-checkbox-0 [color-class="light-blue"].tf-multi-checkbox paper-checkbox.tf-multi-checkbox {
+  ;
+}
+
+.tf-multi-checkbox-0 [color-class="red"].tf-multi-checkbox paper-checkbox.tf-multi-checkbox {
+  ;
+}
+
+.tf-multi-checkbox-0 [color-class="green"].tf-multi-checkbox paper-checkbox.tf-multi-checkbox {
+  ;
+}
+
+.tf-multi-checkbox-0 [color-class="purple"].tf-multi-checkbox paper-checkbox.tf-multi-checkbox {
+  ;
+}
+
+.tf-multi-checkbox-0 [color-class="teal"].tf-multi-checkbox paper-checkbox.tf-multi-checkbox {
+  ;
+}
+
+.tf-multi-checkbox-0 [color-class="pink"].tf-multi-checkbox paper-checkbox.tf-multi-checkbox {
+  ;
+}
+
+.tf-multi-checkbox-0 [color-class="orange"].tf-multi-checkbox paper-checkbox.tf-multi-checkbox {
+  ;
+}
+
+.tf-multi-checkbox-0 [color-class="brown"].tf-multi-checkbox paper-checkbox.tf-multi-checkbox {
+  ;
+}
+
+.tf-multi-checkbox-0 [color-class="indigo"].tf-multi-checkbox paper-checkbox.tf-multi-checkbox {
+  ;
+}
+
+.tf-multi-checkbox-0 {
+  display: flex;
+      flex-direction: column;
+      height: 100%;
+}
+
+.tf-multi-checkbox-0 #outer-container.tf-multi-checkbox {
+  overflow-y: scroll;
+      overflow-x: hidden;
+      width: 100%;
+      flex-grow: 1;
+      flex-shrink: 1;
+      word-wrap: break-word;
+}
+
+.tf-multi-checkbox-0 .run-row.tf-multi-checkbox {
+  padding-top: 5px;
+      padding-bottom: 5px;
+      display: flex;
+      flex-direction: row;
+      font-size: 13px;
+}
+
+.tf-multi-checkbox-0 .checkbox-container.tf-multi-checkbox {
+  flex-grow: 0;
+      flex-shrink: 0;
+}
+
+.tf-multi-checkbox-0 .checkbox.tf-multi-checkbox {
+  padding-left: 2px;
+      width: 32px;
+}
+
+.tf-multi-checkbox-0 .item-label-container.tf-multi-checkbox {
+  flex-grow: 1;
+      flex-shrink: 1;
+      width: 0px;
+}
+
+.tf-multi-checkbox-0 .tooltip-value-container.tf-multi-checkbox {
+  display: flex;
+      justify-content: center;
+      flex-grow: 0;
+      flex-shrink: 0;
+      text-align:right;
+      padding-left: 2px;
+}
+
+.tf-multi-checkbox-0 .vertical-align-container.tf-multi-checkbox {
+  display: flex;
+      justify-content: center;
+}
+
+.tf-multi-checkbox-0 .vertical-align-container.tf-multi-checkbox .vertical-align-center.tf-multi-checkbox {
+  align-self: center;
+}
+
+.tf-multi-checkbox-0 .vertical-align-container.tf-multi-checkbox .vertical-align-top.tf-multi-checkbox {
+  align-self: start;
+}
+
+.tf-multi-checkbox-0 [null-tooltip].tf-multi-checkbox {
+  display: none;
+}
+
+.tf-multi-checkbox-0 [highlight].tf-multi-checkbox {
+  font-weight: bold;
+}</style><!-- Shady DOM styles for tf-run-selector --><style scope="tf-run-selector-0">.tf-run-selector-0 {
+  display: flex;
+        flex-direction: column;
+        padding-bottom: 10px;
+        box-sizing: border-box;
+}
+
+.tf-run-selector-0 #top-text.tf-run-selector {
+  width: 100%;
+        flex-grow: 0;
+        flex-shrink: 0;
+        padding-right: 16px;
+        padding-bottom: 6px;
+        box-sizing: border-box;
+        color: #424242;
+}
+
+.tf-run-selector-0 tf-multi-checkbox.tf-run-selector {
+  display: flex;
+        flex-grow: 1;
+        flex-shrink: 1;
+}
+
+.tf-run-selector-0 .x-button.tf-run-selector {
+  font-size: 13px;
+        background-color: #e0e0e0;
+        margin-top: 5px;
+        color: #757575;
+}
+
+.tf-run-selector-0 .x-tooltip.tf-run-selector {
+  display: flex;
+        flex-direction: row;
+}
+
+.tf-run-selector-0 .x-tooltip-label.tf-run-selector {
+  flex-grow: 1;
+        align-self: flex-start;
+}
+
+.tf-run-selector-0 .x-tooltip-value.tf-run-selector {
+  align-self: flex-end;
+}
+
+.tf-run-selector-0 #tooltip-help.tf-run-selector {
+  color: #424242;
+        margin: 0;
+        font-weight: normal;
+        font-size: 14px;
+        margin-bottom: 5px;
+}
+
+.tf-run-selector-0 paper-button.tf-run-selector {
+  margin-left: 0;
+}</style><!-- Shady DOM styles for tf-x-type-selector --><style scope="tf-x-type-selector-0">.tf-x-type-selector-0 .x-button.tf-x-type-selector {
+  width: 30%;
+        font-size: 13px;
+        background: none;
+        margin-top: 10px;
+        color: #757575;
+}
+
+.tf-x-type-selector-0 .x-button.tf-x-type-selector:first-of-type {
+  margin-left: 0;
+}
+
+.tf-x-type-selector-0 .x-button.selected.tf-x-type-selector {
+  background-color: #757575;
+        color: white!important;
+}
+
+.tf-x-type-selector-0 #buttons.tf-x-type-selector h3.tf-x-type-selector {
+  color: #424242;
+        margin: 0;
+        font-weight: normal;
+        font-size: 14px;
+        margin-bottom: 5px;
+}</style><!-- Shady DOM styles for tf-color-scale --><!-- Shady DOM styles for tf-dashboard-layout --><style scope="tf-dashboard-layout-0">.tf-dashboard-layout-0 .scrollbar.tf-dashboard-layout::-webkit-scrollbar-track {
+  visibility: hidden;
+}
+
+.tf-dashboard-layout-0 .scrollbar.tf-dashboard-layout::-webkit-scrollbar {
+  width: 10px;
+}
+
+.tf-dashboard-layout-0 .scrollbar.tf-dashboard-layout::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,.3);
+        background-color: #9e9e9e;
+        color: #212121;
+}
+
+.tf-dashboard-layout-0 .scrollbar.tf-dashboard-layout {
+  box-sizing: border-box;
+}
+
+.tf-dashboard-layout-0 #sidebar.tf-dashboard-layout {
+  width: inherit;
+        height: 100%;
+        overflow: ellipsis;
+        flex-grow: 0;
+        flex-shrink: 0;
+}
+
+.tf-dashboard-layout-0 #center.tf-dashboard-layout {
+  height: 100%;
+        overflow-y: scroll;
+        flex-grow: 1;
+        flex-shrink: 1;
+}
+
+.tf-dashboard-layout-0 .tf-graph-dashboard.tf-dashboard-layout #center.tf-dashboard-layout {
+  background: white;
+}
+
+.tf-dashboard-layout-0 {
+  display: flex;
+        flex-direction: row;
+        height: 100%;
+}</style><!-- Shady DOM styles for tf-downloader --><style scope="tf-downloader">tf-downloader {
+  display: block;
+}
+
+paper-dropdown-menu.tf-downloader {
+  width: 220px;
+}
+
+a.tf-downloader {
+  font-size: 10px;
+        border-radius: 3px;
+        border: 1px solid #EEE;
+}
+
+paper-input.tf-downloader {
+  font-size: 22px;
+}</style><!-- Shady DOM styles for tf-regex-group --><style scope="tf-regex-group-0">.tf-regex-group-0 .regex-input.tf-regex-group {
+  width: 230px;
+            display: inline-block;
+            margin-left: -3px;
+}
+
+.tf-regex-group-0 paper-checkbox.tf-regex-group {
+  ;
+}
+
+.tf-regex-group-0 .delete-button.tf-regex-group {
+  color: #616161;
+            width: 40px;
+            height: 40px;
+            margin-right: -10px;
+}
+
+.tf-regex-group-0 .regex-list.tf-regex-group {
+  margin-bottom: 10px;
+}
+
+.tf-regex-group-0 paper-input.tf-regex-group {
+  ;
+}</style><!-- Shady DOM styles for tf-categorizer --><style scope="tf-categorizer-0">.tf-categorizer-0 {
+  display: block;
+        padding-bottom: 15px;
+}
+
+.tf-categorizer-0 paper-checkbox.tf-categorizer {
+  ;
+        font-size: 14px;
+}
+
+.tf-categorizer-0 #underscore-categorization.tf-categorizer {
+  color: #616161;
+}</style><!-- Shady DOM styles for tf-chart --><style scope="tf-chart">tf-chart {
+  -webkit-user-select: none;
+        -moz-user-select: none;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        flex-shrink: 1;
+}
+
+svg.tf-chart {
+  -webkit-user-select: none;
+        -moz-user-select: none;
+        flex-grow: 1;
+        flex-shrink: 1;
+}
+
+.plottable.tf-chart .crosshairs.tf-chart line.guide-line.tf-chart {
+  stroke: #777;
+}</style><!-- Shady DOM styles for tf-collapsable-pane --><style scope="tf-collapsable-pane-0">.tf-collapsable-pane-0 {
+  display: block;
+        margin: 0 5px 1px 10px;
+}
+
+.tf-collapsable-pane-0:first-of-type {
+  margin-top: 20px;
+}
+
+.tf-collapsable-pane-0:last-of-type {
+  margin-bottom: 20px;
+}
+
+.tf-collapsable-pane-0 .heading.tf-collapsable-pane {
+  background-color: white;
+        border-radius: 2px;
+        border: none;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 15px;
+        display: inline-flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        line-height: 1;
+        box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+        padding: 10px 15px;
+}
+
+.tf-collapsable-pane-0 .content.tf-collapsable-pane {
+  padding: 15px;
+        border: 1px solid #dedede;
+        border-top: none;
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+        background: white;
+}
+
+.tf-collapsable-pane-0 [open-button].tf-collapsable-pane {
+  border-bottom-left-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+}
+
+.tf-collapsable-pane-0 .name.tf-collapsable-pane {
+  flex-grow: 0;
+}
+
+.tf-collapsable-pane-0 .count.tf-collapsable-pane {
+  flex-grow: 0;
+        float: right;
+        margin-right: 5px;
+        font-size: 12px;
+        color: #9e9e9e;
+}
+
+.tf-collapsable-pane-0 .hackpadding.tf-collapsable-pane {
+  flex-grow: 1;
+}</style><!-- Shady DOM styles for tf-no-data-warning --><style scope="tf-no-data-warning">.warning.tf-no-data-warning {
+  max-width: 540px;
+        margin: 80px auto 0 auto;
+}</style><!-- Shady DOM styles for tf-event-dashboard --><style scope="tf-event-dashboard">.card.tf-event-dashboard {
+  height: 200px;
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        margin: 5px;
+        padding: 0 30px 30px 0;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        position: relative;
+}
+
+.card.tf-event-dashboard .card-title.tf-event-dashboard {
+  flex-grow: 0;
+        flex-shrink: 0;
+        margin-bottom: 10px;
+        font-size: 14px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+}
+
+.card.tf-event-dashboard .card-content.tf-event-dashboard {
+  flex-grow: 1;
+        flex-shrink: 1;
+        display: flex;
+}
+
+.card.tf-event-dashboard .card-bottom-row.tf-event-dashboard {
+  flex-grow: 0;
+        flex-shrink: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+}
+
+.card.selected.tf-event-dashboard {
+  height: 400px;
+        width: 100%;
+}
+
+[shift].tf-event-dashboard {
+  bottom: 20px !important;
+}
+
+.expand-button.tf-event-dashboard {
+  position: absolute;
+        left: 0px;
+        bottom: 20px;
+        color: #2196F3;
+        display: block;
+}
+
+#content-container.tf-event-dashboard {
+  display: block;
+}
+
+.sidebar.tf-event-dashboard {
+  display: flex;
+        flex-direction: column;
+        height: 100%;
+        margin-right: 20px;
+}
+
+#categorizer.tf-event-dashboard {
+  flex-shrink: 0;
+}
+
+#xTypeSelector.tf-event-dashboard {
+  flex-shrink: 0;
+        margin: 20px 0;
+}
+
+#runSelector.tf-event-dashboard {
+  flex-shrink: 1;
+        flex-grow: 1;
+}
+
+.sidebar-section.tf-event-dashboard {
+  border-top: solid 1px rgba(0, 0, 0, 0.12);
+        padding: 20px 0px 20px 30px;
+}
+
+.sidebar-section.tf-event-dashboard:first-child {
+  border: none;
+}
+
+.sidebar-section.tf-event-dashboard:last-child {
+  flex-grow: 1;
+        display: flex;
+}
+
+paper-checkbox.tf-event-dashboard {
+  font-size: 14px;
+}</style><!-- Shady DOM styles for tf-histogram-dashboard --><style scope="tf-histogram-dashboard">.card.tf-histogram-dashboard {
+  height: 200px;
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        margin: 5px;
+        padding: 0 30px 30px 0;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        position: relative;
+}
+
+.card.tf-histogram-dashboard .card-title.tf-histogram-dashboard {
+  flex-grow: 0;
+        flex-shrink: 0;
+        margin-bottom: 10px;
+        font-size: 14px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+}
+
+.card.tf-histogram-dashboard .card-content.tf-histogram-dashboard {
+  flex-grow: 1;
+        flex-shrink: 1;
+        display: flex;
+}
+
+.card.tf-histogram-dashboard .card-bottom-row.tf-histogram-dashboard {
+  flex-grow: 0;
+        flex-shrink: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+}
+
+.card.selected.tf-histogram-dashboard {
+  height: 400px;
+        width: 100%;
+}
+
+[shift].tf-histogram-dashboard {
+  bottom: 20px !important;
+}
+
+.expand-button.tf-histogram-dashboard {
+  position: absolute;
+        left: 0px;
+        bottom: 20px;
+        color: #2196F3;
+        display: block;
+}
+
+#content-container.tf-histogram-dashboard {
+  display: block;
+}
+
+.sidebar.tf-histogram-dashboard {
+  display: flex;
+        flex-direction: column;
+        height: 100%;
+        margin-right: 20px;
+}
+
+#categorizer.tf-histogram-dashboard {
+  flex-shrink: 0;
+}
+
+#xTypeSelector.tf-histogram-dashboard {
+  flex-shrink: 0;
+        margin: 20px 0;
+}
+
+#runSelector.tf-histogram-dashboard {
+  flex-shrink: 1;
+        flex-grow: 1;
+}
+
+.sidebar-section.tf-histogram-dashboard {
+  border-top: solid 1px rgba(0, 0, 0, 0.12);
+        padding: 20px 0px 20px 30px;
+}
+
+.sidebar-section.tf-histogram-dashboard:first-child {
+  border: none;
+}
+
+.sidebar-section.tf-histogram-dashboard:last-child {
+  flex-grow: 1;
+        display: flex;
+}
+
+paper-checkbox.tf-histogram-dashboard {
+  font-size: 14px;
+}</style><!-- Shady DOM styles for tf-image-loader --><style scope="tf-image-loader">tf-image-loader {
+  display: block;
+}
+
+img.tf-image-loader {
+  width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+}</style><!-- Shady DOM styles for tf-image-grid --><!-- Shady DOM styles for tf-image-dashboard --><style scope="tf-image-dashboard">.center.tf-image-dashboard {
+  padding-left: 10px;
+        padding-right: 10px;
+        height: 100%;
+        width: 100%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+}
+
+tf-image-dashboard {
+  height: 100%;
+        display: block;
+}</style><!-- Shady DOM styles for tf-graph-loader --><!-- Shady DOM styles for tf-graph-minimap --><style scope="tf-graph-minimap">tf-graph-minimap {
+  background-color:white;
+  transition: opacity .3s linear;
+  pointer-events: auto;
+}
+
+tf-graph-minimap.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+canvas.tf-graph-minimap {
+  border: 1px solid #999;
+}
+
+rect.tf-graph-minimap {
+  fill: white;
+  stroke: #111111;
+  stroke-width: 1px;
+  fill-opacity: 0;
+  filter: url('#minimapDropShadow');
+  cursor: move;
+}
+
+svg.tf-graph-minimap {
+  position: absolute;
+}</style><!-- Shady DOM styles for tf-graph-scene --><style scope="tf-graph-scene">tf-graph-scene {
+  display: flex;
+  width: 100%;
+  font-size: 20px;
+}
+
+tf-graph-scene  #svg {
+  overflow: hidden;
+  flex: 1;
+}
+
+tf-graph-scene  #hidden {
+  position: fixed;
+  top: 0px;
+  visibility: hidden;
+}
+
+tf-graph-scene  .meta > .nodeshape > rect,  .meta > .annotation-node > rect {
+  cursor: pointer;
+  fill: hsl(0, 0%, 70%);
+}
+
+tf-graph-scene  .node.meta.highlighted > .nodeshape > rect,  .node.meta.highlighted > .annotation-node > rect {
+  stroke-width: 2;
+}
+
+tf-graph-scene  .annotation.meta.highlighted > .nodeshape > rect,  .annotation.meta.highlighted > .annotation-node > rect {
+  stroke-width: 1;
+}
+
+tf-graph-scene  .meta.selected > .nodeshape > rect,  .meta.selected > .annotation-node > rect {
+  stroke: red;
+  stroke-width: 2;
+}
+
+tf-graph-scene  .node.meta.selected.expanded > .nodeshape > rect,  .node.meta.selected.expanded > .annotation-node > rect {
+  stroke: red;
+  stroke-width: 3;
+}
+
+.tf-graph-scene:content .annotation.meta.selected.tf-graph-scene > .nodeshape.tf-graph-scene > rect.tf-graph-scene, .tf-graph-scene:content .annotation.meta.selected.tf-graph-scene > .annotation-node.tf-graph-scene > rect.tf-graph-scene {
+  stroke: red;
+  stroke-width: 2;
+}
+
+tf-graph-scene  .node.meta.selected.expanded.highlighted > .nodeshape > rect,  .node.meta.selected.expanded.highlighted > .annotation-node > rect {
+  stroke: red;
+  stroke-width: 4;
+}
+
+tf-graph-scene  .op > .nodeshape > ellipse,  .op > .annotation-node > ellipse {
+  cursor: pointer;
+  fill: #fff;
+  stroke: #ccc;
+}
+
+tf-graph-scene  .op.selected > .nodeshape > ellipse,  .op.selected > .annotation-node > ellipse {
+  stroke: red;
+  stroke-width: 2;
+}
+
+tf-graph-scene  .op.highlighted > .nodeshape > ellipse,  .op.highlighted > .annotation-node > ellipse {
+  stroke-width: 2;
+}
+
+tf-graph-scene  .series > .nodeshape > rect {
+  fill: hsl(0, 0%, 70%);
+  fill-opacity: 0;
+  stroke-dasharray: 5, 5;
+  stroke-opacity: 0;
+  cursor: pointer;
+}
+
+tf-graph-scene  .series.expanded > .nodeshape > rect {
+  fill-opacity: 0.15;
+  stroke: hsl(0, 0%, 70%);
+  stroke-opacity: 1;
+}
+
+tf-graph-scene  .series.expanded > .nodeshape > use {
+  visibility: hidden;
+}
+
+tf-graph-scene  .series > .nodeshape > use ,  .series > .annotation-node > use {
+  stroke: #ccc;
+}
+
+tf-graph-scene  .series.highlighted > .nodeshape > use ,  .series.highlighted > .annotation-node > use {
+  stroke-width: 2;
+}
+
+tf-graph-scene  .series.selected > .nodeshape > use ,  .series.selected > .annotation-node > use {
+  stroke: red;
+  stroke-width: 2;
+}
+
+tf-graph-scene  .series.selected > .nodeshape > rect {
+  stroke: red;
+  stroke-width: 2;
+}
+
+tf-graph-scene  .annotation.series.selected > .annotation-node > use {
+  stroke: red;
+  stroke-width: 2;
+}
+
+tf-graph-scene  .bridge > .nodeshape > rect {
+  stroke: #f0f;
+  opacity: 0.2;
+  display: none;
+}
+
+tf-graph-scene  .edge > path.edgeline.structural {
+  stroke: #f0f;
+  opacity: 0.2;
+  display: none;
+}
+
+tf-graph-scene  .series > .annotation-node > rect {
+  display: none;
+}
+
+tf-graph-scene  .node > text.nodelabel {
+  cursor: pointer;
+  fill: #444;
+}
+
+tf-graph-scene  .meta.expanded > text.nodelabel {
+  font-size: 9px;
+}
+
+tf-graph-scene  .series > text.nodelabel {
+  font-size: 8px;
+}
+
+tf-graph-scene  .op > text.nodelabel {
+  font-size: 6px;
+}
+
+tf-graph-scene  .bridge > text.nodelabel {
+  display: none;
+}
+
+tf-graph-scene  .node.meta.expanded > text.nodelabel {
+  cursor: normal;
+}
+
+tf-graph-scene  .annotation.meta.highlighted > text.annotation-label {
+  fill: #50A3F7;
+}
+
+tf-graph-scene  .annotation.meta.selected > text.annotation-label {
+  fill: #4285F4;
+}
+
+tf-graph-scene  .annotation > .annotation-node > * {
+  stroke-width: 0.5;
+  stroke-dasharray: 1, 1;
+}
+
+tf-graph-scene  .annotation.summary > .annotation-node > *,  .annotation.constant > .annotation-node > * {
+  stroke-width: 1;
+  stroke-dasharray: none;
+}
+
+tf-graph-scene  .annotation > .annotation-edge {
+  fill: none;
+  stroke: #aaa;
+  stroke-width: 0.5;
+  marker-end: url('#annotation-arrowhead');
+}
+
+tf-graph-scene  .annotation > .annotation-edge.refline {
+  marker-start: url('#ref-annotation-arrowhead');
+}
+
+tf-graph-scene  .annotation > .annotation-control-edge {
+  stroke-dasharray: 1, 1;
+}
+
+tf-graph-scene  #annotation-arrowhead {
+  fill: #aaa;
+}
+
+tf-graph-scene  #ref-annotation-arrowhead {
+  fill: #aaa;
+}
+
+tf-graph-scene  .annotation > .annotation-label {
+  font-size: 5px;
+  cursor: pointer;
+}
+
+tf-graph-scene  .annotation > .annotation-label.annotation-ellipsis {
+  cursor: default;
+}
+
+tf-graph-scene  .expanded > .in-annotations,  .expanded > .out-annotations {
+  display: none;
+}
+
+tf-graph-scene  .constant > .annotation-node > ellipse {
+  cursor: pointer;
+  fill: white;
+  stroke: #848484;
+}
+
+tf-graph-scene  .constant.selected > .annotation-node > ellipse {
+  fill: white;
+  stroke: red;
+}
+
+tf-graph-scene  .constant.highlighted > .annotation-node > ellipse {
+  stroke-width: 1.5;
+}
+
+tf-graph-scene  .summary > .annotation-node > ellipse {
+  cursor: pointer;
+  fill: #DB4437;
+  stroke: #DB4437;
+}
+
+tf-graph-scene  .summary.selected > .annotation-node > ellipse {
+  fill: #A52714;
+  stroke: #A52714;
+}
+
+tf-graph-scene  .summary.highlighted > .annotation-node > ellipse {
+  stroke-width: 1.5;
+}
+
+tf-graph-scene  .edge > path.edgeline {
+  fill: none;
+  stroke: #bbb;
+  stroke-linecap: round;
+  stroke-width: 0.75;
+}
+
+tf-graph-scene  .edge > text {
+  font-size: 3.5px;
+  fill: #666;
+}
+
+tf-graph-scene  .ref-arrowhead {
+  fill: #bbb;
+}
+
+tf-graph-scene  .edge .control-dep {
+  stroke-dasharray: 2, 2;
+}
+
+tf-graph-scene  .node:not(.highlighted):not(.expanded) > .nodeshape > .buttoncontainer {
+  opacity: 0.01;
+}
+
+tf-graph-scene  .node.highlighted > .nodeshape > .buttoncontainer {
+  cursor: pointer;
+}
+
+tf-graph-scene  .buttoncircle {
+  fill: #E7811D;
+}
+
+tf-graph-scene  .buttoncircle:hover {
+  fill: #B96717;
+}
+
+tf-graph-scene  .expandbutton,  .collapsebutton {
+  stroke: white;
+}
+
+tf-graph-scene  .node > .nodeshape > .buttoncontainer > .expandbutton,  .node > .nodeshape > .buttoncontainer > .collapsebutton {
+  pointer-events: none;
+}
+
+tf-graph-scene  .node.expanded > .nodeshape > .buttoncontainer > .expandbutton {
+  display: none;
+}
+
+tf-graph-scene  .node:not(.expanded) > .nodeshape > .buttoncontainer > .collapsebutton {
+  display: none;
+}
+
+.titleContainer.tf-graph-scene {
+  position: relative;
+}
+
+.title.tf-graph-scene {
+  position: absolute;
+}
+
+.auxTitle.tf-graph-scene {
+  position: absolute;
+}
+
+#minimap.tf-graph-scene {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}</style><!-- Shady DOM styles for tf-graph --><!-- Shady DOM styles for tf-graph-icon --><!-- Shady DOM styles for tf-node-list-item --><!-- Shady DOM styles for tf-node-info --><!-- Shady DOM styles for tf-graph-info --><style scope="tf-graph-info">tf-graph-info {
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+h2.tf-graph-info {
+  padding: 0;
+  text-align: center;
+  margin: 0;
+}</style><!-- Shady DOM styles for tf-graph-board --><!-- Shady DOM styles for tf-graph-controls --><!-- Shady DOM styles for tf-graph-dashboard --><style scope="tf-graph-dashboard">tf-graph-dashboard   {
+  font-family: 'Roboto', sans-serif;
+}
+
+.center.tf-graph-dashboard {
+  position: relative;
+  height: 100%;
+}</style><!-- Shady DOM styles for tf-tensorboard --><style scope="tf-tensorboard-0">.tf-tensorboard-0 {
+  height: 100%;
+        display: block;
+        background-color: #f5f5f5;
+}
+
+.tf-tensorboard-0 #toolbar.tf-tensorboard {
+  background-color: #f57c00;
+        -webkit-font-smoothing: antialiased;
+}
+
+.tf-tensorboard-0 .toolbar-title.tf-tensorboard {
+  font-size: 20px;
+        margin-left: 10px;
+        text-rendering: optimizeLegibility;
+        letter-spacing: -0.025em;
+        font-weight: 500;
+        width: 340px;
+}
+
+.tf-tensorboard-0 .tabs.tf-tensorboard {
+  width: 400px;
+        text-transform: uppercase;
+        height: 100%;
+}
+
+.tf-tensorboard-0 paper-tabs.tf-tensorboard {
+  ;
+}
+
+.tf-tensorboard-0 .global-actions.tf-tensorboard {
+  flex-grow: 2;
+        text-align: right;
+        color: white;
+}
+
+.tf-tensorboard-0 .global-actions.tf-tensorboard a.tf-tensorboard {
+  color: white;
+}
+
+.tf-tensorboard-0 #toolbar-content.tf-tensorboard {
+  width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+}
+
+.tf-tensorboard-0 #content.tf-tensorboard {
+  height: 100%;
+}</style>
+    <title>TensorBoard</title>
+    <link rel="stylesheet" type="text/css" href="./TensorBoard_files/global.css">
+
+    <script src="./TensorBoard_files/lodash.min.js"></script>
+    <script src="./TensorBoard_files/d3.min.js"></script>
+    <script src="./TensorBoard_files/plottable.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./TensorBoard_files/plottable.css">
+
+    <script src="./TensorBoard_files/graphlib.core.min.js"></script>
+    <script src="./TensorBoard_files/dagre.core.min.js"></script>
+
+    <link rel="import" href="http://localhost:6006/external/polymer/polymer.html">
+    <script src="./TensorBoard_files/webcomponents-lite.min.js"></script>
+
+    <link rel="import" href="http://localhost:6006/external/iron-ajax/iron-ajax.html">
+    <link rel="import" href="http://localhost:6006/external/iron-collapse/iron-collapse.html">
+    <link rel="import" href="http://localhost:6006/external/iron-list/iron-list.html">
+    <link rel="import" href="http://localhost:6006/external/paper-button/paper-button.html">
+    <link rel="import" href="http://localhost:6006/external/paper-checkbox/paper-checkbox.html">
+    <link rel="import" href="http://localhost:6006/external/paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="http://localhost:6006/external/paper-header-panel/paper-header-panel.html">
+    <link rel="import" href="http://localhost:6006/external/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="http://localhost:6006/external/paper-input/paper-input.html">
+    <link rel="import" href="http://localhost:6006/external/paper-item/paper-item.html">
+    <link rel="import" href="http://localhost:6006/external/paper-menu/paper-menu.html">
+    <link rel="import" href="http://localhost:6006/external/paper-progress/paper-progress.html">
+    <link rel="import" href="http://localhost:6006/external/paper-radio-button/paper-radio-button.html">
+    <link rel="import" href="http://localhost:6006/external/paper-radio-group/paper-radio-group.html">
+    <link rel="import" href="http://localhost:6006/external/paper-slider/paper-slider.html">
+    <link rel="import" href="http://localhost:6006/external/paper-styles/paper-styles.html">
+    <link rel="import" href="http://localhost:6006/external/paper-toggle-button/paper-toggle-button.html">
+    <link rel="import" href="http://localhost:6006/external/paper-toolbar/paper-toolbar.html">
+    <link rel="import" href="http://localhost:6006/external/paper-tabs/paper-tabs.html">
+
+    <link rel="import" href="http://localhost:6006/dist/tf-tensorboard.html">
+
+  <style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+.en-markup-crop-options {
+    top: 18px !important;
+    left: 50% !important;
+    margin-left: -100px !important;
+    width: 200px !important;
+    border: 2px rgba(255,255,255,.38) solid !important;
+    border-radius: 4px !important;
+}
+
+.en-markup-crop-options div div:first-of-type {
+    margin-left: 0px !important;
+}
+</style></head>
+  <body>
+    <tf-tensorboard class="x-scope tf-tensorboard-0">
+    <paper-header-panel class="style-scope tf-tensorboard x-scope paper-header-panel-0" mode="standard" at-top="">
+    
+
+    <paper-toolbar id="toolbar" class="style-scope tf-tensorboard animate x-scope paper-toolbar-0" role="toolbar">
+    
+
+    <div id="topBar" class="toolbar-tools  style-scope paper-toolbar">
+      <div id="toolbar-content" class="style-scope tf-tensorboard">
+          <div class="toolbar-title style-scope tf-tensorboard">TensorBoard</div>
+          <paper-tabs noink="" class="tabs style-scope tf-tensorboard x-scope paper-tabs-0" id="tabs" role="tablist" tabindex="0">
+    
+
+    <paper-icon-button icon="paper-tabs:chevron-left" tabindex="-1" class="hidden style-scope paper-tabs x-scope paper-icon-button-0" role="button" aria-disabled="false"><iron-icon id="icon" class="style-scope paper-icon-button x-scope iron-icon-0"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" class="style-scope iron-icon"></path></g></svg>
+  </iron-icon></paper-icon-button>
+
+    <div id="tabsContainer" class="style-scope paper-tabs" style="touch-action: pan-y;">
+      <div id="tabsContent" class="horizontal style-scope paper-tabs">
+        <paper-tab data-mode="events" class="style-scope tf-tensorboard x-scope paper-tab-0 iron-selected" role="tab" noink="" aria-disabled="false" tabindex="-1" aria-selected="true">
+    
+
+    <div class="tab-content style-scope paper-tab">
+      Events
+    </div>
+  <paper-ripple class="style-scope paper-tab">
+    
+
+    <div id="background" class="style-scope paper-ripple"></div>
+    <div id="waves" class="style-scope paper-ripple"></div>
+  </paper-ripple></paper-tab><paper-tab data-mode="images" class="style-scope tf-tensorboard x-scope paper-tab-0" role="tab" noink="" aria-disabled="false" tabindex="-1">
+    
+
+    <div class="tab-content style-scope paper-tab">
+      Images
+    </div>
+  <paper-ripple class="style-scope paper-tab">
+    
+
+    <div id="background" class="style-scope paper-ripple"></div>
+    <div id="waves" class="style-scope paper-ripple"></div>
+  </paper-ripple></paper-tab><paper-tab data-mode="graphs" class="style-scope tf-tensorboard x-scope paper-tab-0" role="tab" noink="" aria-disabled="false" tabindex="-1">
+    
+
+    <div class="tab-content style-scope paper-tab">
+      Graph
+    </div>
+  <paper-ripple class="style-scope paper-tab">
+    
+
+    <div id="background" class="style-scope paper-ripple"></div>
+    <div id="waves" class="style-scope paper-ripple"></div>
+  </paper-ripple></paper-tab><paper-tab data-mode="histograms" class="style-scope tf-tensorboard x-scope paper-tab-0" role="tab" noink="" aria-disabled="false" tabindex="-1">
+    
+
+    <div class="tab-content style-scope paper-tab">
+      Histograms
+    </div>
+  <paper-ripple class="style-scope paper-tab">
+    
+
+    <div id="background" class="style-scope paper-ripple"></div>
+    <div id="waves" class="style-scope paper-ripple"></div>
+  </paper-ripple></paper-tab>
+        <div id="selectionBar" class="style-scope paper-tabs" style="transform: translate3d(0%, 0px, 0px) scaleX(0.25);"></div>
+      </div>
+    </div>
+
+    <paper-icon-button icon="paper-tabs:chevron-right" tabindex="-1" class="hidden style-scope paper-tabs x-scope paper-icon-button-0" role="button" aria-disabled="false"><iron-icon id="icon" class="style-scope paper-icon-button x-scope iron-icon-0"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" class="style-scope iron-icon"></path></g></svg>
+  </iron-icon></paper-icon-button>
+
+  </paper-tabs>
+          <div class="global-actions style-scope tf-tensorboard">
+            <a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tensorboard/README.md" tabindex="-1" class="style-scope tf-tensorboard">
+              <paper-icon-button icon="help-outline" class="style-scope tf-tensorboard x-scope paper-icon-button-0" role="button" tabindex="0" aria-disabled="false"><iron-icon id="icon" class="style-scope paper-icon-button x-scope iron-icon-0"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z" class="style-scope iron-icon"></path></g></svg>
+  </iron-icon></paper-icon-button>
+            </a>
+          </div>
+        </div>
+    </div>
+
+    <div id="middleBar" class="toolbar-tools  style-scope paper-toolbar">
+      
+    </div>
+
+    <div id="bottomBar" class="toolbar-tools  style-scope paper-toolbar">
+      
+    </div>
+  </paper-toolbar>
+
+    <div id="mainPanel" class="style-scope paper-header-panel">
+      <div id="mainContainer" class="flex style-scope paper-header-panel">
+        <div id="content" class="fit style-scope tf-tensorboard">
+        
+          <tf-event-dashboard id="eventDash" class="style-scope tf-tensorboard">
+    <div id="plumbing" class="style-scope tf-event-dashboard">
+      <tf-color-scale id="colorScale" class="style-scope tf-event-dashboard"></tf-color-scale>
+
+      <tf-tooltip-coordinator id="tooltipCoordinator" class="style-scope tf-event-dashboard"></tf-tooltip-coordinator>
+
+    </div>
+
+    <tf-dashboard-layout class="style-scope tf-event-dashboard x-scope tf-dashboard-layout-0">
+    <div id="sidebar" class="style-scope tf-dashboard-layout">
+      <div class="sidebar style-scope tf-event-dashboard">
+        <div class="sidebar-section style-scope tf-event-dashboard">
+          <tf-categorizer id="categorizer" class="style-scope tf-event-dashboard x-scope tf-categorizer-0">
+    <div class="inputs style-scope tf-categorizer">
+      <tf-regex-group id="regex-group" class="style-scope tf-categorizer x-scope tf-regex-group-0">
+    <div class="regex-list style-scope tf-regex-group">
+      
+        <div class="regex-line style-scope tf-regex-group">
+          <paper-checkbox class="active-button style-scope tf-regex-group x-scope paper-checkbox-0" role="checkbox" tabindex="0" toggles="" aria-checked="true" aria-disabled="false" checked="" active=""><div id="checkboxContainer" class="style-scope paper-checkbox"><div id="checkbox" class="checked  style-scope paper-checkbox"><div id="checkmark" class="style-scope paper-checkbox"></div></div></div><div id="checkboxLabel" class="style-scope paper-checkbox"></div></paper-checkbox>
+          <paper-input id="text-input" class="regex-input style-scope tf-regex-group x-scope paper-input-0" label="Regex filter" no-label-float="" tabindex="0" aria-disabled="false">
+    
+
+    <paper-input-container class="style-scope paper-input x-scope paper-input-container-0">
+    
+
+    <template is="dom-if" class="style-scope paper-input-container"></template>
+
+    <div class="input-content style-scope paper-input-container">
+      
+
+      <div class="label-and-input-container style-scope paper-input-container" id="labelAndInputContainer">
+        <label class="style-scope paper-input" id="paper-input-label-275">Regex filter</label><input is="iron-input" id="input" class="style-scope paper-input" autocomplete="off" placeholder="" autocapitalize="none" autocorrect="off" aria-describedby="" aria-labelledby="paper-input-label-275" tabindex="0"><template is="dom-if" class="style-scope paper-input"></template><template is="dom-if" class="style-scope paper-input"></template>
+      </div>
+
+      
+    </div>
+
+    <div class="underline style-scope paper-input-container">
+      <div class="unfocused-line style-scope paper-input-container"></div>
+      <div class="focused-line style-scope paper-input-container"></div>
+    </div>
+
+    <div class="add-on-content style-scope paper-input-container">
+      
+    </div>
+  </paper-input-container>
+  </paper-input>
+          <paper-icon-button icon="close" class="delete-button style-scope tf-regex-group x-scope paper-icon-button-0" aria-label="Delete Regex" tabindex="0" role="button" aria-disabled="false"><iron-icon id="icon" class="style-scope paper-icon-button x-scope iron-icon-0"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" class="style-scope iron-icon"></path></g></svg>
+  </iron-icon></paper-icon-button>
+        </div>
+        
+      <template is="dom-repeat" class="style-scope tf-regex-group"></template>
+    </div>
+  </tf-regex-group>
+    </div>
+    <div id="underscore-categorization" class="style-scope tf-categorizer">
+      <paper-checkbox class="style-scope tf-categorizer x-scope paper-checkbox-0" role="checkbox" tabindex="0" toggles="" aria-checked="false" aria-disabled="false"><div id="checkboxContainer" class="style-scope paper-checkbox"><div id="checkbox" class="style-scope paper-checkbox"><div id="checkmark" class="hidden style-scope paper-checkbox"></div></div></div><div id="checkboxLabel" class="style-scope paper-checkbox">Split on underscores</div></paper-checkbox>
+    </div>
+    
+  </tf-categorizer>
+          <paper-checkbox id="download-option" class="style-scope tf-event-dashboard x-scope paper-checkbox-0" role="checkbox" tabindex="0" toggles="" aria-checked="false" aria-disabled="false"><div id="checkboxContainer" class="style-scope paper-checkbox"><div id="checkbox" class="style-scope paper-checkbox"><div id="checkmark" class="hidden style-scope paper-checkbox"></div></div></div><div id="checkboxLabel" class="style-scope paper-checkbox">Data download links</div></paper-checkbox>
+        </div>
+        <div class="sidebar-section style-scope tf-event-dashboard">
+          <tf-x-type-selector id="xTypeSelector" class="style-scope tf-event-dashboard x-scope tf-x-type-selector-0">
+    <div id="buttons" class="style-scope tf-x-type-selector">
+      <h3 class="style-scope tf-x-type-selector">Horizontal Axis</h3>
+      <paper-button class="x-button style-scope tf-x-type-selector x-scope paper-button-0 selected" id="step" role="button" tabindex="0" animated="" aria-disabled="false" elevation="0">
+      step
+      <paper-ripple class="style-scope paper-button">
+    
+
+    <div id="background" class="style-scope paper-ripple" style="opacity: 0.005948;"></div>
+    <div id="waves" class="style-scope paper-ripple"></div>
+  </paper-ripple></paper-button>
+      <paper-button class="x-button style-scope tf-x-type-selector x-scope paper-button-0" id="relative" role="button" tabindex="0" animated="" aria-disabled="false" elevation="0">
+      relative
+      <paper-ripple class="style-scope paper-button">
+    
+
+    <div id="background" class="style-scope paper-ripple" style="opacity: 0.00844;"></div>
+    <div id="waves" class="style-scope paper-ripple"></div>
+  </paper-ripple></paper-button>
+      <paper-button class="x-button style-scope tf-x-type-selector x-scope paper-button-0" id="wall_time" role="button" tabindex="0" animated="" aria-disabled="false" elevation="0">
+      wall
+      </paper-button>
+    </div>
+    
+  </tf-x-type-selector>
+        </div>
+        <div class="sidebar-section style-scope tf-event-dashboard">
+          <tf-run-selector id="runSelector" class="style-scope tf-event-dashboard x-scope tf-run-selector-0">
+    <div id="top-text" class="style-scope tf-run-selector">
+      <div class="x-tooltip tooltip-container style-scope tf-run-selector" style="display: none;">
+          <div class="x-tooltip-label style-scope tf-run-selector">step</div>
+          <div class="x-tooltip-value style-scope tf-run-selector"></div>
+        </div><template is="dom-if" class="style-scope tf-run-selector"></template>
+      
+        <h3 id="tooltip-help" class="tooltip-container style-scope tf-run-selector">
+          Runs
+        </h3>
+      <template is="dom-if" class="style-scope tf-run-selector"></template>
+    </div>
+    <tf-multi-checkbox hide-missing-tooltips="" class="style-scope tf-run-selector x-scope tf-multi-checkbox-0">
+    <div id="outer-container" class="scrollbar style-scope tf-multi-checkbox">
+      
+        <div class="run-row style-scope tf-multi-checkbox" color-class="light-blue">
+          <div class="checkbox-container vertical-align-container style-scope tf-multi-checkbox">
+            <paper-checkbox class="checkbox vertical-align-center style-scope tf-multi-checkbox x-scope paper-checkbox-1" role="checkbox" tabindex="0" toggles="" aria-checked="false" aria-disabled="false"><div id="checkboxContainer" class="style-scope paper-checkbox"><div id="checkbox" class="style-scope paper-checkbox"><div id="checkmark" class="hidden style-scope paper-checkbox"></div></div><paper-ripple id="ink" center="" class="circle style-scope paper-checkbox">
+    
+
+    <div id="background" class="style-scope paper-ripple" style="opacity: 0;"></div>
+    <div id="waves" class="style-scope paper-ripple"></div>
+  </paper-ripple></div><div id="checkboxLabel" class="style-scope paper-checkbox"></div></paper-checkbox>
+          </div>
+          <div class="item-label-container style-scope tf-multi-checkbox">
+            <span class="style-scope tf-multi-checkbox">logs/StochasticMDPEnv/action_num-4/action_repeat-4/actions-0,1,2,3/backend-tf/batch_size-1/cnn_format-NHWC/discount-0.95/double_q-False/dueling-False/env_name-StochasticMDPEnv/env_type-detail/ep_end-0.1/ep_end_t-1000/ep_start-1.0/history_length-1/is_train-True/learn_start-50.0/learning_rate-0.0025/learning_rate_decay-0.96/learning_rate_decay_step-50/learning_rate_minimum-0.0025/max_delta-100/max_reward-1.0/max_step-50000/memory_size-1000/min_delta--100/min_reward--1.0/model_name-QLModel/n_episode-10/n_step-100/random_seed-123/random_start-30/scale-10/screen_height-84/screen_width-84/state_num-13/target_q_update_learn_step-10/test_ep-None/train_frequency-4</span>
+          </div>
+          <div class="tooltip-value-container vertical-align-container style-scope tf-multi-checkbox">
+            <span class="vertical-align-top style-scope tf-multi-checkbox"></span>
+          </div>
+        </div>
+      
+        <div class="run-row style-scope tf-multi-checkbox" color-class="red">
+          <div class="checkbox-container vertical-align-container style-scope tf-multi-checkbox">
+            <paper-checkbox class="checkbox vertical-align-center style-scope tf-multi-checkbox x-scope paper-checkbox-2" role="checkbox" tabindex="0" toggles="" aria-checked="true" aria-disabled="false" checked="" active=""><div id="checkboxContainer" class="style-scope paper-checkbox"><div id="checkbox" class="checked  style-scope paper-checkbox"><div id="checkmark" class="style-scope paper-checkbox"></div></div></div><div id="checkboxLabel" class="style-scope paper-checkbox"></div></paper-checkbox>
+          </div>
+          <div class="item-label-container style-scope tf-multi-checkbox">
+            <span class="style-scope tf-multi-checkbox">logs/StochasticMDPEnv/action_num-4/action_repeat-4/actions-0,1,2,3/backend-tf/batch_size-30/cnn_format-NHWC/discount-0.95/double_q-False/dueling-False/env_name-StochasticMDPEnv/env_type-detail/ep_end-0.1/ep_end_t-2000/ep_start-1.0/history_length-1/is_train-True/learn_start-100.0/learning_rate-0.0025/learning_rate_decay-0.96/learning_rate_decay_step-100/learning_rate_minimum-0.0025/max_delta-100/max_reward-1.0/max_step-100000/memory_size-2000/min_delta--100/min_reward--1.0/model_name-QLModel/n_episode-10/n_step-100/random_seed-123/random_start-30/scale-20/screen_height-84/screen_width-84/state_num-13/target_q_update_learn_step-20/test_ep-None/train_frequency-4</span>
+          </div>
+          <div class="tooltip-value-container vertical-align-container style-scope tf-multi-checkbox">
+            <span class="vertical-align-top style-scope tf-multi-checkbox"></span>
+          </div>
+        </div>
+      <template is="dom-repeat" class="style-scope tf-multi-checkbox"></template>
+    </div>
+  
+  </tf-multi-checkbox>
+    <paper-button class="x-button style-scope tf-run-selector x-scope paper-button-0" id="toggle-all" role="button" tabindex="0" animated="" aria-disabled="false" elevation="0">
+    Toggle All Runs
+    </paper-button>
+    
+  </tf-run-selector>
+        </div>
+      </div>
+    </div>
+
+    <div id="center" class="scrollbar style-scope tf-dashboard-layout">
+      <div class="center style-scope tf-event-dashboard">
+        <tf-no-data-warning data-type="scalar" class="style-scope tf-event-dashboard">
+    <template is="dom-if" class="style-scope tf-no-data-warning"></template>
+    
+  </tf-no-data-warning>
+        
+          <tf-collapsable-pane class="style-scope tf-event-dashboard x-scope tf-collapsable-pane-0">
+    <button class="heading style-scope tf-collapsable-pane" open-button="">
+    <span class="name style-scope tf-collapsable-pane">StochasticMDPEnv-detail</span>
+    <span class="hackpadding style-scope tf-collapsable-pane"></span>
+    <span class="count style-scope tf-collapsable-pane">
+      <span class="style-scope tf-collapsable-pane">6</span>
+    </span>
+  </button>
+    <iron-collapse class="style-scope tf-collapsable-pane iron-collapse-opened" role="group" aria-hidden="false" aria-expanded="true" style="transition-property: height; height: auto; transition-duration: 0s;">
+
+    
+      <div class="content style-scope tf-collapsable-pane">
+        
+          
+            <div class="layout horizontal wrap style-scope tf-event-dashboard">
+              
+                <div class="card style-scope tf-event-dashboard">
+                  <span class="card-title style-scope tf-event-dashboard">StochasticMDPEnv-detail/average.loss</span>
+                  <div class="card-content style-scope tf-event-dashboard">
+                    <tf-chart type="scalar" id="chart" tabindex="2" class="style-scope tf-event-dashboard">
+    <svg id="chartsvg" class="style-scope tf-chart plottable" width="100%" height="100%" style="overflow: visible;"><rect class="measure-rect" style="opacity: 0; visibility: hidden;" width="1" height="1" x="894.0625" y="485"></rect><g class="component table" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="300" height="174"></rect></g><g class="content"><g class="component axis y-axis" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="49.9375" height="152"></rect></g><g class="content"><g class="tick-mark-container"><line class="tick-mark end-tick-mark" x1="49.9375" y1="152" x2="44.9375" y2="152" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="138.1818181818182" x2="44.9375" y2="138.1818181818182" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="124.36363636363636" x2="44.9375" y2="124.36363636363636" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="110.54545454545455" x2="44.9375" y2="110.54545454545455" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="96.72727272727272" x2="44.9375" y2="96.72727272727272" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="82.9090909090909" x2="44.9375" y2="82.9090909090909" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="69.0909090909091" x2="44.9375" y2="69.0909090909091" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="55.27272727272727" x2="44.9375" y2="55.27272727272727" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="41.45454545454545" x2="44.9375" y2="41.45454545454545" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="27.63636363636363" x2="44.9375" y2="27.63636363636363" style="visibility: inherit;"></line><line class="tick-mark end-tick-mark" x1="49.9375" y1="13.818181818181824" x2="44.9375" y2="13.818181818181824" style="visibility: inherit;"></line><line class="tick-mark end-tick-mark" x1="49.9375" y1="0" x2="44.9375" y2="0" style="visibility: inherit;"></line></g><g class="tick-label-container" transform="translate(39.9375, 0)"><text class="tick-label" x="0" y="152" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">20.0</text><text class="tick-label" x="0" y="138.1818181818182" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">40.0</text><text class="tick-label" x="0" y="124.36363636363636" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">60.0</text><text class="tick-label" x="0" y="110.54545454545455" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">80.0</text><text class="tick-label" x="0" y="96.72727272727272" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">100</text><text class="tick-label" x="0" y="82.9090909090909" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">120</text><text class="tick-label" x="0" y="69.0909090909091" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">140</text><text class="tick-label" x="0" y="55.27272727272727" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">160</text><text class="tick-label" x="0" y="41.45454545454545" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">180</text><text class="tick-label" x="0" y="27.63636363636363" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">200</text><text class="tick-label" x="0" y="13.818181818181824" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">220</text><text class="tick-label" x="0" y="0" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">240</text></g><line class="baseline" x1="49.9375" y1="0" x2="49.9375" y2="152"></line><g class="annotation-container"><g class="annotation-line-container"></g><g class="annotation-circle-container"></g><g class="annotation-rect-container"></g><g class="annotation-label-container"></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="49.9375" height="152"></rect></g></g><g class="component component-group" transform="translate(49.9375,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><g class="component component-group" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><g class="component plot xy-plot line-plot" clip-path="url(&quot;http://localhost:6006/#plottableClipPath49&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><g class="render-area"><g><path class="line" stroke="#f44366" stroke-width="2px" d="M28.05979097222222,134.72096835049717L55.844513194444446,141.75464976917615L83.62923541666667,131.92648481889205L111.41395763888889,100.17850258567117L139.19867986111112,66.33396717418324L166.98340208333332,50.812169855291195L194.76812430555555,9.200858376242898L222.5528465277778,16.184368341619315" style="fill: none;"></path></g></g></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath49"><rect class="clip-rect" width="250.0625" height="152"></rect></clippath><rect class="bounding-box" width="250.0625" height="152"></rect></g></g><g class="component guide-line-layer vertical crosshairs" clip-path="url(&quot;http://localhost:6006/#plottableClipPath50&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><line class="guide-line" y1="0" y2="152"></line></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath50"><rect class="clip-rect" width="250.0625" height="152"></rect></clippath><rect class="bounding-box" width="250.0625" height="152"></rect></g></g><g class="component guide-line-layer horizontal crosshairs" clip-path="url(&quot;http://localhost:6006/#plottableClipPath51&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><line class="guide-line" x1="0" x2="250.0625"></line></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath51"><rect class="clip-rect" width="250.0625" height="152"></rect></clippath><rect class="bounding-box" width="250.0625" height="152"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="250.0625" height="152"></rect></g></g><g class="component gridlines" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><g class="x-gridlines"><line x1="0" y1="0" x2="0" y2="152" class=""></line><line x1="27.78472222222222" y1="0" x2="27.78472222222222" y2="152"></line><line x1="55.56944444444444" y1="0" x2="55.56944444444444" y2="152"></line><line x1="83.35416666666666" y1="0" x2="83.35416666666666" y2="152"></line><line x1="111.13888888888889" y1="0" x2="111.13888888888889" y2="152"></line><line x1="138.92361111111111" y1="0" x2="138.92361111111111" y2="152"></line><line x1="166.70833333333331" y1="0" x2="166.70833333333331" y2="152"></line><line x1="194.49305555555557" y1="0" x2="194.49305555555557" y2="152"></line><line x1="222.27777777777777" y1="0" x2="222.27777777777777" y2="152"></line><line x1="250.0625" y1="0" x2="250.0625" y2="152"></line></g><g class="y-gridlines"><line x1="0" y1="152" x2="250.0625" y2="152" class=""></line><line x1="0" y1="138.1818181818182" x2="250.0625" y2="138.1818181818182" class=""></line><line x1="0" y1="124.36363636363636" x2="250.0625" y2="124.36363636363636"></line><line x1="0" y1="110.54545454545455" x2="250.0625" y2="110.54545454545455"></line><line x1="0" y1="96.72727272727272" x2="250.0625" y2="96.72727272727272"></line><line x1="0" y1="82.9090909090909" x2="250.0625" y2="82.9090909090909"></line><line x1="0" y1="69.0909090909091" x2="250.0625" y2="69.0909090909091"></line><line x1="0" y1="55.27272727272727" x2="250.0625" y2="55.27272727272727"></line><line x1="0" y1="41.45454545454545" x2="250.0625" y2="41.45454545454545"></line><line x1="0" y1="27.63636363636363" x2="250.0625" y2="27.63636363636363"></line><line x1="0" y1="13.818181818181824" x2="250.0625" y2="13.818181818181824"></line><line x1="0" y1="0" x2="250.0625" y2="0"></line></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="250.0625" height="152"></rect></g></g><g class="component selection-box-layer" clip-path="url(&quot;http://localhost:6006/#plottableClipPath52&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath52"><rect class="clip-rect" width="250.0625" height="152"></rect></clippath><rect class="bounding-box" width="250.0625" height="152"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="250.0625" height="152"></rect></g></g><g class="component axis x-axis" transform="translate(49.9375,152)"><g class="background-container"><rect class="background-fill" width="250.0625" height="22"></rect></g><g class="content"><g class="tick-mark-container"><line class="tick-mark end-tick-mark" x1="0" y1="0" x2="0" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="27.78472222222222" y1="0" x2="27.78472222222222" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="55.56944444444444" y1="0" x2="55.56944444444444" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="83.35416666666666" y1="0" x2="83.35416666666666" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="111.13888888888889" y1="0" x2="111.13888888888889" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="138.92361111111111" y1="0" x2="138.92361111111111" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="166.70833333333331" y1="0" x2="166.70833333333331" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="194.49305555555557" y1="0" x2="194.49305555555557" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="222.27777777777777" y1="0" x2="222.27777777777777" y2="5" style="visibility: inherit;"></line><line class="tick-mark end-tick-mark" x1="250.0625" y1="0" x2="250.0625" y2="5" style="visibility: inherit;"></line></g><g class="tick-label-container" transform="translate(0, 8)"><text class="tick-label" x="0" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">10.00k</text><text class="tick-label" x="27.78472222222222" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">20.00k</text><text class="tick-label" x="55.56944444444444" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">30.00k</text><text class="tick-label" x="83.35416666666666" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">40.00k</text><text class="tick-label" x="111.13888888888889" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">50.00k</text><text class="tick-label" x="138.92361111111111" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">60.00k</text><text class="tick-label" x="166.70833333333331" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">70.00k</text><text class="tick-label" x="194.49305555555557" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">80.00k</text><text class="tick-label" x="222.27777777777777" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">90.00k</text><text class="tick-label" x="250.0625" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">100.0k</text></g><line class="baseline" x1="0" y1="0" x2="250.0625" y2="0"></line><g class="annotation-container"><g class="annotation-line-container"></g><g class="annotation-circle-container"></g><g class="annotation-rect-container"></g><g class="annotation-label-container"></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="250.0625" height="22"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="300" height="174"></rect></g></g></svg>
+    
+  </tf-chart>
+                    <paper-icon-button class="expand-button style-scope tf-event-dashboard x-scope paper-icon-button-0" icon="fullscreen" role="button" tabindex="0" aria-disabled="false"><iron-icon id="icon" class="style-scope paper-icon-button x-scope iron-icon-0"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" class="style-scope iron-icon"></path></g></svg>
+  </iron-icon></paper-icon-button>
+                  </div>
+                  <template is="dom-if" class="style-scope tf-event-dashboard"></template>
+                </div>
+              
+                <div class="card style-scope tf-event-dashboard">
+                  <span class="card-title style-scope tf-event-dashboard">StochasticMDPEnv-detail/average.reward</span>
+                  <div class="card-content style-scope tf-event-dashboard">
+                    <tf-chart type="scalar" id="chart" tabindex="2" class="style-scope tf-event-dashboard">
+    <svg id="chartsvg" class="style-scope tf-chart plottable" width="100%" height="100%" style="overflow: visible;"><rect class="measure-rect" style="opacity: 0; visibility: hidden;" width="1" height="1" x="554.0625" y="485"></rect><g class="component table" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="300" height="174"></rect></g><g class="content"><g class="component axis y-axis" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="59.921875" height="152"></rect></g><g class="content"><g class="tick-mark-container"><line class="tick-mark end-tick-mark" x1="59.921875" y1="152" x2="54.921875" y2="152" style="visibility: inherit;"></line><line class="tick-mark" x1="59.921875" y1="130.2857142857143" x2="54.921875" y2="130.2857142857143" style="visibility: inherit;"></line><line class="tick-mark" x1="59.921875" y1="108.57142857142857" x2="54.921875" y2="108.57142857142857" style="visibility: inherit;"></line><line class="tick-mark" x1="59.921875" y1="86.85714285714285" x2="54.921875" y2="86.85714285714285" style="visibility: inherit;"></line><line class="tick-mark" x1="59.921875" y1="65.14285714285715" x2="54.921875" y2="65.14285714285715" style="visibility: inherit;"></line><line class="tick-mark" x1="59.921875" y1="43.42857142857142" x2="54.921875" y2="43.42857142857142" style="visibility: inherit;"></line><line class="tick-mark" x1="59.921875" y1="21.714285714285722" x2="54.921875" y2="21.714285714285722" style="visibility: inherit;"></line><line class="tick-mark end-tick-mark" x1="59.921875" y1="0" x2="54.921875" y2="0" style="visibility: inherit;"></line></g><g class="tick-label-container" transform="translate(49.921875, 0)"><text class="tick-label" x="0" y="152" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">-1.00</text><text class="tick-label" x="0" y="130.2857142857143" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">0.00</text><text class="tick-label" x="0" y="108.57142857142857" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">1.00</text><text class="tick-label" x="0" y="86.85714285714285" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">2.00</text><text class="tick-label" x="0" y="65.14285714285715" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">3.00</text><text class="tick-label" x="0" y="43.42857142857142" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">4.00</text><text class="tick-label" x="0" y="21.714285714285722" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">5.00</text><text class="tick-label" x="0" y="0" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">6.00</text></g><line class="baseline" x1="59.921875" y1="0" x2="59.921875" y2="152"></line><g class="annotation-container"><g class="annotation-line-container"></g><g class="annotation-circle-container"></g><g class="annotation-rect-container"></g><g class="annotation-label-container"></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="59.921875" height="152"></rect></g></g><g class="component component-group" transform="translate(59.921875,0)"><g class="background-container"><rect class="background-fill" width="240.078125" height="152"></rect></g><g class="content"><g class="component component-group" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="240.078125" height="152"></rect></g><g class="content"><g class="component plot xy-plot line-plot" clip-path="url(&quot;http://localhost:6006/#plottableClipPath53&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="240.078125" height="152"></rect></g><g class="content"><g class="render-area"><g><path class="line" stroke="#f44366" stroke-width="2px" d="M26.93943315972222,141.2536002567836L53.61478038194445,141.69222913469588L80.29012760416667,136.8673140662057L106.9654748263889,115.15520014081683L133.6408220486111,90.81131553649902L160.3161692708333,40.80765969412668L186.99151649305554,6.156004224504746L213.6668637152778,7.691197531563888" style="fill: none;"></path></g></g></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath53"><rect class="clip-rect" width="240.078125" height="152"></rect></clippath><rect class="bounding-box" width="240.078125" height="152"></rect></g></g><g class="component guide-line-layer vertical crosshairs" clip-path="url(&quot;http://localhost:6006/#plottableClipPath54&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="240.078125" height="152"></rect></g><g class="content"><line class="guide-line" y1="0" y2="152" x1="-1" x2="-1"></line></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath54"><rect class="clip-rect" width="240.078125" height="152"></rect></clippath><rect class="bounding-box" width="240.078125" height="152"></rect></g></g><g class="component guide-line-layer horizontal crosshairs" clip-path="url(&quot;http://localhost:6006/#plottableClipPath55&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="240.078125" height="152"></rect></g><g class="content"><line class="guide-line" x1="0" x2="240.078125" y1="-1" y2="-1"></line></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath55"><rect class="clip-rect" width="240.078125" height="152"></rect></clippath><rect class="bounding-box" width="240.078125" height="152"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="240.078125" height="152"></rect></g></g><g class="component gridlines" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="240.078125" height="152"></rect></g><g class="content"><g class="x-gridlines"><line x1="0" y1="0" x2="0" y2="152" class=""></line><line x1="26.67534722222222" y1="0" x2="26.67534722222222" y2="152"></line><line x1="53.35069444444444" y1="0" x2="53.35069444444444" y2="152"></line><line x1="80.02604166666666" y1="0" x2="80.02604166666666" y2="152"></line><line x1="106.70138888888889" y1="0" x2="106.70138888888889" y2="152"></line><line x1="133.37673611111111" y1="0" x2="133.37673611111111" y2="152"></line><line x1="160.05208333333331" y1="0" x2="160.05208333333331" y2="152"></line><line x1="186.72743055555557" y1="0" x2="186.72743055555557" y2="152"></line><line x1="213.40277777777777" y1="0" x2="213.40277777777777" y2="152"></line><line x1="240.078125" y1="0" x2="240.078125" y2="152"></line></g><g class="y-gridlines"><line x1="0" y1="152" x2="240.078125" y2="152" class=""></line><line x1="0" y1="130.2857142857143" x2="240.078125" y2="130.2857142857143" class="zeroline"></line><line x1="0" y1="108.57142857142857" x2="240.078125" y2="108.57142857142857" class=""></line><line x1="0" y1="86.85714285714285" x2="240.078125" y2="86.85714285714285"></line><line x1="0" y1="65.14285714285715" x2="240.078125" y2="65.14285714285715"></line><line x1="0" y1="43.42857142857142" x2="240.078125" y2="43.42857142857142"></line><line x1="0" y1="21.714285714285722" x2="240.078125" y2="21.714285714285722"></line><line x1="0" y1="0" x2="240.078125" y2="0"></line></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="240.078125" height="152"></rect></g></g><g class="component selection-box-layer" clip-path="url(&quot;http://localhost:6006/#plottableClipPath56&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="240.078125" height="152"></rect></g><g class="content"></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath56"><rect class="clip-rect" width="240.078125" height="152"></rect></clippath><rect class="bounding-box" width="240.078125" height="152"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="240.078125" height="152"></rect></g></g><g class="component axis x-axis" transform="translate(59.921875,152)"><g class="background-container"><rect class="background-fill" width="240.078125" height="22"></rect></g><g class="content"><g class="tick-mark-container"><line class="tick-mark end-tick-mark" x1="0" y1="0" x2="0" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="26.67534722222222" y1="0" x2="26.67534722222222" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="53.35069444444444" y1="0" x2="53.35069444444444" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="80.02604166666666" y1="0" x2="80.02604166666666" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="106.70138888888889" y1="0" x2="106.70138888888889" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="133.37673611111111" y1="0" x2="133.37673611111111" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="160.05208333333331" y1="0" x2="160.05208333333331" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="186.72743055555557" y1="0" x2="186.72743055555557" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="213.40277777777777" y1="0" x2="213.40277777777777" y2="5" style="visibility: inherit;"></line><line class="tick-mark end-tick-mark" x1="240.078125" y1="0" x2="240.078125" y2="5" style="visibility: inherit;"></line></g><g class="tick-label-container" transform="translate(0, 8)"><text class="tick-label" x="0" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">10.00k</text><text class="tick-label" x="26.67534722222222" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">20.00k</text><text class="tick-label" x="53.35069444444444" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">30.00k</text><text class="tick-label" x="80.02604166666666" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">40.00k</text><text class="tick-label" x="106.70138888888889" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">50.00k</text><text class="tick-label" x="133.37673611111111" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">60.00k</text><text class="tick-label" x="160.05208333333331" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">70.00k</text><text class="tick-label" x="186.72743055555557" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">80.00k</text><text class="tick-label" x="213.40277777777777" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">90.00k</text><text class="tick-label" x="240.078125" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">100.0k</text></g><line class="baseline" x1="0" y1="0" x2="240.078125" y2="0"></line><g class="annotation-container"><g class="annotation-line-container"></g><g class="annotation-circle-container"></g><g class="annotation-rect-container"></g><g class="annotation-label-container"></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="240.078125" height="22"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="300" height="174"></rect></g></g></svg>
+    
+  </tf-chart>
+                    <paper-icon-button class="expand-button style-scope tf-event-dashboard x-scope paper-icon-button-0" icon="fullscreen" role="button" tabindex="0" aria-disabled="false"><iron-icon id="icon" class="style-scope paper-icon-button x-scope iron-icon-0"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" class="style-scope iron-icon"></path></g></svg>
+  </iron-icon></paper-icon-button>
+                  </div>
+                  <template is="dom-if" class="style-scope tf-event-dashboard"></template>
+                </div>
+              
+                <div class="card style-scope tf-event-dashboard">
+                  <span class="card-title style-scope tf-event-dashboard">StochasticMDPEnv-detail/episode.avg reward</span>
+                  <div class="card-content style-scope tf-event-dashboard">
+                    <tf-chart type="scalar" id="chart" tabindex="2" class="style-scope tf-event-dashboard">
+    <svg id="chartsvg" class="style-scope tf-chart plottable" width="100%" height="100%" style="overflow: visible;"><rect class="measure-rect" style="opacity: 0; visibility: hidden;" width="1" height="1" x="214.0625" y="485"></rect><g class="component table" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="300" height="174"></rect></g><g class="content"><g class="component axis y-axis" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="59.921875" height="152"></rect></g><g class="content"><g class="tick-mark-container"><line class="tick-mark end-tick-mark" x1="59.921875" y1="152" x2="54.921875" y2="152" style="visibility: inherit;"></line><line class="tick-mark" x1="59.921875" y1="130.2857142857143" x2="54.921875" y2="130.2857142857143" style="visibility: inherit;"></line><line class="tick-mark" x1="59.921875" y1="108.57142857142857" x2="54.921875" y2="108.57142857142857" style="visibility: inherit;"></line><line class="tick-mark" x1="59.921875" y1="86.85714285714285" x2="54.921875" y2="86.85714285714285" style="visibility: inherit;"></line><line class="tick-mark" x1="59.921875" y1="65.14285714285715" x2="54.921875" y2="65.14285714285715" style="visibility: inherit;"></line><line class="tick-mark" x1="59.921875" y1="43.42857142857142" x2="54.921875" y2="43.42857142857142" style="visibility: inherit;"></line><line class="tick-mark" x1="59.921875" y1="21.714285714285722" x2="54.921875" y2="21.714285714285722" style="visibility: inherit;"></line><line class="tick-mark end-tick-mark" x1="59.921875" y1="0" x2="54.921875" y2="0" style="visibility: inherit;"></line></g><g class="tick-label-container" transform="translate(49.921875, 0)"><text class="tick-label" x="0" y="152" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">-250</text><text class="tick-label" x="0" y="130.2857142857143" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">-200</text><text class="tick-label" x="0" y="108.57142857142857" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">-150</text><text class="tick-label" x="0" y="86.85714285714285" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">-100</text><text class="tick-label" x="0" y="65.14285714285715" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">-50.0</text><text class="tick-label" x="0" y="43.42857142857142" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">0.00</text><text class="tick-label" x="0" y="21.714285714285722" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">50.0</text><text class="tick-label" x="0" y="0" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">100</text></g><line class="baseline" x1="59.921875" y1="0" x2="59.921875" y2="152"></line><g class="annotation-container"><g class="annotation-line-container"></g><g class="annotation-circle-container"></g><g class="annotation-rect-container"></g><g class="annotation-label-container"></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="59.921875" height="152"></rect></g></g><g class="component component-group" transform="translate(59.921875,0)"><g class="background-container"><rect class="background-fill" width="240.078125" height="152"></rect></g><g class="content"><g class="component component-group" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="240.078125" height="152"></rect></g><g class="content"><g class="component plot xy-plot line-plot" clip-path="url(&quot;http://localhost:6006/#plottableClipPath57&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="240.078125" height="152"></rect></g><g class="content"><g class="render-area"><g><path class="line" stroke="#f44366" stroke-width="2px" d="M26.93943315972222,35.868454895019525L53.61478038194445,139.9601217215402L80.29012760416667,67.23875819614956L106.9654748263889,25.49102111816406L133.6408220486111,14.946277901785717L160.3161692708333,8.250570417131687L186.99151649305554,6.088488769531247L213.6668637152778,6.166461530412951" style="fill: none;"></path></g></g></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath57"><rect class="clip-rect" width="240.078125" height="152"></rect></clippath><rect class="bounding-box" width="240.078125" height="152"></rect></g></g><g class="component guide-line-layer vertical crosshairs" clip-path="url(&quot;http://localhost:6006/#plottableClipPath58&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="240.078125" height="152"></rect></g><g class="content"><line class="guide-line" y1="0" y2="152"></line></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath58"><rect class="clip-rect" width="240.078125" height="152"></rect></clippath><rect class="bounding-box" width="240.078125" height="152"></rect></g></g><g class="component guide-line-layer horizontal crosshairs" clip-path="url(&quot;http://localhost:6006/#plottableClipPath59&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="240.078125" height="152"></rect></g><g class="content"><line class="guide-line" x1="0" x2="240.078125"></line></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath59"><rect class="clip-rect" width="240.078125" height="152"></rect></clippath><rect class="bounding-box" width="240.078125" height="152"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="240.078125" height="152"></rect></g></g><g class="component gridlines" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="240.078125" height="152"></rect></g><g class="content"><g class="x-gridlines"><line x1="0" y1="0" x2="0" y2="152" class=""></line><line x1="26.67534722222222" y1="0" x2="26.67534722222222" y2="152"></line><line x1="53.35069444444444" y1="0" x2="53.35069444444444" y2="152"></line><line x1="80.02604166666666" y1="0" x2="80.02604166666666" y2="152"></line><line x1="106.70138888888889" y1="0" x2="106.70138888888889" y2="152"></line><line x1="133.37673611111111" y1="0" x2="133.37673611111111" y2="152"></line><line x1="160.05208333333331" y1="0" x2="160.05208333333331" y2="152"></line><line x1="186.72743055555557" y1="0" x2="186.72743055555557" y2="152"></line><line x1="213.40277777777777" y1="0" x2="213.40277777777777" y2="152"></line><line x1="240.078125" y1="0" x2="240.078125" y2="152"></line></g><g class="y-gridlines"><line x1="0" y1="152" x2="240.078125" y2="152" class=""></line><line x1="0" y1="130.2857142857143" x2="240.078125" y2="130.2857142857143"></line><line x1="0" y1="108.57142857142857" x2="240.078125" y2="108.57142857142857"></line><line x1="0" y1="86.85714285714285" x2="240.078125" y2="86.85714285714285"></line><line x1="0" y1="65.14285714285715" x2="240.078125" y2="65.14285714285715"></line><line x1="0" y1="43.42857142857142" x2="240.078125" y2="43.42857142857142" class="zeroline"></line><line x1="0" y1="21.714285714285722" x2="240.078125" y2="21.714285714285722"></line><line x1="0" y1="0" x2="240.078125" y2="0"></line></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="240.078125" height="152"></rect></g></g><g class="component selection-box-layer" clip-path="url(&quot;http://localhost:6006/#plottableClipPath60&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="240.078125" height="152"></rect></g><g class="content"></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath60"><rect class="clip-rect" width="240.078125" height="152"></rect></clippath><rect class="bounding-box" width="240.078125" height="152"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="240.078125" height="152"></rect></g></g><g class="component axis x-axis" transform="translate(59.921875,152)"><g class="background-container"><rect class="background-fill" width="240.078125" height="22"></rect></g><g class="content"><g class="tick-mark-container"><line class="tick-mark end-tick-mark" x1="0" y1="0" x2="0" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="26.67534722222222" y1="0" x2="26.67534722222222" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="53.35069444444444" y1="0" x2="53.35069444444444" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="80.02604166666666" y1="0" x2="80.02604166666666" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="106.70138888888889" y1="0" x2="106.70138888888889" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="133.37673611111111" y1="0" x2="133.37673611111111" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="160.05208333333331" y1="0" x2="160.05208333333331" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="186.72743055555557" y1="0" x2="186.72743055555557" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="213.40277777777777" y1="0" x2="213.40277777777777" y2="5" style="visibility: inherit;"></line><line class="tick-mark end-tick-mark" x1="240.078125" y1="0" x2="240.078125" y2="5" style="visibility: inherit;"></line></g><g class="tick-label-container" transform="translate(0, 8)"><text class="tick-label" x="0" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">10.00k</text><text class="tick-label" x="26.67534722222222" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">20.00k</text><text class="tick-label" x="53.35069444444444" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">30.00k</text><text class="tick-label" x="80.02604166666666" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">40.00k</text><text class="tick-label" x="106.70138888888889" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">50.00k</text><text class="tick-label" x="133.37673611111111" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">60.00k</text><text class="tick-label" x="160.05208333333331" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">70.00k</text><text class="tick-label" x="186.72743055555557" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">80.00k</text><text class="tick-label" x="213.40277777777777" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">90.00k</text><text class="tick-label" x="240.078125" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">100.0k</text></g><line class="baseline" x1="0" y1="0" x2="240.078125" y2="0"></line><g class="annotation-container"><g class="annotation-line-container"></g><g class="annotation-circle-container"></g><g class="annotation-rect-container"></g><g class="annotation-label-container"></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="240.078125" height="22"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="300" height="174"></rect></g></g></svg>
+    
+  </tf-chart>
+                    <paper-icon-button class="expand-button style-scope tf-event-dashboard x-scope paper-icon-button-0" icon="fullscreen" role="button" tabindex="0" aria-disabled="false"><iron-icon id="icon" class="style-scope paper-icon-button x-scope iron-icon-0"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" class="style-scope iron-icon"></path></g></svg>
+  </iron-icon></paper-icon-button>
+                  </div>
+                  <template is="dom-if" class="style-scope tf-event-dashboard"></template>
+                </div>
+              
+                <div class="card style-scope tf-event-dashboard">
+                  <span class="card-title style-scope tf-event-dashboard">StochasticMDPEnv-detail/episode.max reward</span>
+                  <div class="card-content style-scope tf-event-dashboard">
+                    <tf-chart type="scalar" id="chart" tabindex="2" class="style-scope tf-event-dashboard">
+    <svg id="chartsvg" class="style-scope tf-chart plottable" width="100%" height="100%" style="overflow: visible;"><rect class="measure-rect" style="opacity: 0; visibility: hidden;" width="1" height="1" x="-125.9375" y="485"></rect><g class="component table" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="300" height="174"></rect></g><g class="content"><g class="component axis y-axis" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="49.9375" height="152"></rect></g><g class="content"><g class="tick-mark-container"><line class="tick-mark end-tick-mark" x1="49.9375" y1="152" x2="44.9375" y2="152" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="139.33333333333408" x2="44.9375" y2="139.33333333333408" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="126.66666666666818" x2="44.9375" y2="126.66666666666818" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="114.00000000000045" x2="44.9375" y2="114.00000000000045" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="101.33333333333452" x2="44.9375" y2="101.33333333333452" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="88.66666666666683" x2="44.9375" y2="88.66666666666683" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="76.00000000000091" x2="44.9375" y2="76.00000000000091" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="63.333333333334984" x2="44.9375" y2="63.333333333334984" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="50.66666666666726" x2="44.9375" y2="50.66666666666726" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="38.00000000000135" x2="44.9375" y2="38.00000000000135" style="visibility: inherit;"></line><line class="tick-mark end-tick-mark" x1="49.9375" y1="25.33333333333363" x2="44.9375" y2="25.33333333333363" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="12.66666666666772" x2="44.9375" y2="12.66666666666772" style="visibility: inherit;"></line><line class="tick-mark end-tick-mark" x1="49.9375" y1="1.8056667272503546e-12" x2="44.9375" y2="1.8056667272503546e-12" style="visibility: inherit;"></line></g><g class="tick-label-container" transform="translate(39.9375, 0)"><text class="tick-label" x="0" y="152" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">93.9</text><text class="tick-label" x="0" y="139.33333333333408" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">94.0</text><text class="tick-label" x="0" y="126.66666666666818" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">94.1</text><text class="tick-label" x="0" y="114.00000000000045" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">94.2</text><text class="tick-label" x="0" y="101.33333333333452" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">94.3</text><text class="tick-label" x="0" y="88.66666666666683" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">94.4</text><text class="tick-label" x="0" y="76.00000000000091" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">94.5</text><text class="tick-label" x="0" y="63.333333333334984" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">94.6</text><text class="tick-label" x="0" y="50.66666666666726" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">94.7</text><text class="tick-label" x="0" y="38.00000000000135" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">94.8</text><text class="tick-label" x="0" y="25.33333333333363" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">94.9</text><text class="tick-label" x="0" y="12.66666666666772" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">95.0</text><text class="tick-label" x="0" y="1.8056667272503546e-12" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">95.1</text></g><line class="baseline" x1="49.9375" y1="0" x2="49.9375" y2="152"></line><g class="annotation-container"><g class="annotation-line-container"></g><g class="annotation-circle-container"></g><g class="annotation-rect-container"></g><g class="annotation-label-container"></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="49.9375" height="152"></rect></g></g><g class="component component-group" transform="translate(49.9375,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><g class="component component-group" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><g class="component plot xy-plot line-plot" clip-path="url(&quot;http://localhost:6006/#plottableClipPath61&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><g class="render-area"><g><path class="line" stroke="#f44366" stroke-width="2px" d="M28.05979097222222,139.33333333333408L55.844513194444446,12.66666666666772L83.62923541666667,139.33333333333408L111.41395763888889,12.66666666666772L139.19867986111112,12.66666666666772L166.98340208333332,12.66666666666772L194.76812430555555,12.66666666666772L222.5528465277778,12.66666666666772" style="fill: none;"></path></g></g></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath61"><rect class="clip-rect" width="250.0625" height="152"></rect></clippath><rect class="bounding-box" width="250.0625" height="152"></rect></g></g><g class="component guide-line-layer vertical crosshairs" clip-path="url(&quot;http://localhost:6006/#plottableClipPath62&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><line class="guide-line" y1="0" y2="152" x1="-1" x2="-1"></line></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath62"><rect class="clip-rect" width="250.0625" height="152"></rect></clippath><rect class="bounding-box" width="250.0625" height="152"></rect></g></g><g class="component guide-line-layer horizontal crosshairs" clip-path="url(&quot;http://localhost:6006/#plottableClipPath63&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><line class="guide-line" x1="0" x2="250.0625" y1="-1" y2="-1"></line></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath63"><rect class="clip-rect" width="250.0625" height="152"></rect></clippath><rect class="bounding-box" width="250.0625" height="152"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="250.0625" height="152"></rect></g></g><g class="component gridlines" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><g class="x-gridlines"><line x1="0" y1="0" x2="0" y2="152" class=""></line><line x1="27.78472222222222" y1="0" x2="27.78472222222222" y2="152"></line><line x1="55.56944444444444" y1="0" x2="55.56944444444444" y2="152"></line><line x1="83.35416666666666" y1="0" x2="83.35416666666666" y2="152"></line><line x1="111.13888888888889" y1="0" x2="111.13888888888889" y2="152"></line><line x1="138.92361111111111" y1="0" x2="138.92361111111111" y2="152"></line><line x1="166.70833333333331" y1="0" x2="166.70833333333331" y2="152"></line><line x1="194.49305555555557" y1="0" x2="194.49305555555557" y2="152"></line><line x1="222.27777777777777" y1="0" x2="222.27777777777777" y2="152"></line><line x1="250.0625" y1="0" x2="250.0625" y2="152"></line></g><g class="y-gridlines"><line x1="0" y1="152" x2="250.0625" y2="152" class=""></line><line x1="0" y1="139.33333333333408" x2="250.0625" y2="139.33333333333408"></line><line x1="0" y1="126.66666666666818" x2="250.0625" y2="126.66666666666818"></line><line x1="0" y1="114.00000000000045" x2="250.0625" y2="114.00000000000045"></line><line x1="0" y1="101.33333333333452" x2="250.0625" y2="101.33333333333452"></line><line x1="0" y1="88.66666666666683" x2="250.0625" y2="88.66666666666683"></line><line x1="0" y1="76.00000000000091" x2="250.0625" y2="76.00000000000091"></line><line x1="0" y1="63.333333333334984" x2="250.0625" y2="63.333333333334984"></line><line x1="0" y1="50.66666666666726" x2="250.0625" y2="50.66666666666726"></line><line x1="0" y1="38.00000000000135" x2="250.0625" y2="38.00000000000135" class=""></line><line x1="0" y1="25.33333333333363" x2="250.0625" y2="25.33333333333363"></line><line x1="0" y1="12.66666666666772" x2="250.0625" y2="12.66666666666772"></line><line x1="0" y1="1.8056667272503546e-12" x2="250.0625" y2="1.8056667272503546e-12"></line></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="250.0625" height="152"></rect></g></g><g class="component selection-box-layer" clip-path="url(&quot;http://localhost:6006/#plottableClipPath64&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath64"><rect class="clip-rect" width="250.0625" height="152"></rect></clippath><rect class="bounding-box" width="250.0625" height="152"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="250.0625" height="152"></rect></g></g><g class="component axis x-axis" transform="translate(49.9375,152)"><g class="background-container"><rect class="background-fill" width="250.0625" height="22"></rect></g><g class="content"><g class="tick-mark-container"><line class="tick-mark end-tick-mark" x1="0" y1="0" x2="0" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="27.78472222222222" y1="0" x2="27.78472222222222" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="55.56944444444444" y1="0" x2="55.56944444444444" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="83.35416666666666" y1="0" x2="83.35416666666666" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="111.13888888888889" y1="0" x2="111.13888888888889" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="138.92361111111111" y1="0" x2="138.92361111111111" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="166.70833333333331" y1="0" x2="166.70833333333331" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="194.49305555555557" y1="0" x2="194.49305555555557" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="222.27777777777777" y1="0" x2="222.27777777777777" y2="5" style="visibility: inherit;"></line><line class="tick-mark end-tick-mark" x1="250.0625" y1="0" x2="250.0625" y2="5" style="visibility: inherit;"></line></g><g class="tick-label-container" transform="translate(0, 8)"><text class="tick-label" x="0" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">10.00k</text><text class="tick-label" x="27.78472222222222" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">20.00k</text><text class="tick-label" x="55.56944444444444" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">30.00k</text><text class="tick-label" x="83.35416666666666" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">40.00k</text><text class="tick-label" x="111.13888888888889" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">50.00k</text><text class="tick-label" x="138.92361111111111" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">60.00k</text><text class="tick-label" x="166.70833333333331" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">70.00k</text><text class="tick-label" x="194.49305555555557" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">80.00k</text><text class="tick-label" x="222.27777777777777" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">90.00k</text><text class="tick-label" x="250.0625" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">100.0k</text></g><line class="baseline" x1="0" y1="0" x2="250.0625" y2="0"></line><g class="annotation-container"><g class="annotation-line-container"></g><g class="annotation-circle-container"></g><g class="annotation-rect-container"></g><g class="annotation-label-container"></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="250.0625" height="22"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="300" height="174"></rect></g></g></svg>
+    
+  </tf-chart>
+                    <paper-icon-button class="expand-button style-scope tf-event-dashboard x-scope paper-icon-button-0" icon="fullscreen" role="button" tabindex="0" aria-disabled="false"><iron-icon id="icon" class="style-scope paper-icon-button x-scope iron-icon-0"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" class="style-scope iron-icon"></path></g></svg>
+  </iron-icon></paper-icon-button>
+                  </div>
+                  <template is="dom-if" class="style-scope tf-event-dashboard"></template>
+                </div>
+              
+                <div class="card style-scope tf-event-dashboard">
+                  <span class="card-title style-scope tf-event-dashboard">StochasticMDPEnv-detail/episode.min reward</span>
+                  <div class="card-content style-scope tf-event-dashboard">
+                    <tf-chart type="scalar" id="chart" tabindex="2" class="style-scope tf-event-dashboard">
+    <svg id="chartsvg" class="style-scope tf-chart plottable" width="100%" height="100%" style="overflow: visible;"><rect class="measure-rect" style="opacity: 0; visibility: hidden;" width="1" height="1" x="894.0625" y="245"></rect><g class="component table" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="300" height="174"></rect></g><g class="content"><g class="component axis y-axis" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="89.875" height="152"></rect></g><g class="content"><g class="tick-mark-container"><line class="tick-mark end-tick-mark" x1="89.875" y1="152" x2="84.875" y2="152" style="visibility: inherit;"></line><line class="tick-mark" x1="89.875" y1="133" x2="84.875" y2="133" style="visibility: inherit;"></line><line class="tick-mark" x1="89.875" y1="114" x2="84.875" y2="114" style="visibility: inherit;"></line><line class="tick-mark" x1="89.875" y1="95" x2="84.875" y2="95" style="visibility: inherit;"></line><line class="tick-mark" x1="89.875" y1="76" x2="84.875" y2="76" style="visibility: inherit;"></line><line class="tick-mark" x1="89.875" y1="57" x2="84.875" y2="57" style="visibility: inherit;"></line><line class="tick-mark" x1="89.875" y1="38" x2="84.875" y2="38" style="visibility: inherit;"></line><line class="tick-mark" x1="89.875" y1="19" x2="84.875" y2="19" style="visibility: inherit;"></line><line class="tick-mark end-tick-mark" x1="89.875" y1="0" x2="84.875" y2="0" style="visibility: inherit;"></line></g><g class="tick-label-container" transform="translate(79.875, 0)"><text class="tick-label" x="0" y="152" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">-7.00e+3</text><text class="tick-label" x="0" y="133" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">-6.00e+3</text><text class="tick-label" x="0" y="114" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">-5.00e+3</text><text class="tick-label" x="0" y="95" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">-4.00e+3</text><text class="tick-label" x="0" y="76" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">-3.00e+3</text><text class="tick-label" x="0" y="57" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">-2.00e+3</text><text class="tick-label" x="0" y="38" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">-1.00e+3</text><text class="tick-label" x="0" y="19" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">0.00</text><text class="tick-label" x="0" y="0" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">1.00e+3</text></g><line class="baseline" x1="89.875" y1="0" x2="89.875" y2="152"></line><g class="annotation-container"><g class="annotation-line-container"></g><g class="annotation-circle-container"></g><g class="annotation-rect-container"></g><g class="annotation-label-container"></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="89.875" height="152"></rect></g></g><g class="component component-group" transform="translate(89.875,0)"><g class="background-container"><rect class="background-fill" width="210.125" height="152"></rect></g><g class="content"><g class="component component-group" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="210.125" height="152"></rect></g><g class="content"><g class="component plot xy-plot line-plot" clip-path="url(&quot;http://localhost:6006/#plottableClipPath65&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="210.125" height="152"></rect></g><g class="content"><g class="render-area"><g><path class="line" stroke="#f44366" stroke-width="2px" d="M23.57835972222222,61.465L46.925581944444446,142.804L70.27280416666667,55.784L93.62002638888889,39.861999999999995L116.96724861111112,30.03900000000001L140.31447083333333,27.607000000000006L163.66169305555556,17.803000000000004L187.0089152777778,17.878999999999998" style="fill: none;"></path></g></g></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath65"><rect class="clip-rect" width="210.125" height="152"></rect></clippath><rect class="bounding-box" width="210.125" height="152"></rect></g></g><g class="component guide-line-layer vertical crosshairs" clip-path="url(&quot;http://localhost:6006/#plottableClipPath66&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="210.125" height="152"></rect></g><g class="content"><line class="guide-line" y1="0" y2="152"></line></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath66"><rect class="clip-rect" width="210.125" height="152"></rect></clippath><rect class="bounding-box" width="210.125" height="152"></rect></g></g><g class="component guide-line-layer horizontal crosshairs" clip-path="url(&quot;http://localhost:6006/#plottableClipPath67&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="210.125" height="152"></rect></g><g class="content"><line class="guide-line" x1="0" x2="210.125"></line></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath67"><rect class="clip-rect" width="210.125" height="152"></rect></clippath><rect class="bounding-box" width="210.125" height="152"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="210.125" height="152"></rect></g></g><g class="component gridlines" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="210.125" height="152"></rect></g><g class="content"><g class="x-gridlines"><line x1="0" y1="0" x2="0" y2="152" class=""></line><line x1="23.34722222222222" y1="0" x2="23.34722222222222" y2="152"></line><line x1="46.69444444444444" y1="0" x2="46.69444444444444" y2="152"></line><line x1="70.04166666666666" y1="0" x2="70.04166666666666" y2="152"></line><line x1="93.38888888888889" y1="0" x2="93.38888888888889" y2="152"></line><line x1="116.73611111111111" y1="0" x2="116.73611111111111" y2="152"></line><line x1="140.08333333333331" y1="0" x2="140.08333333333331" y2="152"></line><line x1="163.43055555555557" y1="0" x2="163.43055555555557" y2="152"></line><line x1="186.77777777777777" y1="0" x2="186.77777777777777" y2="152"></line><line x1="210.125" y1="0" x2="210.125" y2="152"></line></g><g class="y-gridlines"><line x1="0" y1="152" x2="210.125" y2="152" class=""></line><line x1="0" y1="133" x2="210.125" y2="133"></line><line x1="0" y1="114" x2="210.125" y2="114"></line><line x1="0" y1="95" x2="210.125" y2="95"></line><line x1="0" y1="76" x2="210.125" y2="76"></line><line x1="0" y1="57" x2="210.125" y2="57"></line><line x1="0" y1="38" x2="210.125" y2="38"></line><line x1="0" y1="19" x2="210.125" y2="19" class="zeroline"></line><line x1="0" y1="0" x2="210.125" y2="0"></line></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="210.125" height="152"></rect></g></g><g class="component selection-box-layer" clip-path="url(&quot;http://localhost:6006/#plottableClipPath68&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="210.125" height="152"></rect></g><g class="content"></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath68"><rect class="clip-rect" width="210.125" height="152"></rect></clippath><rect class="bounding-box" width="210.125" height="152"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="210.125" height="152"></rect></g></g><g class="component axis x-axis" transform="translate(89.875,152)"><g class="background-container"><rect class="background-fill" width="210.125" height="22"></rect></g><g class="content"><g class="tick-mark-container"><line class="tick-mark end-tick-mark" x1="0" y1="0" x2="0" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="23.34722222222222" y1="0" x2="23.34722222222222" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="46.69444444444444" y1="0" x2="46.69444444444444" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="70.04166666666666" y1="0" x2="70.04166666666666" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="93.38888888888889" y1="0" x2="93.38888888888889" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="116.73611111111111" y1="0" x2="116.73611111111111" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="140.08333333333331" y1="0" x2="140.08333333333331" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="163.43055555555557" y1="0" x2="163.43055555555557" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="186.77777777777777" y1="0" x2="186.77777777777777" y2="5" style="visibility: inherit;"></line><line class="tick-mark end-tick-mark" x1="210.125" y1="0" x2="210.125" y2="5" style="visibility: inherit;"></line></g><g class="tick-label-container" transform="translate(0, 8)"><text class="tick-label" x="0" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">10.00k</text><text class="tick-label" x="23.34722222222222" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">20.00k</text><text class="tick-label" x="46.69444444444444" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">30.00k</text><text class="tick-label" x="70.04166666666666" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">40.00k</text><text class="tick-label" x="93.38888888888889" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">50.00k</text><text class="tick-label" x="116.73611111111111" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">60.00k</text><text class="tick-label" x="140.08333333333331" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">70.00k</text><text class="tick-label" x="163.43055555555557" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">80.00k</text><text class="tick-label" x="186.77777777777777" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">90.00k</text><text class="tick-label" x="210.125" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">100.0k</text></g><line class="baseline" x1="0" y1="0" x2="210.125" y2="0"></line><g class="annotation-container"><g class="annotation-line-container"></g><g class="annotation-circle-container"></g><g class="annotation-rect-container"></g><g class="annotation-label-container"></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="210.125" height="22"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="300" height="174"></rect></g></g></svg>
+    
+  </tf-chart>
+                    <paper-icon-button class="expand-button style-scope tf-event-dashboard x-scope paper-icon-button-0" icon="fullscreen" role="button" tabindex="0" aria-disabled="false"><iron-icon id="icon" class="style-scope paper-icon-button x-scope iron-icon-0"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" class="style-scope iron-icon"></path></g></svg>
+  </iron-icon></paper-icon-button>
+                  </div>
+                  <template is="dom-if" class="style-scope tf-event-dashboard"></template>
+                </div>
+              
+                <div class="card style-scope tf-event-dashboard">
+                  <span class="card-title style-scope tf-event-dashboard">StochasticMDPEnv-detail/episode.num of game</span>
+                  <div class="card-content style-scope tf-event-dashboard">
+                    <tf-chart type="scalar" id="chart" tabindex="2" class="style-scope tf-event-dashboard">
+    <svg id="chartsvg" class="style-scope tf-chart plottable" width="100%" height="100%" style="overflow: visible;"><rect class="measure-rect" style="opacity: 0; visibility: hidden;" width="1" height="1" x="554.0625" y="245"></rect><g class="component table" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="300" height="174"></rect></g><g class="content"><g class="component axis y-axis" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="49.9375" height="152"></rect></g><g class="content"><g class="tick-mark-container"><line class="tick-mark end-tick-mark" x1="49.9375" y1="152" x2="44.9375" y2="152" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="130.2857142857143" x2="44.9375" y2="130.2857142857143" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="108.57142857142857" x2="44.9375" y2="108.57142857142857" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="86.85714285714285" x2="44.9375" y2="86.85714285714285" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="65.14285714285715" x2="44.9375" y2="65.14285714285715" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="43.42857142857142" x2="44.9375" y2="43.42857142857142" style="visibility: inherit;"></line><line class="tick-mark" x1="49.9375" y1="21.714285714285722" x2="44.9375" y2="21.714285714285722" style="visibility: inherit;"></line><line class="tick-mark end-tick-mark" x1="49.9375" y1="0" x2="44.9375" y2="0" style="visibility: inherit;"></line></g><g class="tick-label-container" transform="translate(39.9375, 0)"><text class="tick-label" x="0" y="152" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">0.00</text><text class="tick-label" x="0" y="130.2857142857143" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">100</text><text class="tick-label" x="0" y="108.57142857142857" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">200</text><text class="tick-label" x="0" y="86.85714285714285" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">300</text><text class="tick-label" x="0" y="65.14285714285715" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">400</text><text class="tick-label" x="0" y="43.42857142857142" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">500</text><text class="tick-label" x="0" y="21.714285714285722" dx="0em" dy="0.3em" style="text-anchor: end; visibility: inherit;">600</text><text class="tick-label" x="0" y="0" dx="0em" dy="0.3em" style="text-anchor: end; visibility: hidden;">700</text></g><line class="baseline" x1="49.9375" y1="0" x2="49.9375" y2="152"></line><g class="annotation-container"><g class="annotation-line-container"></g><g class="annotation-circle-container"></g><g class="annotation-rect-container"></g><g class="annotation-label-container"></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="49.9375" height="152"></rect></g></g><g class="component component-group" transform="translate(49.9375,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><g class="component component-group" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><g class="component plot xy-plot line-plot" clip-path="url(&quot;http://localhost:6006/#plottableClipPath69&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><g class="render-area"><g><path class="line" stroke="#f44366" stroke-width="2px" d="M28.05979097222222,141.35999999999999L55.844513194444446,141.7942857142857L83.62923541666667,137.01714285714286L111.41395763888889,115.52L139.19867986111112,91.41714285714286L166.98340208333332,41.90857142857143L194.76812430555555,7.600000000000007L222.5528465277778,9.120000000000008" style="fill: none;"></path></g></g></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath69"><rect class="clip-rect" width="250.0625" height="152"></rect></clippath><rect class="bounding-box" width="250.0625" height="152"></rect></g></g><g class="component guide-line-layer vertical crosshairs" clip-path="url(&quot;http://localhost:6006/#plottableClipPath70&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><line class="guide-line" y1="0" y2="152" x1="-1" x2="-1"></line></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath70"><rect class="clip-rect" width="250.0625" height="152"></rect></clippath><rect class="bounding-box" width="250.0625" height="152"></rect></g></g><g class="component guide-line-layer horizontal crosshairs" clip-path="url(&quot;http://localhost:6006/#plottableClipPath71&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><line class="guide-line" x1="0" x2="250.0625" y1="-1" y2="-1"></line></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath71"><rect class="clip-rect" width="250.0625" height="152"></rect></clippath><rect class="bounding-box" width="250.0625" height="152"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="250.0625" height="152"></rect></g></g><g class="component gridlines" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"><g class="x-gridlines"><line x1="0" y1="0" x2="0" y2="152" class=""></line><line x1="27.78472222222222" y1="0" x2="27.78472222222222" y2="152"></line><line x1="55.56944444444444" y1="0" x2="55.56944444444444" y2="152"></line><line x1="83.35416666666666" y1="0" x2="83.35416666666666" y2="152"></line><line x1="111.13888888888889" y1="0" x2="111.13888888888889" y2="152"></line><line x1="138.92361111111111" y1="0" x2="138.92361111111111" y2="152"></line><line x1="166.70833333333331" y1="0" x2="166.70833333333331" y2="152"></line><line x1="194.49305555555557" y1="0" x2="194.49305555555557" y2="152"></line><line x1="222.27777777777777" y1="0" x2="222.27777777777777" y2="152"></line><line x1="250.0625" y1="0" x2="250.0625" y2="152"></line></g><g class="y-gridlines"><line x1="0" y1="152" x2="250.0625" y2="152" class="zeroline"></line><line x1="0" y1="130.2857142857143" x2="250.0625" y2="130.2857142857143" class=""></line><line x1="0" y1="108.57142857142857" x2="250.0625" y2="108.57142857142857"></line><line x1="0" y1="86.85714285714285" x2="250.0625" y2="86.85714285714285"></line><line x1="0" y1="65.14285714285715" x2="250.0625" y2="65.14285714285715"></line><line x1="0" y1="43.42857142857142" x2="250.0625" y2="43.42857142857142"></line><line x1="0" y1="21.714285714285722" x2="250.0625" y2="21.714285714285722"></line><line x1="0" y1="0" x2="250.0625" y2="0"></line></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="250.0625" height="152"></rect></g></g><g class="component selection-box-layer" clip-path="url(&quot;http://localhost:6006/#plottableClipPath72&quot;)" transform="translate(0,0)"><g class="background-container"><rect class="background-fill" width="250.0625" height="152"></rect></g><g class="content"></g><g class="foreground-container"></g><g class="box-container"><clippath id="plottableClipPath72"><rect class="clip-rect" width="250.0625" height="152"></rect></clippath><rect class="bounding-box" width="250.0625" height="152"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="250.0625" height="152"></rect></g></g><g class="component axis x-axis" transform="translate(49.9375,152)"><g class="background-container"><rect class="background-fill" width="250.0625" height="22"></rect></g><g class="content"><g class="tick-mark-container"><line class="tick-mark end-tick-mark" x1="0" y1="0" x2="0" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="27.78472222222222" y1="0" x2="27.78472222222222" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="55.56944444444444" y1="0" x2="55.56944444444444" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="83.35416666666666" y1="0" x2="83.35416666666666" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="111.13888888888889" y1="0" x2="111.13888888888889" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="138.92361111111111" y1="0" x2="138.92361111111111" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="166.70833333333331" y1="0" x2="166.70833333333331" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="194.49305555555557" y1="0" x2="194.49305555555557" y2="5" style="visibility: inherit;"></line><line class="tick-mark" x1="222.27777777777777" y1="0" x2="222.27777777777777" y2="5" style="visibility: inherit;"></line><line class="tick-mark end-tick-mark" x1="250.0625" y1="0" x2="250.0625" y2="5" style="visibility: inherit;"></line></g><g class="tick-label-container" transform="translate(0, 8)"><text class="tick-label" x="0" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">10.00k</text><text class="tick-label" x="27.78472222222222" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">20.00k</text><text class="tick-label" x="55.56944444444444" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">30.00k</text><text class="tick-label" x="83.35416666666666" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">40.00k</text><text class="tick-label" x="111.13888888888889" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">50.00k</text><text class="tick-label" x="138.92361111111111" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">60.00k</text><text class="tick-label" x="166.70833333333331" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">70.00k</text><text class="tick-label" x="194.49305555555557" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: inherit;">80.00k</text><text class="tick-label" x="222.27777777777777" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">90.00k</text><text class="tick-label" x="250.0625" y="0" dx="0em" dy="0.95em" style="text-anchor: middle; visibility: hidden;">100.0k</text></g><line class="baseline" x1="0" y1="0" x2="250.0625" y2="0"></line><g class="annotation-container"><g class="annotation-line-container"></g><g class="annotation-circle-container"></g><g class="annotation-rect-container"></g><g class="annotation-label-container"></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="250.0625" height="22"></rect></g></g></g><g class="foreground-container"></g><g class="box-container"><rect class="bounding-box" width="300" height="174"></rect></g></g></svg>
+    
+  </tf-chart>
+                    <paper-icon-button class="expand-button style-scope tf-event-dashboard x-scope paper-icon-button-0" icon="fullscreen" role="button" tabindex="0" aria-disabled="false"><iron-icon id="icon" class="style-scope paper-icon-button x-scope iron-icon-0"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" class="style-scope iron-icon"></path></g></svg>
+  </iron-icon></paper-icon-button>
+                  </div>
+                  <template is="dom-if" class="style-scope tf-event-dashboard"></template>
+                </div>
+              <template is="dom-repeat" as="tag" class="style-scope tf-event-dashboard"></template>
+            </div>
+          
+        <template is="dom-if" class="style-scope tf-collapsable-pane"></template>
+      </div>
+    
+
+  </iron-collapse>
+    
+  </tf-collapsable-pane>
+        
+          <tf-collapsable-pane class="style-scope tf-event-dashboard x-scope tf-collapsable-pane-0">
+    <button class="heading style-scope tf-collapsable-pane">
+    <span class="name style-scope tf-collapsable-pane">StochasticMDPEnv=detail</span>
+    <span class="hackpadding style-scope tf-collapsable-pane"></span>
+    <span class="count style-scope tf-collapsable-pane">
+      <span class="style-scope tf-collapsable-pane">52</span>
+    </span>
+  </button>
+    <iron-collapse class="style-scope tf-collapsable-pane iron-collapse-closed" role="group" aria-hidden="true" aria-expanded="false" style="transition-property: height; height: 0px; transition-duration: 0s;">
+
+    
+      <div class="content style-scope tf-collapsable-pane">
+        <template is="dom-if" class="style-scope tf-collapsable-pane"></template>
+      </div>
+    
+
+  </iron-collapse>
+    
+  </tf-collapsable-pane>
+        
+          <tf-collapsable-pane class="style-scope tf-event-dashboard x-scope tf-collapsable-pane-0">
+    <button class="heading style-scope tf-collapsable-pane">
+    <span class="name style-scope tf-collapsable-pane">learn_count</span>
+    <span class="hackpadding style-scope tf-collapsable-pane"></span>
+    <span class="count style-scope tf-collapsable-pane">
+      <span class="style-scope tf-collapsable-pane">1</span>
+    </span>
+  </button>
+    <iron-collapse class="style-scope tf-collapsable-pane iron-collapse-closed" role="group" aria-hidden="true" aria-expanded="false" style="transition-property: height; transition-duration: 0s; height: 0px;">
+
+    
+      <div class="content style-scope tf-collapsable-pane">
+        <template is="dom-if" class="style-scope tf-collapsable-pane"></template>
+      </div>
+    
+
+  </iron-collapse>
+    
+  </tf-collapsable-pane>
+        <template is="dom-repeat" class="style-scope tf-event-dashboard"></template>
+      </div>
+    </div>
+    
+    
+  </tf-dashboard-layout>
+
+    
+
+  </tf-event-dashboard>
+        <template is="dom-if" class="style-scope tf-tensorboard"></template>
+
+        <template is="dom-if" class="style-scope tf-tensorboard"></template>
+
+        <template is="dom-if" class="style-scope tf-tensorboard"></template>
+
+        <template is="dom-if" class="style-scope tf-tensorboard"></template>
+      </div>
+      </div>
+      <div id="dropShadow" class="style-scope paper-header-panel has-shadow"></div>
+    </div>
+  </paper-header-panel>
+    
+  </tf-tensorboard>
+  
+
+<iron-a11y-announcer>
+    <div class="style-scope iron-a11y-announcer" aria-live="polite"></div>
+  </iron-a11y-announcer></body></html>
