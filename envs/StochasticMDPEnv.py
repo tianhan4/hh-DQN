@@ -29,7 +29,7 @@ class StochasticMDPEnv:
             print("ended, please reset the game. (from env)")
             return
         t = random.random()
-        reward = -1.
+        reward = 0
         if t < self.transition_prob[np.argmax(self.current_state)][action]:
             self.current_state = one_hot(self.transition_table[np.argmax(self.current_state)][action], self.state_num)
             if np.argmax(self.current_state) == 12:
