@@ -71,7 +71,10 @@ class Agent():
         while self.stackIdx > 1:
             beta = self.model.beta_no.eval({self.model.state_input_n: [state], self.model.o_idx: [self.optionStack[self.stackIdx - 1]]})
             if random.random() <= beta:
-                self.memory.add(self.optionStack_state[self.stackIdx - 1], state, self.optionStack_r[self.stackIdx-1], self.optionStack[self.stackIdx-1], terminal, self.optionStack[self.stackIdx-2], self.optionStack_k[self.stackIdx-1])
+                self.memory.add(self.optionStack_state[self.stackIdx - 2], state, self.optionStack_r[
+                    self.stackIdx - 2], self.optionStack[self.stackIdx - 1], terminal, self.optionStack[
+                    self.stackIdx-2],
+                                self.optionStack_k[self.stackIdx - 2])
                 self.stackIdx -= 1
             else:
                 break
@@ -119,18 +122,17 @@ class Agent():
                     if self.stackIdx == self.max_stackDepth - 1 and action < self.option_num:
                         #print("almost full")
                         action = self.option_num + random.choice(self.config.actions)
-                    self.optionStack_state[self.stackIdx] = self.env.history.get()
-                    self.optionStack_k[self.stackIdx] = 0
-                    self.optionStack_r[self.stackIdx] = 0
+                    self.optionStack_state[self.stackIdx-1] = self.env.history.get()
+                    self.optionStack_k[self.stackIdx-1] = 1
+                    self.optionStack_r[self.stackIdx-1] = 0
                     self.optionStack[self.stackIdx] = action
                     self.stackIdx += 1
                     if action >= self.option_num:
                         break
                 time2 = time.time()
                 reward, state, terminal = self.env.step(action - self.option_num)
-                for i in range(1,self.stackIdx):
-                    self.optionStack_k[i] += 1
-                    self.optionStack_r[i] *= self.config.discount
+                for i in range(0,self.stackIdx-1):
+                    #self.optionStack_r[i] *= self.config.discount
                     self.optionStack_r[i] += reward
                 time3 = time.time()
                 self.observe(state, reward, action, terminal)

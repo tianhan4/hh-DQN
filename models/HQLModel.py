@@ -43,7 +43,7 @@ class HQLModel(BaseModel):
             self.flat_qs = tf.reshape(self.qs,  [(self.config.action_num+self.config.option_num)*
                                                  (self.config.action_num+self.config.option_num), self.config.state_num])
             self.bs = tf.get_variable("bs", [self.config.state_num, self.config.action_num + self.config.option_num],
-                                      tf.float32, initializer=tf.random_normal_initializer(0,1,dtype=tf.float32))
+                                      tf.float32, initializer=tf.random_normal_initializer(0,10,dtype=tf.float32))
             '''initializer=tf.constant_initializer([[-10,-10,-10,-10,-10,-10,-10],
                                                                                        [-10,-10,-10,-10,-10,-10,-10],
                                                                                        [-10,-10,-10,-10,-10,-10,-10],
@@ -83,7 +83,7 @@ class HQLModel(BaseModel):
             self.target_reward = self.config.goal_pho * self.beta_sg + self.reward_sgt + (1 - self.terminals) * self.config.discount** self.k * (1 - self.beta_no) * reward_ngo
             '''
             self.reward_st = tf.placeholder("float32", [None], name="reward_st")
-        
+
         with tf.variable_scope("beta"):
             self.l1_b_o, self.w['l1_b_w'], self.w['l1_b_b'] = linear(self.o, self.state_num,
                                                                      activation_fn=activation_fn, name="l1")
@@ -133,21 +133,23 @@ class HQLModel(BaseModel):
                                    self.o_idx, fn*fn, 1. ,0.,-1)), 1)
             self.q_sga = tf.squeeze(tf.batch_matmul(tf.gather(self.qs, self.g_idx), tf.expand_dims(self.l2_s,2)), [2])
             self.max_q_ng = tf.placeholder(tf.float32, [None], name="max_q_ng")
+            self.no_self_max_q_ng = tf.placeholder(tf.float32, [None], name="max_q_ng")
             self.target_q = tf.stop_gradient(self.reward_st +
                                              (1 - self.terminals) * self.config.discount**self.k *
-                                             ((self.beta_ng *
-                                                              self.config.goal_pho+
-                                                              (1 - self.beta_ng) * self.max_q_ng)
-                                              ))
-            self.target_beta = -(self.reward_st + (1 - self.terminals) \
-                                             * self.config.discount**self.k * \
-                                             tf.stop_gradient(self.beta_ng * self.config.goal_pho+
-                                                              (1 - self.beta_ng) * self.max_q_ng))
+                                             (self.beta_no * (self.config.goal_pho * self.beta_ng +
+                                                              (1 - self.beta_ng) * self.max_q_ng) +
+                                              (1-self.beta_no) * self.q_ngo))
+            self.target_beta = - (self.reward_st +
+                                             (1 - self.terminals) * self.config.discount**self.k *
+                                             (self.beta_no * tf.stop_gradient(self.config.goal_pho * \
+                                                                                          self.beta_ng +
+                                                              (1 - self.beta_ng) * self.no_self_max_q_ng) +
+                                              (1-self.beta_no) * tf.stop_gradient(self.q_ngo)))
 
         
         with tf.variable_scope("optimizer"):
             self.q_delta = self.target_q - self.q_sgo
-            self.q_clipped_delta = tf.clip_by_value(self.q_delta, self.min_delta, self.max_delta)
+            #self.q_clipped_delta = tf.clip_by_value(self.q_delta, self.min_delta, self.max_delta)
             self.q_loss = tf.reduce_mean(tf.square(self.q_delta), name="q_loss")
             self.learning_rate_op = tf.maximum(self.learning_rate_minimum, tf.train.exponential_decay(
                         self.learning_rate,
@@ -155,7 +157,6 @@ class HQLModel(BaseModel):
                         self.learning_rate_decay_step,
 self.learning_rate_decay,
                         staircase = True))
-            self.grad = tf.train.GradientDescentOptimizer(self.learning_rate_op).compute_gradients(self.q_loss)
             self.q_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op).minimize(self.q_loss)
             '''
             self.r_delta = tf.stop_gradient(self.target_reward) - self.r_sgo
@@ -164,7 +165,7 @@ self.learning_rate_decay,
             self.r_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op).minimize(self.r_loss)
             '''
             self.b_loss = self.target_beta
-            #self.b_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op).minimize(self.b_loss,)
+            self.b_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op/10).minimize(self.b_loss)
             # #self.w['l1_s_w'], self.w['l1_s_b'], self.w['l2_s_w'], self.w['l2_s_b']})
 
         with tf.variable_scope("summary"):
@@ -208,7 +209,8 @@ self.learning_rate_decay,
                 self.state_input_n : n
                 })
         max_q_ng = np.max(q_nga[:,1:],1)
-
+        q_nga[:,o] = -100
+        no_self_max_q_ng = np.max(q_nga[:,1:],1)
         target_q, target_beta, beta_no, beta_ng, q_ngo, q_nga, q_loss,q_delta,q_sgo = self.sess.run([self.target_q,
                                                                                                      self.target_beta,
                                                                                              self.beta_no,
@@ -223,9 +225,10 @@ self.learning_rate_decay,
             self.state_input : s,
             self.state_input_n : n,
             self.k : k,
-            self.max_q_ng: max_q_ng
+            self.max_q_ng: max_q_ng,
+            self.no_self_max_q_ng : no_self_max_q_ng
         })
-        _, q_loss, summary_str = self.sess.run([self.q_optim, self.q_loss, self.all_summary], {
+        _,  q_loss, summary_str = self.sess.run([self.q_optim, self.q_loss, self.all_summary], {
                 self.g_idx : g,
                 self.o_idx : o,
                 self.reward_st : r,
@@ -233,7 +236,8 @@ self.learning_rate_decay,
                 self.state_input : s,
                 self.state_input_n : n,
                 self.k : k,
-                self.max_q_ng : max_q_ng
+                self.max_q_ng : max_q_ng,
+                self.no_self_max_q_ng : no_self_max_q_ng
                 })
 
         target_q2,target_beta2, beta_no2, beta_ng2, q_ngo2, q_nga2,  q_loss2,q_delta2,q_sgo2 = self.sess.run([
@@ -250,7 +254,8 @@ self.learning_rate_decay,
             self.state_input : s,
             self.state_input_n : n,
             self.k : k,
-            self.max_q_ng : max_q_ng
+            self.max_q_ng : max_q_ng,
+            self.no_self_max_q_ng : no_self_max_q_ng
         })
 
 
