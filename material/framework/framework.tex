@@ -1,11 +1,29 @@
-\documentclass{article}
+we propose a framework that integrates deep reinforcement learning with hierarchical value functions (h-DQN), where the agent is motivated to solve intrinsic goals (via learning options) to aid))\documentclass{article}
 \usepackage{algorithm}
 \usepackage{algorithmic}
 \begin{document}
 \title{Hierarchy Deep Q-Learning Framework}
 \maketitle
+Environments with sparse feedback is a major challenge for reinforcement learning algorithms. There are two primary difficulties. The first is that the agent can hardly explore the sparse feedback by totally take random actions around states, which means insufficient information for Q-learning to iterate. The second is that the reward can hardly back propogate properly around the whole state space because of the random actions performed will contain lots of meaningless circles in the local state space. 
+Spatio-temporal abstraction over different levels are efficient techniques to solve long-range planning problem, and can also be transfer to solve sparse reward challenge in reinforcement learning. We consider adding "option" to the choose of agent, which means a "multi-step" action policy. For each option we will set intrinsic reward to help options find proper actions to fulfill its subgoal, meanwhile, maximize rewards gained on the trip. When performing under an option, the agent can still choose another option as a "sub-option". An important feature of our model is that we just give a specific number of options with uniform distributed random subgoal around the state space. The agent will first learn the policy of options with nearby subgoal, which we can call "easy options", then combine easy options and primitive actions (one-step action) to found out how to fulfill harder options, for which the subgoal will be further from where agent begins, at last, combine all well-learned options and primitive actions to efficiently explore the whole state space.  We design an Bellman equation to learn Q-value in various situation. 
+
+\begin{comment}
+There is a simple example in a simple MDP environment. In the environment the agent start from $s_0$, and can only get a big reward 100 in $s_12$, where is also the terminal state. However, the probability of successful moving from $s_10$ to $s_12$, $s_6$ to $s_11$ and $s_3$ to $s_7$ is very small, but 1 for moving back. When failed, the agent will stay without moving. The probability distribution makes the states of environment aggregate to distinct regions and it's hard to cross from lower region to higher region but easy from higher region to lower region. The agent can hardly arrive $s_12$ by totally random walking and when fortunately arriving, it can hardly associate the reward to the Q-function of states in lower regions for a lot of pointless circles in local regions in action history. The insufficient of useful information and lots of noise in the memory will make Q-learning very hard.
+Spatio-temporal abstraction techniques are efficient methods to solve this challenge \cite{sutton1999between}. By giving some options with specific subgoals (represented by intrinsic reward when performing the option), more efficiently the environment can be explored and the reward will be learned. Take the our simple environment as an example. If we give two option 
+\end{comment}
+
 At first, we construct a hierarchy framework without deep neural network.
-After we specify all tasks, the set containing all tasks is defined as $T:\{T_1,T_2,T_3...\}$. We also define the available action set as $A:\{a_1,a_2,a_3...\}$. We define $O:T\cup A$, which is often used as all the operation we can perform. Besides, we define a global task named $global$, which only focus on getting more extrinsic reward during the game. We define $G:T\cup \{global\}$, which is often used as the super-task we are going through. So a task can be regarded as an operation as well as a goal. $\Omega$ means the state set. 
+We use a definition of options similar with the temporal abstraction of options in \cite{sutton1999between}. Our option consists of two components: a policy $\pi:S*O \rightarrow [0,1]$, a termination condition $\beta:S \rightarrow [0,1]$. When an option is taken, the agent will perform based on the policy and decide if the subgoal of the option is fulfilled based on the termination probability $\beta(s)$ in current state. There are two important difference in our option definition: the first is that based on the option policy, the agent can not only choose primitive actions, but also other options. Eventually, the agent will construct a hierarchy policy with unspecific depth. The second difference is that we have no initiation set for option, any options can be choose under any states.
+What's more, we use options in a different way from other previous models, in which the subgoal are pre-defined to some bottleneck states and terminals. We give a number of options with random $\beta(s)$ into our model, giving random subgoals uniform distributed among the state space, which will help the agent gradually explore the whole state space.
+
+
+
+
+
+
+
+The agent learns option polices and the optimal policy conducting options and primitive actions to maximize cumulative extrinsic rewards. 
+After we specify all options with random subgoal, the set containing all options is defined as $T:\{T_1,T_2,T_3...\}$. We also define the available action set as $A:\{a_1,a_2,a_3...\}$. We define $O:T\cup A$, which is often used as all the operation we can perform. 
 
 Then, we define tasks as follows(containing actions as primitive tasks):
 \begin{eqnarray}

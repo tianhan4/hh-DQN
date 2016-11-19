@@ -7,8 +7,8 @@ class AgentConfig(object):
 
     batch_size = 20
     random_start = 30
-    cnn_format = 'NCHW'
-    discount = 0.95
+    cnn_format = 'NHWC'
+    discount = 0.99
     target_q_update_learn_step = 2 * scale
     learning_rate = 0.0025
     learning_rate_minimum = 0.0025
@@ -17,10 +17,10 @@ class AgentConfig(object):
 
     ep_end = 0.1
     ep_start = 1
-    ep_end_t = memory_size
+    ep_end_t = memory_size 
 
-    history_length = 1
-    train_frequency = 4
+    history_length = 4
+    train_frequency = 2
     learn_start = 5. * scale
 
     min_delta = -100
@@ -40,25 +40,31 @@ class AgentConfig(object):
 
 class EnvironmentConfig(object):
     #env_name = 'Breakout-v0'
-    env_name = "StochasticMDPEnv"
+    env_name = "ALEEnvironment"
     screen_width  = 84
     screen_height = 84
     max_reward = 100.
     min_reward = -100.
 
 class DQNConfig(object):
-    model_name = 'HQLModel'
-    max_stackDepth = 5
-    option_num = 3
-    option_dim = 20
-    goal_pho = 50
-    thinking_burden = 5
+    model_name = 'DHQLModel'
+    max_stackDepth = 10
+    option_num = 20
+    goal_pho = 10
+
 
 class M1(AgentConfig, EnvironmentConfig, DQNConfig):
+    rom_file = "roms/pong.bin"
+    mode = "train"
     backend = 'tf'
     env_type = 'detail'
     action_repeat = 1
-
+    display_screen = 0
+    frame_skip = 2
+    color_averaging = True
+    record_screen_path = None
+    record_sound_filename = None
+    minimal_action_set = True
 
 def get_config(FLAGS):
     config = M1()

@@ -1,0 +1,749 @@
+%%% ====================================================================
+%%%  BibTeX-file{
+%%%     author          = "Gerry Murray",
+%%%     version         = "1.2",
+%%%     date            = "2 April 2012",
+%%%     filename        = "acmsmall-sample-bibfile.bib",
+%%%     address         = "ACM, NY",
+%%%     email           = "murray at hq.acm.org",
+%%%     codetable       = "ISO/ASCII",
+%%%     keywords        = "ACM Reference Format, bibliography, citation, references",
+%%%     supported       = "yes",
+%%%     docstring       = "This BibTeX database file contains 'bibdata' entries
+%%%                        that 'match' the examples provided in the Specifications Document
+%%%                        AND, also, 'legacy'-type bibs. It should assist authors in 
+%%%                        choosing the 'correct' at-bibtype and necessary bib-fields
+%%%                        so as to obtain the appropriate ACM Reference Format output. 
+%%%			   It also contains many 'Standard Abbreviations'. "
+%%%  }
+%%% ====================================================================
+
+% Journals
+
+% First the Full Name is given, then the abbreviation used in the AMS Math
+% Reviews, with an indication if it could not be found there.
+% Note the 2nd overwrites the 1st, so swap them if you want the full name.
+
+ %{AMS}
+ @String{AMSTrans = "American Mathematical Society Translations" }
+ @String{AMSTrans = "Amer. Math. Soc. Transl." }
+ @String{BullAMS = "Bulletin of the American Mathematical Society" }
+ @String{BullAMS = "Bull. Amer. Math. Soc." }
+ @String{ProcAMS = "Proceedings of the American Mathematical Society" }
+ @String{ProcAMS = "Proc. Amer. Math. Soc." }
+ @String{TransAMS = "Transactions of the American Mathematical Society" }
+ @String{TransAMS = "Trans. Amer. Math. Soc." }
+
+ %ACM
+ @String{CACM = "Communications of the {ACM}" }
+ @String{CACM = "Commun. {ACM}" }
+ @String{CompServ = "Comput. Surveys" }
+ @String{JACM = "J. ACM" }
+ @String{ACMMathSoft = "{ACM} Transactions on Mathematical Software" }
+ @String{ACMMathSoft = "{ACM} Trans. Math. Software" }
+ @String{SIGNUM = "{ACM} {SIGNUM} Newsletter" }
+ @String{SIGNUM = "{ACM} {SIGNUM} Newslett." }
+
+ @String{AmerSocio = "American Journal of Sociology" }
+ @String{AmerStatAssoc = "Journal of the American Statistical Association" }
+ @String{AmerStatAssoc = "J. Amer. Statist. Assoc." }
+ @String{ApplMathComp = "Applied Mathematics and Computation" }
+ @String{ApplMathComp = "Appl. Math. Comput." }
+ @String{AmerMathMonthly = "American Mathematical Monthly" }
+ @String{AmerMathMonthly = "Amer. Math. Monthly" }
+ @String{BIT = "{BIT}" }
+ @String{BritStatPsych = "British Journal of Mathematical and Statistical
+          Psychology" }
+ @String{BritStatPsych = "Brit. J. Math. Statist. Psych." }
+ @String{CanMathBull = "Canadian Mathematical Bulletin" }
+ @String{CanMathBull = "Canad. Math. Bull." }
+ @String{CompApplMath = "Journal of Computational and Applied Mathematics" }
+ @String{CompApplMath = "J. Comput. Appl. Math." }
+ @String{CompPhys = "Journal of Computational Physics" }
+ @String{CompPhys = "J. Comput. Phys." }
+ @String{CompStruct = "Computers and Structures" }
+ @String{CompStruct = "Comput. \& Structures" }
+ @String{CompJour = "The Computer Journal" }
+ @String{CompJour = "Comput. J." }
+ @String{CompSysSci = "Journal of Computer and System Sciences" }
+ @String{CompSysSci = "J. Comput. System Sci." }
+ @String{Computing = "Computing" }
+ @String{ContempMath = "Contemporary Mathematics" }
+ @String{ContempMath = "Contemp. Math." }
+ @String{Crelle = "Crelle's Journal" }
+ @String{GiornaleMath = "Giornale di Mathematiche" }
+ @String{GiornaleMath = "Giorn. Mat." } % didn't find in AMS MR., ibid.
+
+ %IEEE
+ @String{Computer = "{IEEE} Computer" }
+ @String{IEEETransComp = "{IEEE} Transactions on Computers" }
+ @String{IEEETransComp = "{IEEE} Trans. Comput." }
+ @String{IEEETransAC = "{IEEE} Transactions on Automatic Control" }
+ @String{IEEETransAC = "{IEEE} Trans. Automat. Control" }
+ @String{IEEESpec = "{IEEE} Spectrum" } % didn't find in AMS MR
+ @String{ProcIEEE = "Proceedings of the {IEEE}" }
+ @String{ProcIEEE = "Proc. {IEEE}" } % didn't find in AMS MR
+ @String{IEEETransAeroElec = "{IEEE} Transactions on Aerospace and Electronic
+     Systems" }
+ @String{IEEETransAeroElec = "{IEEE} Trans. Aerospace Electron. Systems" }
+
+ @String{IMANumerAna = "{IMA} Journal of Numerical Analysis" }
+ @String{IMANumerAna = "{IMA} J. Numer. Anal." }
+ @String{InfProcLet = "Information Processing Letters" }
+ @String{InfProcLet = "Inform. Process. Lett." }
+ @String{InstMathApp = "Journal of the Institute of Mathematics and
+     its Applications" }
+ @String{InstMathApp = "J. Inst. Math. Appl." }
+ @String{IntControl = "International Journal of Control" }
+ @String{IntControl = "Internat. J. Control" }
+ @String{IntNumerEng = "International Journal for Numerical Methods in
+     Engineering" }
+ @String{IntNumerEng = "Internat. J. Numer. Methods Engrg." }
+ @String{IntSuper = "International Journal of Supercomputing Applications" }
+ @String{IntSuper = "Internat. J. Supercomputing Applic." } % didn't find
+%% in AMS MR
+ @String{Kibernetika = "Kibernetika" }
+ @String{JResNatBurStand = "Journal of Research of the National Bureau
+     of Standards" }
+ @String{JResNatBurStand = "J. Res. Nat. Bur. Standards" }
+ @String{LinAlgApp = "Linear Algebra and its Applications" }
+ @String{LinAlgApp = "Linear Algebra Appl." }
+ @String{MathAnaAppl = "Journal of Mathematical Analysis and Applications" }
+ @String{MathAnaAppl = "J. Math. Anal. Appl." }
+ @String{MathAnnalen = "Mathematische Annalen" }
+ @String{MathAnnalen = "Math. Ann." }
+ @String{MathPhys = "Journal of Mathematical Physics" }
+ @String{MathPhys = "J. Math. Phys." }
+ @String{MathComp = "Mathematics of Computation" }
+ @String{MathComp = "Math. Comp." }
+ @String{MathScand = "Mathematica Scandinavica" }
+ @String{MathScand = "Math. Scand." }
+ @String{TablesAidsComp = "Mathematical Tables and Other Aids to Computation" }
+ @String{TablesAidsComp = "Math. Tables Aids Comput." }
+ @String{NumerMath = "Numerische Mathematik" }
+ @String{NumerMath = "Numer. Math." }
+ @String{PacificMath = "Pacific Journal of Mathematics" }
+ @String{PacificMath = "Pacific J. Math." }
+ @String{ParDistComp = "Journal of Parallel and Distributed Computing" }
+ @String{ParDistComp = "J. Parallel and Distrib. Comput." } % didn't find
+%% in AMS MR
+ @String{ParComputing = "Parallel Computing" }
+ @String{ParComputing = "Parallel Comput." }
+ @String{PhilMag = "Philosophical Magazine" }
+ @String{PhilMag = "Philos. Mag." }
+ @String{ProcNAS = "Proceedings of the National Academy of Sciences
+                    of the USA" }
+ @String{ProcNAS = "Proc. Nat. Acad. Sci. U. S. A." }
+ @String{Psychometrika = "Psychometrika" }
+ @String{QuartMath = "Quarterly Journal of Mathematics, Oxford, Series (2)" }
+ @String{QuartMath = "Quart. J. Math. Oxford Ser. (2)" }
+ @String{QuartApplMath = "Quarterly of Applied Mathematics" }
+ @String{QuartApplMath = "Quart. Appl. Math." }
+ @String{RevueInstStat = "Review of the International Statisical Institute" }
+ @String{RevueInstStat = "Rev. Inst. Internat. Statist." }
+
+ %SIAM
+ @String{JSIAM = "Journal of the Society for Industrial and Applied
+     Mathematics" }
+ @String{JSIAM = "J. Soc. Indust. Appl. Math." }
+ @String{JSIAMB = "Journal of the Society for Industrial and Applied
+     Mathematics, Series B, Numerical Analysis" }
+ @String{JSIAMB = "J. Soc. Indust. Appl. Math. Ser. B Numer. Anal." }
+ @String{SIAMAlgMeth = "{SIAM} Journal on Algebraic and Discrete Methods" }
+ @String{SIAMAlgMeth = "{SIAM} J. Algebraic Discrete Methods" }
+ @String{SIAMAppMath = "{SIAM} Journal on Applied Mathematics" }
+ @String{SIAMAppMath = "{SIAM} J. Appl. Math." }
+ @String{SIAMComp = "{SIAM} Journal on Computing" }
+ @String{SIAMComp = "{SIAM} J. Comput." }
+ @String{SIAMMatrix = "{SIAM} Journal on Matrix Analysis and Applications" }
+ @String{SIAMMatrix = "{SIAM} J. Matrix Anal. Appl." }
+ @String{SIAMNumAnal = "{SIAM} Journal on Numerical Analysis" }
+ @String{SIAMNumAnal = "{SIAM} J. Numer. Anal." }
+ @String{SIAMReview = "{SIAM} Review" }
+ @String{SIAMReview = "{SIAM} Rev." }
+ @String{SIAMSciStat = "{SIAM} Journal on Scientific and Statistical
+     Computing" }
+ @String{SIAMSciStat = "{SIAM} J. Sci. Statist. Comput." }
+
+ @String{SoftPracExp = "Software Practice and Experience" }
+ @String{SoftPracExp = "Software Prac. Experience" } % didn't find in AMS MR
+ @String{StatScience = "Statistical Science" }
+ @String{StatScience = "Statist. Sci." }
+ @String{Techno = "Technometrics" }
+ @String{USSRCompMathPhys = "{USSR} Computational Mathematics and Mathematical
+     Physics" }
+ @String{USSRCompMathPhys = "{U. S. S. R.} Comput. Math. and Math. Phys." }
+ @String{VLSICompSys = "Journal of {VLSI} and Computer Systems" }
+ @String{VLSICompSys = "J. {VLSI} Comput. Syst." }
+ @String{ZAngewMathMech = "Zeitschrift fur Angewandte Mathematik und
+     Mechanik" }
+ @String{ZAngewMathMech = "Z. Angew. Math. Mech." }
+ @String{ZAngewMathPhys = "Zeitschrift fur Angewandte Mathematik und Physik" }
+ @String{ZAngewMathPhys = "Z. Angew. Math. Phys." }
+
+% Publishers % ================================================= |
+
+ @String{Academic = "Academic Press" }
+ @String{ACMPress = "{ACM} Press" }
+ @String{AdamHilger = "Adam Hilger" }
+ @String{AddisonWesley = "Addison-Wesley" }
+ @String{AllynBacon = "Allyn and Bacon" }
+ @String{AMS = "American Mathematical Society" }
+ @String{Birkhauser = "Birkha{\"u}ser" }
+ @String{CambridgePress = "Cambridge University Press" }
+ @String{Chelsea = "Chelsea" }
+ @String{ClaredonPress = "Claredon Press" }
+ @String{DoverPub = "Dover Publications" }
+ @String{Eyolles = "Eyolles" }
+ @String{HoltRinehartWinston = "Holt, Rinehart and Winston" }
+ @String{Interscience = "Interscience" }
+ @String{JohnsHopkinsPress = "The Johns Hopkins University Press" }
+ @String{JohnWileySons = "John Wiley and Sons" }
+ @String{Macmillan = "Macmillan" }
+ @String{MathWorks = "The Math Works Inc." }
+ @String{McGrawHill = "McGraw-Hill" }
+ @String{NatBurStd = "National Bureau of Standards" }
+ @String{NorthHolland = "North-Holland" }
+ @String{OxfordPress = "Oxford University Press" }  %address Oxford or London?
+ @String{PergamonPress = "Pergamon Press" }
+ @String{PlenumPress = "Plenum Press" }
+ @String{PrenticeHall = "Prentice-Hall" }
+ @String{SIAMPub = "{SIAM} Publications" }
+ @String{Springer = "Springer-Verlag" }
+ @String{TexasPress = "University of Texas Press" }
+ @String{VanNostrand = "Van Nostrand" }
+ @String{WHFreeman = "W. H. Freeman and Co." }
+
+%Entries
+@inproceedings{word2vec,
+title = {Distributed Representations of Words and Phrases and their Compositionality},
+author = {Mikolov, Tomas and Sutskever, Ilya and Chen, Kai and Corrado, Greg S and Dean, Jeff},
+booktitle = {NIPS},
+pages = {3111--3119},
+year = {2013},
+}
+
+@article{DBLP:journals/corr/abs-1301-3781,
+  author    = {Tomas Mikolov and
+               Kai Chen and
+               Greg Corrado and
+               Jeffrey Dean},
+  title     = {Efficient Estimation of Word Representations in Vector Space},
+  journal   = {CoRR},
+  volume    = {abs/1301.3781},
+  year      = {2013},
+  url       = {http://arxiv.org/abs/1301.3781},
+  timestamp = {Thu, 07 May 2015 20:02:01 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/abs-1301-3781},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/ijcai/Buro03,
+  author    = {Michael Buro},
+  title     = {Real-Time Strategy Games: {A} New {AI} Research Challenge},
+  booktitle = {IJCAI-03, Proceedings of the Eighteenth International Joint Conference
+               on Artificial Intelligence, Acapulco, Mexico, August 9-15, 2003},
+  pages     = {1534--1535},
+  year      = {2003},
+  crossref  = {DBLP:conf/ijcai/2003},
+  url       = {http://ijcai.org/Proceedings/09/Papers/265.pdf},
+  timestamp = {Wed, 20 Jul 2016 09:02:28 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/ijcai/Buro03},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@incollection{DBLP:conf/dagstuhl/CowlingBBBBBHMNS13,
+  author    = {Peter I. Cowling and
+               Michael Buro and
+               Michal B{\'{\i}}da and
+               Adi Botea and
+               Bruno Bouzy and
+               Martin V. Butz and
+               Philip Hingston and
+               Hector Mu{\~{n}}oz{-}Avila and
+               Dana S. Nau and
+               Moshe Sipper},
+  title     = {Search in Real-Time Video Games},
+  booktitle = {Artificial and Computational Intelligence in Games},
+  pages     = {1--19},
+  year      = {2013},
+  crossref  = {DBLP:conf/dagstuhl/2013dfu6},
+  url       = {http://dx.doi.org/10.4230/DFU.Vol6.12191.1},
+  doi       = {10.4230/DFU.Vol6.12191.1},
+  timestamp = {Fri, 18 Jul 2014 12:25:27 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/dagstuhl/CowlingBBBBBHMNS13},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/ijcai/OntanonB15,
+  author    = {Santiago Onta{\~{n}}{\'{o}}n and
+               Michael Buro},
+  title     = {Adversarial Hierarchical-Task Network Planning for Complex Real-Time
+               Games},
+  booktitle = {Proceedings of the Twenty-Fourth International Joint Conference on
+               Artificial Intelligence, {IJCAI} 2015, Buenos Aires, Argentina, July
+               25-31, 2015},
+  pages     = {1652--1658},
+  year      = {2015},
+  crossref  = {DBLP:conf/ijcai/2015},
+  url       = {http://ijcai.org/Abstract/15/236},
+  timestamp = {Wed, 20 Jul 2016 15:18:06 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/ijcai/OntanonB15},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{DBLP:journals/jair/FoxL03,
+  author    = {Maria Fox and
+               Derek Long},
+  title     = {{PDDL2.1:} An Extension to {PDDL} for Expressing Temporal Planning
+               Domains},
+  journal   = {J. Artif. Intell. Res. {(JAIR)}},
+  volume    = {20},
+  pages     = {61--124},
+  year      = {2003},
+  url       = {http://dx.doi.org/10.1613/jair.1129},
+  doi       = {10.1613/jair.1129},
+  timestamp = {Fri, 11 Jun 2010 09:49:50 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/jair/FoxL03},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/ijcai/GeibS07,
+  author    = {Christopher W. Geib and
+               Mark Steedman},
+  title     = {On Natural Language Processing and Plan Recognition},
+  booktitle = {{IJCAI} 2007, Proceedings of the 20th International Joint Conference
+               on Artificial Intelligence, Hyderabad, India, January 6-12, 2007},
+  pages     = {1612--1617},
+  year      = {2007},
+  crossref  = {DBLP:conf/ijcai/2007},
+  url       = {http://dli.iiit.ac.in/ijcai/IJCAI-2007/PDF/IJCAI07-260.pdf},
+  timestamp = {Fri, 19 Dec 2008 17:01:55 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/ijcai/GeibS07},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/aaai/Huang15,
+  author    = {Wenyi Huang and Zhaohui Wu and Chen Liang and Prasenjit Mitra and C. Lee Giles},
+  title     = {A Neural Probabilistic Model for Context Based Citation Recommendation},
+  booktitle = {InProccedings of AAAI},
+  year      = {2015},
+}
+
+@inproceedings{DBLP:conf/nips/MikolovSCCD13,
+  author    = {Tomas Mikolov and
+               Ilya Sutskever and
+               Kai Chen and
+               Gregory S. Corrado and
+               Jeffrey Dean},
+  title     = {Distributed Representations of Words and Phrases and their Compositionality},
+  booktitle = {Advances in Neural Information Processing Systems 26: 27th Annual
+               Conference on Neural Information Processing Systems 2013. Proceedings
+               of a meeting held December 5-8, 2013, Lake Tahoe, Nevada, United States.},
+  pages     = {3111--3119},
+  year      = {2013},
+  crossref  = {DBLP:conf/nips/2013},
+  url       = {http://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality},
+  timestamp = {Fri, 31 Jan 2014 12:11:40 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/nips/MikolovSCCD13},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/acl/TurianRB10,
+  author    = {Joseph P. Turian and
+               Lev{-}Arie Ratinov and
+               Yoshua Bengio},
+  title     = {Word Representations: {A} Simple and General Method for Semi-Supervised
+               Learning},
+  booktitle = {{ACL} 2010, Proceedings of the 48th Annual Meeting of the Association
+               for Computational Linguistics, July 11-16, 2010, Uppsala, Sweden},
+  pages     = {384--394},
+  year      = {2010},
+  crossref  = {DBLP:conf/acl/2010},
+  url       = {http://www.aclweb.org/anthology/P10-1040},
+  timestamp = {Fri, 02 Dec 2011 14:17:37 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/acl/TurianRB10},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/nips/MnihH08,
+  author    = {Andriy Mnih and
+               Geoffrey E. Hinton},
+  title     = {A Scalable Hierarchical Distributed Language Model},
+  booktitle = {Advances in Neural Information Processing Systems},
+  pages     = {1081--1088},
+  year      = {2008},
+  crossref  = {DBLP:conf/nips/2008},
+  url       = {http://papers.nips.cc/paper/3583-a-scalable-hierarchical-distributed-language-model},
+  timestamp = {Thu, 11 Dec 2014 17:34:08 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/nips/MnihH08},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{csvd,
+  author    = {Weike Pan and
+               Qiang Yang},
+  title     = {Transfer learning in heterogeneous collaborative filtering domains},
+  journal   = {Artif. Intell.},
+  volume    = {197},
+  pages     = {39--55},
+  year      = {2013},
+  url       = {http://dx.doi.org/10.1016/j.artint.2013.01.003},
+  doi       = {10.1016/j.artint.2013.01.003},
+  timestamp = {Wed, 11 Dec 2013 16:46:51 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/ai/PanY13},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{DBLP:journals/umuai/Burke02,
+  author    = {Robin D. Burke},
+  title     = {Hybrid Recommender Systems: Survey and Experiments},
+  journal   = {User Model. User-Adapt. Interact.},
+  volume    = {12},
+  number    = {4},
+  pages     = {331--370},
+  year      = {2002},
+  url       = {http://dx.doi.org/10.1023/A:1021240730564},
+  doi       = {10.1023/A:1021240730564},
+  timestamp = {Mon, 26 Jan 2004 15:58:34 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/umuai/Burke02},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{DBLP:journals/tois/HerlockerKTR04,
+  author    = {Jonathan L. Herlocker and
+               Joseph A. Konstan and
+               Loren G. Terveen and
+               John Riedl},
+  title     = {Evaluating collaborative filtering recommender systems},
+  journal   = {{ACM} Trans. Inf. Syst.},
+  volume    = {22},
+  number    = {1},
+  pages     = {5--53},
+  year      = {2004},
+  url       = {http://doi.acm.org/10.1145/963770.963772},
+  doi       = {10.1145/963770.963772},
+  timestamp = {Thu, 09 Feb 2006 13:54:21 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/tois/HerlockerKTR04},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@proceedings{DBLP:conf/kdd/2008,
+  editor    = {Ying Li and
+               Bing Liu and
+               Sunita Sarawagi},
+  title     = {Proceedings of the 14th {ACM} {SIGKDD} International Conference on
+               Knowledge Discovery and Data Mining, Las Vegas, Nevada, USA, August
+               24-27, 2008},
+  publisher = {{ACM}},
+  year      = {2008},
+  isbn      = {978-1-60558-193-4},
+  timestamp = {Mon, 14 May 2012 09:20:40 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/kdd/2008},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@proceedings{DBLP:conf/kdd/2011,
+  editor    = {Chid Apt{\'{e}} and
+               Joydeep Ghosh and
+               Padhraic Smyth},
+  title     = {Proceedings of the 17th {ACM} {SIGKDD} International Conference on
+               Knowledge Discovery and Data Mining, San Diego, CA, USA, August 21-24,
+               2011},
+  publisher = {{ACM}},
+  year      = {2011},
+  isbn      = {978-1-4503-0813-7},
+  timestamp = {Tue, 23 Aug 2011 09:25:42 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/kdd/2011},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/icdm/Rendle10,
+  author    = {Steffen Rendle},
+  title     = {Factorization Machines},
+  booktitle = {{ICDM} 2010, The 10th {IEEE} International Conference on Data Mining,
+               Sydney, Australia, 14-17 December 2010},
+  pages     = {995--1000},
+  year      = {2010},
+  crossref  = {DBLP:conf/icdm/2010},
+  url       = {http://dx.doi.org/10.1109/ICDM.2010.127},
+  doi       = {10.1109/ICDM.2010.127},
+  timestamp = {Wed, 17 Sep 2014 19:35:04 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/icdm/Rendle10},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{DBLP:journals/tkde/PanY10,
+  author    = {Sinno Jialin Pan and
+               Qiang Yang},
+  title     = {A Survey on Transfer Learning},
+  journal   = {{IEEE} Trans. Knowl. Data Eng.},
+  volume    = {22},
+  number    = {10},
+  pages     = {1345--1359},
+  year      = {2010},
+  url       = {http://dx.doi.org/10.1109/TKDE.2009.191},
+  doi       = {10.1109/TKDE.2009.191},
+  timestamp = {Wed, 11 Dec 2013 16:46:51 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/tkde/PanY10},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/cikm/LiHZC10,
+  author    = {Yanen Li and
+               Jia Hu and
+               ChengXiang Zhai and
+               Ye Chen},
+  title     = {Improving one-class collaborative filtering by incorporating rich
+               user information},
+  booktitle = {Proceedings of the 19th {ACM} Conference on Information and Knowledge
+               Management, {CIKM} 2010, Toronto, Ontario, Canada, October 26-30,
+               2010},
+  pages     = {959--968},
+  year      = {2010},
+  crossref  = {DBLP:conf/cikm/2010},
+  url       = {http://doi.acm.org/10.1145/1871437.1871559},
+  doi       = {10.1145/1871437.1871559},
+  timestamp = {Mon, 03 Jan 2011 15:20:57 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/cikm/LiHZC10},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/recsys/KoenigsteinDK11,
+  author    = {Noam Koenigstein and
+               Gideon Dror and
+               Yehuda Koren},
+  title     = {Yahoo! music recommendations: modeling music ratings with temporal
+               dynamics and item taxonomy},
+  booktitle = {Proceedings of the 2011 {ACM} Conference on Recommender Systems, RecSys
+               2011, Chicago, IL, USA, October 23-27, 2011},
+  pages     = {165--172},
+  year      = {2011},
+  crossref  = {DBLP:conf/recsys/2011},
+  url       = {http://doi.acm.org/10.1145/2043932.2043964},
+  doi       = {10.1145/2043932.2043964},
+  timestamp = {Tue, 25 Oct 2011 19:22:32 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/recsys/KoenigsteinDK11},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/sigir/MoshfeghiPJ11,
+  author    = {Yashar Moshfeghi and
+               Benjamin Piwowarski and
+               Joemon M. Jose},
+  title     = {Handling data sparsity in collaborative filtering using emotion and
+               semantic based features},
+  booktitle = {Proceeding of the 34th International {ACM} {SIGIR} Conference on Research
+               and Development in Information Retrieval, {SIGIR} 2011, Beijing, China,
+               July 25-29, 2011},
+  pages     = {625--634},
+  year      = {2011},
+  crossref  = {DBLP:conf/sigir/2011},
+  url       = {http://doi.acm.org/10.1145/2009916.2010001},
+  doi       = {10.1145/2009916.2010001},
+  timestamp = {Fri, 05 Aug 2011 15:26:15 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/sigir/MoshfeghiPJ11},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/icdm/GantnerDFRS10,
+  author    = {Zeno Gantner and
+               Lucas Drumond and
+               Christoph Freudenthaler and
+               Steffen Rendle and
+               Lars Schmidt{-}Thieme},
+  title     = {Learning Attribute-to-Feature Mappings for Cold-Start Recommendations},
+  booktitle = {{ICDM} 2010, The 10th {IEEE} International Conference on Data Mining,
+               Sydney, Australia, 14-17 December 2010},
+  pages     = {176--185},
+  year      = {2010},
+  crossref  = {DBLP:conf/icdm/2010},
+  url       = {http://dx.doi.org/10.1109/ICDM.2010.129},
+  doi       = {10.1109/ICDM.2010.129},
+  timestamp = {Wed, 17 Sep 2014 19:35:04 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/icdm/GantnerDFRS10},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{DBLP:journals/jmlr/BengioDVJ03,
+  author    = {Yoshua Bengio and
+               R{\'{e}}jean Ducharme and
+               Pascal Vincent and
+               Christian Janvin},
+  title     = {A Neural Probabilistic Language Model},
+  journal   = {Journal of Machine Learning Research},
+  volume    = {3},
+  pages     = {1137--1155},
+  year      = {2003},
+  url       = {http://www.jmlr.org/papers/v3/bengio03a.html},
+  timestamp = {Thu, 05 Feb 2004 13:43:02 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/jmlr/BengioDVJ03},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/interspeech/MikolovKBCK10,
+  author    = {Tomas Mikolov and
+               Martin Karafi{\'{a}}t and
+               Lukas Burget and
+               Jan Cernock{\'{y}} and
+               Sanjeev Khudanpur},
+  title     = {Recurrent neural network based language model},
+  booktitle = {{INTERSPEECH} 2010, 11th Annual Conference of the International Speech
+               Communication Association, Makuhari, Chiba, Japan, September 26-30,
+               2010},
+  pages     = {1045--1048},
+  year      = {2010},
+  crossref  = {DBLP:conf/interspeech/2010},
+  url       = {http://www.isca-speech.org/archive/interspeech_2010/i10_1045.html},
+  timestamp = {Wed, 02 Mar 2011 14:26:03 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/interspeech/MikolovKBCK10},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{DBLP:journals/corr/abs-1301-3781,
+  author    = {Tomas Mikolov and
+               Kai Chen and
+               Greg Corrado and
+               Jeffrey Dean},
+  title     = {Efficient Estimation of Word Representations in Vector Space},
+  journal   = {CoRR},
+  volume    = {abs/1301.3781},
+  year      = {2013},
+  url       = {http://arxiv.org/abs/1301.3781},
+  timestamp = {Mon, 18 Feb 2013 20:50:59 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/abs-1301-3781},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/nips/FromeCSBDRM13,
+  author    = {Andrea Frome and
+               Gregory S. Corrado and
+               Jonathon Shlens and
+               Samy Bengio and
+               Jeffrey Dean and
+               Marc'Aurelio Ranzato and
+               Tomas Mikolov},
+  title     = {DeViSE: {A} Deep Visual-Semantic Embedding Model},
+  booktitle = {Advances in Neural Information Processing Systems 26: 27th Annual
+               Conference on Neural Information Processing Systems 2013. Proceedings
+               of a meeting held December 5-8, 2013, Lake Tahoe, Nevada, United States.},
+  pages     = {2121--2129},
+  year      = {2013},
+  crossref  = {DBLP:conf/nips/2013},
+  url       = {http://papers.nips.cc/paper/5204-devise-a-deep-visual-semantic-embedding-model},
+  timestamp = {Fri, 31 Jan 2014 12:11:40 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/nips/FromeCSBDRM13},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{DBLP:journals/corr/MikolovLS13,
+  author    = {Tomas Mikolov and
+               Quoc V. Le and
+               Ilya Sutskever},
+  title     = {Exploiting Similarities among Languages for Machine Translation},
+  journal   = {CoRR},
+  volume    = {abs/1309.4168},
+  year      = {2013},
+  url       = {http://arxiv.org/abs/1309.4168},
+  timestamp = {Wed, 16 Oct 2013 16:43:12 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/MikolovLS13},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/icml/LeM14,
+  author    = {Quoc V. Le and
+               Tomas Mikolov},
+  title     = {Distributed Representations of Sentences and Documents},
+  booktitle = {Proceedings of the 31th International Conference on Machine Learning,
+               {ICML} 2014, Beijing, China, 21-26 June 2014},
+  pages     = {1188--1196},
+  year      = {2014},
+  crossref  = {DBLP:conf/icml/2014},
+  url       = {http://jmlr.org/proceedings/papers/v32/le14.html},
+  timestamp = {Fri, 07 Nov 2014 20:42:30 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/icml/LeM14},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@incollection{DBLP:reference/ml/MelvilleS10,
+  author    = {Prem Melville and
+               Vikas Sindhwani},
+  title     = {Recommender Systems},
+  booktitle = {Encyclopedia of Machine Learning},
+  pages     = {829--838},
+  year      = {2010},
+  crossref  = {DBLP:reference/ml/2010},
+  url       = {http://dx.doi.org/10.1007/978-0-387-30164-8_705},
+  doi       = {10.1007/978-0-387-30164-8_705},
+  timestamp = {Fri, 25 Nov 2011 17:51:30 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/reference/ml/MelvilleS10},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/kdd/WangB11,
+  author    = {Chong Wang and
+               David M. Blei},
+  title     = {Collaborative topic modeling for recommending scientific articles},
+  booktitle = {Proceedings of the 17th {ACM} {SIGKDD} International Conference on
+               Knowledge Discovery and Data Mining, San Diego, CA, USA, August 21-24,
+               2011},
+  pages     = {448--456},
+  year      = {2011},
+  crossref  = {DBLP:conf/kdd/2011},
+  url       = {http://doi.acm.org/10.1145/2020408.2020480},
+  doi       = {10.1145/2020408.2020480},
+  timestamp = {Tue, 23 Aug 2011 09:53:18 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/kdd/WangB11},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/icml/CollobertW08,
+  author    = {Ronan Collobert and
+               Jason Weston},
+  title     = {A unified architecture for natural language processing: deep neural
+               networks with multitask learning},
+  booktitle = {Machine Learning, Proceedings of the Twenty-Fifth International Conference
+               {(ICML} 2008), Helsinki, Finland, June 5-9, 2008},
+  pages     = {160--167},
+  year      = {2008},
+  crossref  = {DBLP:conf/icml/2008},
+  url       = {http://doi.acm.org/10.1145/1390156.1390177},
+  doi       = {10.1145/1390156.1390177},
+  timestamp = {Thu, 14 Aug 2008 13:58:39 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/icml/CollobertW08},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/acl/TurianRB10,
+  author    = {Joseph P. Turian and
+               Lev{-}Arie Ratinov and
+               Yoshua Bengio},
+  title     = {Word Representations: {A} Simple and General Method for Semi-Supervised
+               Learning},
+  booktitle = {{ACL} 2010, Proceedings of the 48th Annual Meeting of the Association
+               for Computational Linguistics, July 11-16, 2010, Uppsala, Sweden},
+  pages     = {384--394},
+  year      = {2010},
+  crossref  = {DBLP:conf/acl/2010},
+  url       = {http://www.aclweb.org/anthology/P10-1040},
+  timestamp = {Fri, 02 Dec 2011 14:17:37 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/acl/TurianRB10},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/nips/MnihH08,
+  author    = {Andriy Mnih and
+               Geoffrey E. Hinton},
+  title     = {A Scalable Hierarchical Distributed Language Model},
+  booktitle = {Advances in Neural Information Processing Systems 21, Proceedings
+               of the Twenty-Second Annual Conference on Neural Information Processing
+               Systems, Vancouver, British Columbia, Canada, December 8-11, 2008},
+  pages     = {1081--1088},
+  year      = {2008},
+  crossref  = {DBLP:conf/nips/2008},
+  url       = {http://papers.nips.cc/paper/3583-a-scalable-hierarchical-distributed-language-model},
+  timestamp = {Thu, 11 Dec 2014 17:34:08 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/nips/MnihH08},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+

@@ -1,0 +1,46 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Buro}{2003}]{DBLP:conf/ijcai/Buro03}
+Buro, M.
+\newblock 2003.
+\newblock Real-time strategy games: {A} new {AI} research challenge.
+\newblock In {\em IJCAI-03, Proceedings of the Eighteenth International Joint
+  Conference on Artificial Intelligence, Acapulco, Mexico, August 9-15, 2003},
+  1534--1535.
+
+\bibitem[\protect\citeauthoryear{Cowling \bgroup et al\mbox.\egroup
+  }{2013}]{DBLP:conf/dagstuhl/CowlingBBBBBHMNS13}
+Cowling, P.~I.; Buro, M.; B{\'{\i}}da, M.; Botea, A.; Bouzy, B.; Butz, M.~V.;
+  Hingston, P.; Mu{\~{n}}oz{-}Avila, H.; Nau, D.~S.; and Sipper, M.
+\newblock 2013.
+\newblock Search in real-time video games.
+\newblock In {\em Artificial and Computational Intelligence in Games}.
+\newblock  1--19.
+
+\bibitem[\protect\citeauthoryear{Fox and
+  Long}{2003}]{DBLP:journals/jair/FoxL03}
+Fox, M., and Long, D.
+\newblock 2003.
+\newblock {PDDL2.1:} an extension to {PDDL} for expressing temporal planning
+  domains.
+\newblock {\em J. Artif. Intell. Res. {(JAIR)}} 20:61--124.
+
+\bibitem[\protect\citeauthoryear{Mikolov \bgroup et al\mbox.\egroup
+  }{2013}]{word2vec}
+Mikolov, T.; Sutskever, I.; Chen, K.; Corrado, G.~S.; and Dean, J.
+\newblock 2013.
+\newblock Distributed representations of words and phrases and their
+  compositionality.
+\newblock In {\em NIPS},  3111--3119.
+
+\bibitem[\protect\citeauthoryear{Onta{\~{n}}{\'{o}}n and
+  Buro}{2015}]{DBLP:conf/ijcai/OntanonB15}
+Onta{\~{n}}{\'{o}}n, S., and Buro, M.
+\newblock 2015.
+\newblock Adversarial hierarchical-task network planning for complex real-time
+  games.
+\newblock In {\em Proceedings of the Twenty-Fourth International Joint
+  Conference on Artificial Intelligence, {IJCAI} 2015, Buenos Aires, Argentina,
+  July 25-31, 2015},  1652--1658.
+
+\end{thebibliography}

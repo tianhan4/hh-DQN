@@ -3,14 +3,20 @@ import random
 import logging
 import numpy as np
 
-class HReplayMemory:
+class ReplayMemory:
     def __init__(self, config):
         self.memory_size = config.memory_size
         self.actions = np.empty(self.memory_size, dtype=np.uint8)
         self.rewards = np.empty(self.memory_size, dtype=np.float32)
         self.terminals = np.empty(self.memory_size, dtype=np.bool)
-        self.start_states = np.empty((self.memory_size, config.history_length, config.state_num), dtype=np.uint8)
-        self.next_states = np.empty((self.memory_size, config.history_length, config.state_num), dtype=np.uint8)
+        if config.cnn_format=="NHWC":
+            self.start_states = np.empty((self.memory_size, config.screen_height, config.screen_width,config.history_length),
+                                         dtype=np.float16)
+            self.next_states = np.empty((self.memory_size, config.screen_height, config.screen_width, config.history_length),
+                                        dtype=np.float16)
+        else:
+            self.start_states = np.empty((self.memory_size, config.history_length, config.screen_height, config.screen_width), dtype=np.float16)
+            self.next_states = np.empty((self.memory_size, config.history_length, config.screen_height, config.screen_width), dtype=np.float16)
         self.goals = np.empty((self.memory_size))
         self.ks = np.empty((self.memory_size))
         self.count = 0

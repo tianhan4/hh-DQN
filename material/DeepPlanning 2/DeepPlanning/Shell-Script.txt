@@ -1,0 +1,6 @@
+Shell Script
+
+Christian Fritz has created a shell script that will gather together a LaTeX Source package of a paper. Use of this shell script is *not* required, but some authors may find it useful.
+
+For the latest version of the script, go to https://gist.github.com/chfritz/5447483
+

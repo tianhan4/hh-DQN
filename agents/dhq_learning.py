@@ -7,7 +7,7 @@ import tensorflow as tf
 import pprint
 import argparse
 import inspect
-from util.hreplay_memory import HReplayMemory
+from util.dhreplay_memory import ReplayMemory
 
 pp = pprint.PrettyPrinter().pprint
 def class_vars(obj):
@@ -28,7 +28,6 @@ class Agent():
         self.env = getattr(getattr(model_module,self.env_name),self.env_name)(config)
         _, _, self.config.actions = self.env.new_game()
         self.config.action_num = len(self.config.actions)
-        self.config.state_num = self.env.state_num
         model_module = __import__(os.path.join("models."+self.model_name))
         self.model = getattr(getattr(model_module,self.model_name),self.model_name)(config)
         print(self.model)
@@ -52,8 +51,12 @@ class Agent():
                 self.summary_ops[tag] = tf.histogram_summary(tag, self.summary_placeholders[tag])
         pp(class_vars(self.config))
         tf.initialize_all_variables().run()
-        self.memory = HReplayMemory(config)
-        self.optionStack_state = np.empty((self.config.max_stackDepth, self.config.history_length, self.config.state_num),dtype="float32")
+        self.memory = ReplayMemory(config)
+        if config.cnn_format == 'NHWC':
+            self.optionStack_state = np.empty((self.config.max_stackDepth, self.config.screen_height,
+                                               self.config.screen_width,self.config.history_length),dtype="float16")
+        else:
+            self.optionStack_state = np.empty((self.config.max_stackDepth, self.config.history_length, self.config.screen_height, self.config.screen_width),dtype="float16")
         self.optionStack_k = np.zeros((self.max_stackDepth), dtype="int32")
         self.optionStack_r = np.zeros((self.max_stackDepth), dtype="float32")
         self.optionStack = np.zeros((self.max_stackDepth), dtype="int32")
@@ -61,11 +64,6 @@ class Agent():
             
 
     def observe(self, state, reward, action, terminal):
-#print("observe: ", self.optionStack)
-#        print("state:", state)
-#        print("reward", reward)
-#        print("action", action)
-#        print('terminal', terminal)
         #continuous terminal
         beta = 1 #primitive action first
 
@@ -79,7 +77,7 @@ class Agent():
                 break
             if self.stackIdx == 1:
                 break
-            beta = self.model.beta_ng.eval({self.model.state_input_n: [state],
+            beta = self.model.beta_sg.eval({self.model.state_input: [state],
                                             self.model.g: [self.optionStack[self.stackIdx-1]]})
 
         #continuous interrupting(unavailable now.)
@@ -139,7 +137,8 @@ class Agent():
                 reward, state, terminal = self.env.step(action - self.option_num)
                 for i in range(1,self.stackIdx):
                     self.optionStack_k[i] += 1
-                    self.optionStack_r[i] += reward*self.config.discount ** (self.optionStack_k[i]-1)
+                    #self.optionStack_r[i] *= self.config.discount
+                    self.optionStack_r[i] += reward
                 time3 = time.time()
                 self.observe(state, reward, action, terminal)
                 time4 = time.time()
@@ -184,15 +183,6 @@ class Agent():
                             self.model.save_model(self.step + 1)
                             max_avg_ep_reward = max(max_avg_ep_reward, avg_ep_reward)
                         if self.step > 1800:
-                            ori_qs = self.model.ori_qs.eval()
-                            qs = self.model.qs.eval()
-                            #print("ori_qs", ori_qs)
-                            #print("qs",qs)
-                            print("base choose:")
-                            print(np.argmax(ori_qs,0)-self.config.option_num)
-                            for i in range(self.config.option_num):
-                                print("under :",i)
-                                print(np.argmax(qs[i],0)-self.config.option_num)
                             self.inject_summary({
                                 'average.reward': avg_reward,
                                 'average.loss': avg_loss,
