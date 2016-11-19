@@ -1,0 +1,129 @@
+we propose a framework that integrates deep reinforcement learning with hierarchical value functions (h-DQN), where the agent is motivated to solve intrinsic goals (via learning options) to aid))\documentclass{article}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\begin{document}
+\title{Hierarchy Deep Q-Learning Framework}
+\maketitle
+Environments with sparse feedback is a major challenge for reinforcement learning algorithms. There are two primary difficulties. The first is that the agent can hardly explore the sparse feedback by totally take random actions around states, which means insufficient information for Q-learning to iterate. The second is that the reward can hardly back propogate properly around the whole state space because of the random actions performed will contain lots of meaningless circles in the local state space. 
+Spatio-temporal abstraction over different levels are efficient techniques to solve long-range planning problem, and can also be transfer to solve sparse reward challenge in reinforcement learning. We consider adding "option" to the choose of agent, which means a "multi-step" action policy. For each option we will set intrinsic reward to help options find proper actions to fulfill its subgoal, meanwhile, maximize rewards gained on the trip. When performing under an option, the agent can still choose another option as a "sub-option". An important feature of our model is that we just give a specific number of options with uniform distributed random subgoal around the state space. The agent will first learn the policy of options with nearby subgoal, which we can call "easy options", then combine easy options and primitive actions (one-step action) to found out how to fulfill harder options, for which the subgoal will be further from where agent begins, at last, combine all well-learned options and primitive actions to efficiently explore the whole state space.  We design an Bellman equation to learn Q-value in various situation. 
+
+\begin{comment}
+There is a simple example in a simple MDP environment. In the environment the agent start from $s_0$, and can only get a big reward 100 in $s_12$, where is also the terminal state. However, the probability of successful moving from $s_10$ to $s_12$, $s_6$ to $s_11$ and $s_3$ to $s_7$ is very small, but 1 for moving back. When failed, the agent will stay without moving. The probability distribution makes the states of environment aggregate to distinct regions and it's hard to cross from lower region to higher region but easy from higher region to lower region. The agent can hardly arrive $s_12$ by totally random walking and when fortunately arriving, it can hardly associate the reward to the Q-function of states in lower regions for a lot of pointless circles in local regions in action history. The insufficient of useful information and lots of noise in the memory will make Q-learning very hard.
+Spatio-temporal abstraction techniques are efficient methods to solve this challenge \cite{sutton1999between}. By giving some options with specific subgoals (represented by intrinsic reward when performing the option), more efficiently the environment can be explored and the reward will be learned. Take the our simple environment as an example. If we give two option 
+\end{comment}
+
+At first, we construct a hierarchy framework without deep neural network.
+We use a definition of options similar with the temporal abstraction of options in \cite{sutton1999between}. Our option consists of two components: a policy $\pi:S*O \rightarrow [0,1]$, a termination condition $\beta:S \rightarrow [0,1]$. When an option is taken, the agent will perform based on the policy and decide if the subgoal of the option is fulfilled based on the termination probability $\beta(s)$ in current state. There are two important difference in our option definition: the first is that based on the option policy, the agent can not only choose primitive actions, but also other options. Eventually, the agent will construct a hierarchy policy with unspecific depth. The second difference is that we have no initiation set for option, any options can be choose under any states.
+What's more, we use options in a different way from other previous models, in which the subgoal are pre-defined to some bottleneck states and terminals. We give a number of options with random $\beta(s)$ into our model, giving random subgoals uniform distributed among the state space, which will help the agent gradually explore the whole state space.
+
+
+
+
+
+
+
+The agent learns option polices and the optimal policy conducting options and primitive actions to maximize cumulative extrinsic rewards. 
+After we specify all options with random subgoal, the set containing all options is defined as $T:\{T_1,T_2,T_3...\}$. We also define the available action set as $A:\{a_1,a_2,a_3...\}$. We define $O:T\cup A$, which is often used as all the operation we can perform. 
+
+Then, we define tasks as follows(containing actions as primitive tasks):
+\begin{eqnarray}
+O:\{& \pi : \Omega * O\rightarrow [0,1],&\\
+     \nonumber & \beta : \Omega \rightarrow [0,1]&\}
+\end{eqnarray}
+
+The $\pi$ specifies the policy: $\pi_o(s,t)$ mean the policy of $o$: the probability of taking task $t$ under the state $s$. and $\beta$ defines the termination condition of a task, $\beta_o(s)$ denotes the probability of terminating the task at the state of $s$, meaning the goal of it.
+One thing notable is that primitive actions are also compatible for the subtask definition, while the policy $\pi(s,o)=1$ for all states only when $o$ is the current action and $\beta(s)=1$ for all states, meaning the task will definitely stop after one action.
+
+Now we can define the learning procedure.
+
+\section{Hierarchy Model Learning}
+We have to define different intrinsic reward based on the task on which the subtask is performed.
+
+$r^a_s \quad a\in{A},s\in{\Omega}$ : extrinsic reward gained when perform primitive action $a$ on the state of $s$, it's given by the game model.
+
+Because actions can be regarded as primitive tasks, we can define a more general reward:
+
+$r^o_s \quad o\in{O},s\in{\Omega}$ : extrinsic reward gained when perform task $o$ on the state of $s$.
+
+Then we define the mixture reward under the hierarchy reinforcement learning:
+
+$r^o_{s,g} \quad o\in{O},s\in{\Omega},g\in{G}$ : mixture reward gained when perform subtask $o$ under the task goal of $g$ on the state of $s$.
+
+Then we define the Bellman equation of reward and the intrinsic part of reward:
+
+\begin{equation}\label{reward_function}
+r^o_s=\sum_{t\in{O}}{\pi_o(s,t)E[r^t_s + \gamma^k(1-\beta_o(s'))r^o_{s'})]}
+\end{equation}
+In the equation, $k$ is the number of steps used performing $t$ from state $s$. The reward for task $o$ under state $s$ is the expectation of the sum of the accumulate reward gained during the process of the first subtask $t$ and the future expected reward if the task is not terminated according to $\beta_o(s')$. Primitive action also satisfies this equation, but will be given directly from the model.
+
+\begin{eqnarray}\label{reward_function2}
+& r^o_{s,g}=\sum_{t\in{O}}{\pi_o(s,t)E[IR(g,s')+r^t_s + \gamma^k(1-\beta_o(s'))r^o_{s'}]} \\
+& IR(g,s) =\rho * \beta_g{(s)}
+\end{eqnarray}
+
+We define the mixture reward with two parts: getting more rewards while trying to reach specified states. Parameter $\rho$ is used to control the relative weight of the local goal of task $g$. Under the reward model, we can construct the value learning procedure. One exception is that when $g==global$, $IR(g,s)=0$, we only consider maximum extrinsic reward.
+
+This procedure helps building the model of the current hierarchy structure.
+
+\section{\label{sub:HVL}Hierarchy Value Learning}
+In the value learning procedure of hierarchy tasks. We define a new Q-function. $Q^*(g,s,o) \quad g\in G,s\in \Omega, o\in O$ denotes the max Q-value after performing task $o$ from the state $s$ under the goal of task $g$, if from that time on we always conduct the optimal operations.
+
+We get the Bellman equation of this new Q-value as follows:
+\begin{equation}\label{Q_function}
+Q^*(g,s,o) = \sum_{t\in O}{\pi_o(s,t)E[r^t_{(s,g)}+\gamma^k((1-\beta_o(s'))Q^*(g,s',o)+\beta_o(s')\max \limits_{t'\in O}Q^*(g,s',t'))]}
+\end{equation}
+$k$ is the number of primitive steps used for task $t$ to finish from state $s$. We notice that this way of learning can be done just after every finishing of subtask of $o$. It also satisfied when $g==global$.
+
+This procedure get the Q-value from the current hierarchy structure, which will also dynamically change the policy of tasks to building better hierarchy structure.
+
+\section{$\beta$ learning} \label{beta_learning}
+The goal of random initialized tasks should also be learned to adapt the goal to maximum Q-value in section \ref{sub:HVL}. We use interrupting policy to help learning the $\beta$ function as well as choose better policy.
+
+In the running phase, when $Q^*(g,s,currento)<\max \limits_{t\in O}{Q^*(g,s,t)}$, then interrupt the task $currento$ to choose task $\mathop{argmax} \limits_{t\in O}{Q^*(g,s,t)}$ with probability $sigmoid(\lambda * (\max \limits_{t'\in O}Q^*(g,s',t')-Q^*(g,s',o)))$. $\lambda$ controls the balance between keeping the current policy or changing to better policy.\cite{sutton1999between} has proved this policy will definitely improve (at least not deteriorate) V-value. Meanwhile, the $\beta$ of is updated. The update way is inspired by the new Q-function. The first derivative of $Q^*(g,s,o)$ with respect to $\beta_o(s')$ from equation \ref{Q_function} is as follows:
+\begin{equation}
+\frac{\partial Q^*(g,s,o)}{\partial \beta_o(s')}=\sum_{t\in O}{\pi_o(s,t)E[\gamma^k(\max \limits_{t'\in O}Q^*(g,s',t')-Q^*(g,s',o))]}
+\end{equation}
+To maximum Q value we take use of the equation. When a subtask $t$ is finished, we accumulate the grad value $grad'=grad+(\max \limits_{t'\in O}Q^*(g,s',t')-Q^*(g,s',o)))$, Then:
+\begin{equation}
+\beta_o(s)=sigmoid(grad)
+\end{equation}
+
+This procedure helps building better hierarchy structure by changing the goal of tasks.
+
+\section{Deep Learning Procedure}
+\begin{algorithm}[t]
+\caption{Deep Hierarchy Reinforcement Learning Procedure}
+\label{alg:framework}
+\begin{algorithmic}[1]
+\STATE Update the reward with Bellman equation of reward (equation \ref{reward_function}).\\
+$r^o_s \leftarrow r^o_s+\alpha[r^t_s+\gamma^k(1-\beta_o(s'))r^o_{s'})-r^o_s]$
+% why not use r(*,s)?...because it needs policy of every task, and will learn many nonsense: small probability event.
+\STATE Update the Q-value with Bellman equation of Q-value.\\
+$Q^*(g,s,o) \leftarrow Q^*(g,s,o) + \alpha[r^t_{(s,g)}+\gamma^kU(g,s',o)-Q^*(g,s,o)]$\\
+where, \\
+$U(g,s,o)=(1-\beta_o(s))Q^*(g,s,o)+\beta_o(s)\max \limits_{t'\in O}Q^*(g,s,t')$       
+\STATE Consider if the subgoal of task $o$ is finished by $\beta_o(s)$.
+\STATE Consider whether interrupting, if so, update the $\beta_o(s)$ as described in Section \ref{beta_learning}.
+\end{algorithmic}
+\end{algorithm}
+
+Predefine the number of tasks as $n$.
+We may need three DNNs: one for reward mapping $r(s,o)$, one for Q-value mapping $Q^*(g,s,o)$ and one for $\beta(s,o)$. To calculate $\max \limits_{t'\in O}Q^*(g,s',t')$ in one run of NN, the $o$ parameter will be fixed in the output of the NN as in \cite{mnih2015human-level}. To make $g$ as a input of NN of Q-value, we will assign every task a distributed vector as the input. The structure of NN has not decided. 
+
+During the reinforcement learning, the model will keep finding the next task to perform based on the $\pi_o(s,t)$, we use a probabilistic definition of it.
+
+\begin{equation}\label{policy_function}
+\pi_o(s,t)=\frac{exp(\mu*Q^*(o,s,t))}{\sum_{t'\in o}{exp(\mu*Q^*(o,s,t'))}}
+\end{equation}
+
+The parameter $\mu$ is used to control the balance between the max-Q policy and softmax-Q policy.
+
+When one subtask $t$ is finished from the state $s$ to $s'$ under the super-task and current-task $(g,o)$, learning procedure begins as in Algorithm \ref{alg:framework}.
+
+There are 3 new parameters in learning procedure : $\rho, \lambda, \mu$, their use are explained in the text. $\rho$ should decrease during the learning procedure, gradually making learning focus on extrinsic reward rather than intrinsic reward. $\lambda$ should gradually increase, because when Q-value is sufficiently learned, the interrupting policy will be more credible. $\mu$ should gradually increase, for the same reason for $\lambda$, task policy should tend to be more deterministic to max-Q policy.
+
+\bibliographystyle{plain}
+\bibliography{all}
+
+\end{document}
+

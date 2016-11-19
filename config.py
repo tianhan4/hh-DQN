@@ -29,7 +29,7 @@ class AgentConfig(object):
     double_q = True
     dueling = False
 
-    _test_step = 500 * scale
+    _test_step = 50 * scale
     _save_step = _test_step * 10
     random_seed = 0
     is_train = True
