@@ -67,18 +67,23 @@ class Agent():
         #continuous terminal
         beta = 1 #primitive action first
 
+        beta_sa, = self.sess.run([self.model.beta_na,], {self.model.state_input_n: [state],
+                                        self.model.g: [self.optionStack[self.stackIdx-1]]})[0]
         while self.stackIdx > 1:
             if random.random() <= beta or terminal==1:
                 self.memory.add(self.optionStack_state[self.stackIdx - 1], state, self.optionStack_r[
                     self.stackIdx - 1], self.optionStack[self.stackIdx - 1], terminal, self.optionStack[
                     self.stackIdx-2],self.optionStack_k[self.stackIdx - 1])
                 self.stackIdx -= 1
+            elif self.optionStack_k[self.stackIdx - 1] > self.config.shut_step:
+                self.stackIdx -= 1
             else:
                 break
             if self.stackIdx == 1:
                 break
-            beta = self.model.beta_sg.eval({self.model.state_input: [state],
-                                            self.model.g: [self.optionStack[self.stackIdx-1]]})
+            self.betaCount[beta_sa>0.8] += 1
+            beta = beta_sa[self.optionStack[self.stackIdx-1]]
+            #print(self.model.g.eval(),beta)
 
         #continuous interrupting(unavailable now.)
         while self.stackIdx > 1:
@@ -90,6 +95,8 @@ class Agent():
         if self.step > self.learn_start:
             if self.step % self.train_frequency == 0:
                 self.q_learning_mini_batch()
+            if self.step % self.target_q_update_learn_step == 0:
+                self.model.update_target_q_network()
         
 
     #with training
@@ -97,6 +104,7 @@ class Agent():
         if self.config.is_train:
             num_game, ep_reward = 0,0.
             total_reward, self.total_loss, total_q = 0.,0.,0.
+            self.total_beta_loss = 0.
             max_avg_ep_reward = 0
             ep_rewards = []
             start_step = 0
@@ -108,6 +116,7 @@ class Agent():
             observe_times = []
             optionDepth = []
             optionDepths = 0.
+            self.betaCount = np.zeros((self.config.option_num))
             self.optionStack[0] = -1
             self.stackIdx = 1
             
@@ -116,6 +125,7 @@ class Agent():
                     self.update_count = 0
                     num_game= 0
                     total_reward, self.total_loss, total_q = 0.,0.,0.
+                    self.total_beta_loss = 0.
                     max_avg_ep_reward = 0
                     ep_rewards,actions = [],[]
                     optionDepths = 0.
@@ -163,8 +173,11 @@ class Agent():
                 
                 if self.step >= self.learn_start:
                     if (self.step-self.learn_start+1) % self.test_step == 0:
+                        print(self.betaCount)
+                        self.betaCount = np.zeros((self.config.option_num+1))
                         avg_reward = total_reward/self.test_step
                         avg_loss = self.total_loss/self.update_count
+                        avg_beta_loss = self.total_beta_loss/self.update_count
                         avg_optionDepth = 0 if num_game==0 else optionDepths/num_game
 
                         try:
@@ -174,8 +187,11 @@ class Agent():
                         except:
                             max_ep_reward,min_ep_reward,avg_ep_reward = 0.,0.,0.
                         print("predict time : %f, step time: %f observe time %f" % (np.mean(predict_times), np.mean(step_times), np.mean(observe_times)))
-                        print ('\navg_r: %.4f, avg_l: %.6f, avg_ep_r: %.4f, max_ep_r: %.4f, min_ep_r: %.4f, avg_opDepth: %.4f # game: %d' \
-                          % (avg_reward, avg_loss, avg_ep_reward, max_ep_reward, min_ep_reward, avg_optionDepth, num_game))
+                        print ('\navg_r: %.4f, avg_l: %.6f, avg_ep_r: %.4f, max_ep_r: %.4f, min_ep_r: %.4f, '
+                               'avg_b_l: %.4f, avg_opDepth: %.4f # game: %d' \
+                          % (avg_reward, avg_loss, avg_ep_reward, max_ep_reward, min_ep_reward, avg_beta_loss,
+                             avg_optionDepth,
+                             num_game))
 
                         if max_avg_ep_reward * 0.9 <= avg_ep_reward:
                             print("save model : ",self.step)
@@ -198,6 +214,7 @@ class Agent():
                         num_game = 0
                         total_reward = 0.
                         self.total_loss = 0.
+                        self.total_beta_loss = 0.
                         optionDepths = 0.
                         self.total_q = 0.
                         self.update_count = 0
@@ -255,10 +272,11 @@ class Agent():
 
 
     def q_learning_mini_batch(self):
-        q_loss,qq_loss, summary_str = self.model.learn(*self.memory.sample_more())
+        q_loss,qq_loss, beta_loss, summary_str = self.model.learn(*self.memory.sample_more())
         self.writer.add_summary(summary_str, self.step)
         self.writer.flush()
         self.total_loss += q_loss
+        self.total_beta_loss += beta_loss
         self.update_count += 1
 
                                 

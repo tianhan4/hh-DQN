@@ -88,7 +88,7 @@ class ALEEnvironment():
 		screen = self.ale.getScreenGrayscale()
 		#print 'screen:\n',type(screen)
 		#print 'screen.shape',screen.shape	  
-		resized = cv2.resize(screen, (self.screen_width, self.screen_height))
+		resized = cv2.resize(screen/255., (self.screen_width, self.screen_height))
 		'''
 		cv2.namedWindow("Image")
 		cv2.imshow("Image", resized)

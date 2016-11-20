@@ -29,12 +29,12 @@ def conv2d(x,
 
   return out, w, b
 
-def linear(input_, output_size, stddev=0.02, bias_start=0.0, activation_fn=None, name='linear'):
+def linear(input_, output_size, mean = 0, stddev=0.02, bias_start=0.0, activation_fn=None, name='linear'):
   shape = input_.get_shape().as_list()
 
   with tf.variable_scope(name):
     w = tf.get_variable('Matrix', [shape[1], output_size], tf.float32,
-        tf.random_normal_initializer(stddev=stddev))
+        tf.random_normal_initializer(mean=mean, stddev=stddev))
     b = tf.get_variable('bias', [output_size],
         initializer=tf.constant_initializer(bias_start))
 

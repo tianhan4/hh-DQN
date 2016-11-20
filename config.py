@@ -5,21 +5,21 @@ class AgentConfig(object):
     max_step = 5000 * scale
     memory_size = 100 * scale
 
-    batch_size = 20
+    batch_size = 32
     random_start = 30
     cnn_format = 'NHWC'
     discount = 0.99
-    target_q_update_learn_step = 2 * scale
-    learning_rate = 0.0025
-    learning_rate_minimum = 0.0025
+    target_q_update_learn_step = 8
+    learning_rate = 0.025
+    learning_rate_minimum = 0.025
     learning_rate_decay = 0.96
     learning_rate_decay_step = 5 * scale
 
     ep_end = 0.1
     ep_start = 1
-    ep_end_t = memory_size 
+    ep_end_t = memory_size *5
 
-    history_length = 4
+    history_length = 1
     train_frequency = 2
     learn_start = 5. * scale
 
@@ -51,10 +51,11 @@ class DQNConfig(object):
     max_stackDepth = 10
     option_num = 20
     goal_pho = 10
+    shut_step = 300
 
 
 class M1(AgentConfig, EnvironmentConfig, DQNConfig):
-    rom_file = "roms/pong.bin"
+    rom_file = "roms/breakout.bin"
     mode = "train"
     backend = 'tf'
     env_type = 'detail'
