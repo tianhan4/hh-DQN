@@ -122,7 +122,7 @@ class HQLModel(BaseModel):
 self.learning_rate_decay,
                         staircase = True))
             self.q_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op).minimize(self.q_loss)
-            self.qq_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op).minimize(self.qq_loss)
+            self.qq_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op * 2).minimize(self.qq_loss)
 
         with tf.variable_scope("summary"):
             tags = np.empty((self.config.option_num,

@@ -1,25 +1,25 @@
 class AgentConfig(object):
-    scale = 200 # 10000
+    scale = 20 # 10000
     display = False
 
     max_step = 5000 * scale
     memory_size = 100 * scale
 
-    batch_size = 32
+    batch_size = 20
     random_start = 30
     cnn_format = 'NHWC'
-    discount = 0.99
-    target_q_update_learn_step = 8
-    learning_rate = 0.0025
-    learning_rate_minimum = 0.0025
+    discount = 0.95
+    target_q_update_learn_step = 2 * scale
+    learning_rate = 0.025
+    learning_rate_minimum = 0.025
     learning_rate_decay = 0.96
     learning_rate_decay_step = 5 * scale
 
     ep_end = 0.1
     ep_start = 1
-    ep_end_t = memory_size*10
+    ep_end_t = memory_size
 
-    history_length = 4
+    history_length = 1
     train_frequency = 4
     learn_start = 5. * scale
 
@@ -29,9 +29,9 @@ class AgentConfig(object):
     double_q = True
     dueling = False
 
-    _test_step = 500 * scale
+    _test_step = 50 * scale
     _save_step = _test_step * 10
-    random_seed = 50
+    random_seed = 0
     is_train = True
     
     test_ep = None
@@ -40,17 +40,17 @@ class AgentConfig(object):
 
 class EnvironmentConfig(object):
     #env_name = 'Breakout-v0'
-    env_name = "ALEEnvironment"
+    env_name = "StochasticMDPEnv"
     screen_width  = 84
     screen_height = 84
     max_reward = 100.
     min_reward = -100.
 
 class DQNConfig(object):
-    model_name = 'DHQLModel'
+    model_name = 'HQLModel'
     max_stackDepth = 5
-    option_num = 10
-    goal_pho = 20
+    option_num = 5
+    goal_pho = 10
     shut_step = 500
     clip_prob = 0.835
 

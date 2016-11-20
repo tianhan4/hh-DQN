@@ -1,18 +1,18 @@
 import random
 import tensorflow as tf
-from agents.dhq_learning import Agent
+from agents.hq_learning import Agent
 from config import get_config
 
 flags = tf.app.flags
 
 # Model
-flags.DEFINE_string('model_name', 'HDQLModel', 'Type of model')
+flags.DEFINE_string('model_name', 'HQLModel', 'Type of model')
 flags.DEFINE_boolean('dueling', False, 'Whether to use dueling deep q-network')
 flags.DEFINE_boolean('double_q', True, 'Whether to use double q-learning')
 
 # Environment
 #flags.DEFINE_string('env_name', 'Breakout-v0', 'The name of gym environment to use')
-flags.DEFINE_string('env_name', 'ALEEnvironment', 'The name of gym environment to use')
+flags.DEFINE_string('env_name', 'StochasticMDPEnv', 'The name of gym environment to use')
 flags.DEFINE_integer('action_repeat', 4, 'The number of action to be repeated')
 
 # Etc

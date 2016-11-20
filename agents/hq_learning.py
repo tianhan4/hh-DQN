@@ -34,6 +34,7 @@ class Agent():
         print(self.model)
         self.sess = sess
         self.model.sess = self.sess
+        print(self.env.transition_prob)
 
         self.writer = tf.train.SummaryWriter('./logs/%s' % self.model.model_dir, self.sess.graph)
         random.seed(config.random_seed)
