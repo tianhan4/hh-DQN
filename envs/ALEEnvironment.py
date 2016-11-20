@@ -83,7 +83,7 @@ class ALEEnvironment():
 		self.current_state = self.getScreen()
 		self.history.add(self.current_state)
 		self.terminal = self.isTerminal()
-		return reward+(-3 if self.terminal else 0), self.history.get(), self.terminal
+		return reward, self.history.get(), self.terminal
 
 	def getScreen(self):
 		screen = self.ale.getScreenGrayscale()

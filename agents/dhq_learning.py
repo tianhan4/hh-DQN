@@ -108,7 +108,7 @@ class Agent():
     #with training
     def run(self):
         if self.config.is_train:
-            num_game, ep_reward = 0,0.
+            num_game, ep_reward = 0, 0.
             total_reward, self.total_loss, total_q = 0.,0.,0.
             self.total_beta_loss = 0.
             max_avg_ep_reward = 0
