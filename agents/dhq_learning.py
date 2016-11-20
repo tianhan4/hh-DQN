@@ -174,7 +174,7 @@ class Agent():
                 if self.step >= self.learn_start:
                     if (self.step-self.learn_start+1) % self.test_step == 0:
                         print(self.betaCount)
-                        self.betaCount = np.zeros((self.config.option_num+1))
+                        self.betaCount = np.zeros((self.config.option_num))
                         avg_reward = total_reward/self.test_step
                         avg_loss = self.total_loss/self.update_count
                         avg_beta_loss = self.total_beta_loss/self.update_count
