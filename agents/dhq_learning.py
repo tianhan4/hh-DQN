@@ -74,9 +74,8 @@ class Agent():
         beta_sa, = self.sess.run([self.model.beta_na,], {self.model.state_input_n: [state],
                                         self.model.g: [self.optionStack[self.stackIdx-1]],
                                         self.model.residual_state_input_n : [residual_state_input_n]})[0]
-        if np.max(beta_sa)>0:
-            self.betaCount[beta_sa>0.99] += 1
-            print(beta_sa.nonzero()[0])
+        self.betaCount[beta_sa>0.99] += 1
+            #print(beta_sa.nonzero()[0])
         while self.stackIdx > 1:
             if random.random() <= beta or terminal==1:
                 self.memory.add(self.optionStack_state[self.stackIdx - 1], state, self.optionStack_r[
