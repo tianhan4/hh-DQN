@@ -15,6 +15,7 @@ class ALEEnvironment():
 		self.life_lost = False
 		self.terminal = False
 		self.score = 0
+		#cv2.namedWindow("Image")
 
 		from ale_python_interface import ALEInterface
 		self.ale = ALEInterface()
@@ -82,17 +83,17 @@ class ALEEnvironment():
 		self.current_state = self.getScreen()
 		self.history.add(self.current_state)
 		self.terminal = self.isTerminal()
-		return reward, self.history.get(), self.terminal
+		return reward+(-3 if self.terminal else 0), self.history.get(), self.terminal
 
 	def getScreen(self):
 		screen = self.ale.getScreenGrayscale()
 		#print 'screen:\n',type(screen)
 		#print 'screen.shape',screen.shape	  
 		resized = cv2.resize(screen/255., (self.screen_width, self.screen_height))
+
+		#cv2.imshow("Image", screen)
 		'''
 		cv2.namedWindow("Image")
-		cv2.imshow("Image", resized)
-		cv2.waitKey (0)
 		cv2.destroyAllWindows()
 		'''
 		return resized

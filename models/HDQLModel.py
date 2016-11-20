@@ -101,11 +101,9 @@ class HDQLModel(BaseModel):
                                                                                             shape[1:])])
             shape = self.state_input_n.get_shape().as_list()
             self.state_input_n_flat = tf.reshape(self.state_input_n, [-1, reduce(lambda x,y: x*y, shape[1:])])
-            self.state_input_n_flat_ = tf.concat(1, [self.residual_input_n_flat,self.state_input_n_flat])
-            self.l1_b, self.l1_b_w, self.l1_b_b = linear(self.state_input_n_flat, 128, stddev=0.1,
-                                                         activation_fn=tf.nn.sigmoid, name="l1_b")
-            self.l2_b, self.l2_b_w, self.l2_b_b = linear(self.l1_b, self.config.option_num, stddev=0.1, name='beta')
-            self.beta_na_ = tf.sigmoid(self.l2_b)
+            self.state_input_n_flat_ = tf.concat(1, [self.residual_input_n_flat,0.1 * self.state_input_n_flat])
+            self.beta_na_, self.l1_b_w, self.l1_b_b = linear(self.state_input_n_flat_, self.config.option_num, stddev=0.1,
+                                                         activation_fn=tf.nn.sigmoid, name="beta")
             self.beta_na = tf.select(tf.greater(self.beta_na_, self.config.clip_prob), tf.ones_like(self.beta_na_,
                                                                                               tf.float32),
                                      tf.zeros_like(
@@ -154,6 +152,7 @@ class HDQLModel(BaseModel):
         with tf.variable_scope("optimizer"):
             self.q_delta = self.target_q_so - self.q_so
             self.qq_delta = self.target_q_sgo - self.q_sgo
+
             self.q_loss = tf.reduce_mean(tf.square(self.q_delta), name="q_loss")
             self.qq_loss = tf.reduce_mean(tf.square(self.qq_delta), name="qq_loss")
             self.learning_rate_op = tf.maximum(self.learning_rate_minimum, tf.train.exponential_decay(
@@ -162,10 +161,16 @@ class HDQLModel(BaseModel):
                         self.learning_rate_decay_step,
 self.learning_rate_decay,
                         staircase = True))
-            self.q_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op).minimize(self.q_loss)
-            self.qq_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op).minimize(self.qq_loss)
-                                                                                              #var_list=[self.w[
-                                                                                              # 'l1_qq_w'], self.w['l1_qq_b'],self.w['l2_qq_w'], self.w['l2_qq_b']])
+            q_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op)
+            qq_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op)
+            self.gvs, self.gvs2 = q_optim.compute_gradients(self.q_loss), qq_optim.compute_gradients(self.qq_loss)
+            capped_gvs,capped_gvs2 = [(tf.clip_by_value(grad, self.min_delta, self.max_delta), var) for grad,
+                                                                                                        var in
+                                      self.gvs if
+                                      grad is not None], [(tf.clip_by_value(grad, self.min_delta, self.max_delta),
+                                                           var) for grad, var in self.gvs2 if grad is not None]
+            self.q_optim = q_optim.apply_gradients(capped_gvs)
+            self.qq_optim = qq_optim.apply_gradients(capped_gvs2)
 
             self.beta_loss = (1 - self.ep) * tf.reduce_mean(tf.square(self.beta_na-tf.one_hot(tf.argmax(self.beta_na,1),
                                                             self.config.option_num, 1., 0., -1))) + self.ep * \
@@ -219,6 +224,8 @@ self.learning_rate_decay,
                 self.state_input_n: n,
                 self.residual_state_input_n : residual_state_input_n
                 })
+        min_q_ng = np.min(q_nga, 1)
+        min_q_n = np.min(q_na, 1)
         max_q_ng = np.max(q_nga, 1) 
         max_q_n = np.max(q_na, 1)
         _, _, q_loss, qq_loss, summary_str = self.sess.run([self.q_optim,self.qq_optim,

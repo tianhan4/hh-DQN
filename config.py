@@ -5,10 +5,10 @@ class AgentConfig(object):
     max_step = 5000 * scale
     memory_size = 100 * scale
 
-    batch_size = 32
+    batch_size = 20
     random_start = 30
     cnn_format = 'NHWC'
-    discount = 0.99
+    discount = 0.95
     target_q_update_learn_step = 8
     learning_rate = 0.0025
     learning_rate_minimum = 0.0025
@@ -17,19 +17,19 @@ class AgentConfig(object):
 
     ep_end = 0.1
     ep_start = 1
-    ep_end_t = memory_size *5
+    ep_end_t = memory_size*10
 
-    history_length = 1
-    train_frequency = 2
+    history_length = 4
+    train_frequency = 4
     learn_start = 5. * scale
 
-    min_delta = -100
-    max_delta = 100
+    min_delta = -1
+    max_delta = 1
 
     double_q = True
     dueling = False
 
-    _test_step = 50 * scale
+    _test_step = 500 * scale
     _save_step = _test_step * 10
     random_seed = 50
     is_train = True
@@ -48,20 +48,20 @@ class EnvironmentConfig(object):
 
 class DQNConfig(object):
     model_name = 'DHQLModel'
-    max_stackDepth = 10
+    max_stackDepth = 5
     option_num = 10
-    goal_pho = 1
-    shut_step = 100
-    clip_prob = 0.81
+    goal_pho = 10
+    shut_step = 50
+    clip_prob = 0.8
 
 
 class M1(AgentConfig, EnvironmentConfig, DQNConfig):
-    rom_file = "roms/breakout.bin"
+    rom_file = "roms/montezuma_revenge.bin"
     mode = "train"
     backend = 'tf'
     env_type = 'detail'
     action_repeat = 1
-    display_screen = 0
+    display_screen = 1
     frame_skip = 2
     color_averaging = True
     record_screen_path = None
