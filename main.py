@@ -20,7 +20,7 @@ flags.DEFINE_boolean('use_gpu', False, 'Whether to use gpu or not')
 flags.DEFINE_string('gpu_fraction', '1/1', 'idx / # of gpu fraction e.g. 1/3, 2/3, 3/3')
 flags.DEFINE_boolean('display', False, 'Whether to do display the game screen or not')
 flags.DEFINE_boolean('is_train', True, 'Whether to do training or testing')
-flags.DEFINE_integer('random_seed', 123, 'Value of random seed')
+flags.DEFINE_integer('random_seed', 113, 'Value of random seed')
 
 FLAGS = flags.FLAGS
 

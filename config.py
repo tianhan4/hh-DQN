@@ -10,8 +10,8 @@ class AgentConfig(object):
     cnn_format = 'NHWC'
     discount = 0.99
     target_q_update_learn_step = 8
-    learning_rate = 0.025
-    learning_rate_minimum = 0.025
+    learning_rate = 0.0025
+    learning_rate_minimum = 0.0025
     learning_rate_decay = 0.96
     learning_rate_decay_step = 5 * scale
 
@@ -31,7 +31,7 @@ class AgentConfig(object):
 
     _test_step = 50 * scale
     _save_step = _test_step * 10
-    random_seed = 0
+    random_seed = 50
     is_train = True
     
     test_ep = None
@@ -49,9 +49,10 @@ class EnvironmentConfig(object):
 class DQNConfig(object):
     model_name = 'DHQLModel'
     max_stackDepth = 10
-    option_num = 20
-    goal_pho = 10
-    shut_step = 300
+    option_num = 10
+    goal_pho = 1
+    shut_step = 100
+    clip_prob = 0.81
 
 
 class M1(AgentConfig, EnvironmentConfig, DQNConfig):

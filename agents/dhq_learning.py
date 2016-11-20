@@ -69,6 +69,7 @@ class Agent():
 
         beta_sa, = self.sess.run([self.model.beta_na,], {self.model.state_input_n: [state],
                                         self.model.g: [self.optionStack[self.stackIdx-1]]})[0]
+        self.betaCount[beta_sa>0.8] += 1
         while self.stackIdx > 1:
             if random.random() <= beta or terminal==1:
                 self.memory.add(self.optionStack_state[self.stackIdx - 1], state, self.optionStack_r[
@@ -81,7 +82,6 @@ class Agent():
                 break
             if self.stackIdx == 1:
                 break
-            self.betaCount[beta_sa>0.8] += 1
             beta = beta_sa[self.optionStack[self.stackIdx-1]]
             #print(self.model.g.eval(),beta)
 

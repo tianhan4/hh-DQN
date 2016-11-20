@@ -93,7 +93,8 @@ class HDQLModel(BaseModel):
                                                          activation_fn=tf.nn.sigmoid, name="l1_b")
             self.l2_b, self.l2_b_w, self.l2_b_b = linear(self.l1_b, self.config.option_num, stddev=0.1, name='beta')
             self.beta_na_ = tf.sigmoid(self.l2_b)
-            self.beta_na = tf.select(tf.greater(self.beta_na_, 0.85), tf.ones_like(self.beta_na_, tf.float32),
+            self.beta_na = tf.select(tf.greater(self.beta_na_, self.config.clip_prob), tf.ones_like(self.beta_na_,
+                                                                                              tf.float32),
                                      tf.zeros_like(
                 self.beta_na_, tf.float32))
             self.beta_ng = tf.reduce_sum(tf.mul(self.beta_na, tf.one_hot(self.g, self.config.option_num, 1.,
