@@ -67,8 +67,13 @@ class Agent():
         #continuous terminal
         beta = 1 #primitive action first
 
+        if self.cnn_format=='NHWC':
+            residual_state_input_n = state[:,:,1:] - state[:,:,:-1]
+        else:
+            residual_state_input_n =state[1:,:,:] - state[:-1,:,:]
         beta_sa, = self.sess.run([self.model.beta_na,], {self.model.state_input_n: [state],
-                                        self.model.g: [self.optionStack[self.stackIdx-1]]})[0]
+                                        self.model.g: [self.optionStack[self.stackIdx-1]],
+                                        self.model.residual_state_input_n : [residual_state_input_n]})[0]
         self.betaCount[beta_sa>0.8] += 1
         while self.stackIdx > 1:
             if random.random() <= beta or terminal==1:

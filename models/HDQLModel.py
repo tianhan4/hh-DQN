@@ -16,7 +16,7 @@ class HDQLModel(BaseModel):
         self.learn_count_incre = self.learn_count.assign(self.learn_count + 1)
         self.learn_count_summary = tf.scalar_summary("learn_count", self.learn_count)
         self.network = self.construct(config)
-        self.cnn_format = "NCHW"
+        self.cnn_format = self.config.cnn_format
         self.config = config
 
 
@@ -87,9 +87,22 @@ class HDQLModel(BaseModel):
             self.reward_st = tf.placeholder("float32", [None], name="reward_st")
 
         with tf.variable_scope("beta"):
+            if self.cnn_format=='NHWC':
+                self.residual_state_input_n = tf.placeholder("float32",[None, self.screen_height, self.screen_width,
+                                                              self.history_length-1],
+                                                  name="residual_state_input")
+            else:
+                self.residual_state_input_n = tf.placeholder("float32",[None, self.history_length-1,
+                                                                        self.screen_height,
+                                                             self.screen_width],
+                                                  name="residual_state_input")
+            shape = self.residual_state_input_n.get_shape().as_list()
+            self.residual_input_n_flat = tf.reshape(self.residual_state_input_n, [-1, reduce(lambda x,y: x*y,
+                                                                                            shape[1:])])
             shape = self.state_input_n.get_shape().as_list()
             self.state_input_n_flat = tf.reshape(self.state_input_n, [-1, reduce(lambda x,y: x*y, shape[1:])])
-            self.l1_b, self.l1_b_w, self.l1_b_b = linear(self.state_input_n_flat, 256, stddev=0.1,
+            self.state_input_n_flat_ = tf.concat(1, [self.residual_input_n_flat,self.state_input_n_flat])
+            self.l1_b, self.l1_b_w, self.l1_b_b = linear(self.state_input_n_flat, 128, stddev=0.1,
                                                          activation_fn=tf.nn.sigmoid, name="l1_b")
             self.l2_b, self.l2_b_w, self.l2_b_b = linear(self.l1_b, self.config.option_num, stddev=0.1, name='beta')
             self.beta_na_ = tf.sigmoid(self.l2_b)
@@ -195,20 +208,16 @@ self.learning_rate_decay,
         return action
 
     def learn(self, s, o, r, n, terminals, g, k):
-        #ep = self.test_ep or (self.ep_end +
-        #    max(0., (self.ep_start - self.ep_end)
-        #      * (self.ep_end_t - max(0., self.learn_count.eval())) / self.ep_end_t))
-        #b = np.copy(g)
-        #for i in range(len(b)):
-        #    if random.random() < 0.2:
-         #       b[i] = random.randrange(0,self.option_num)
-         #   else:
-         #       b[i] = self.option_num
-
         self.learn_count_incre.eval()
+
+        if self.cnn_format=='NHWC':
+            residual_state_input_n = n[:,:,:,1:] - n[:,:,:,:-1]
+        else:
+            residual_state_input_n =n[:,1:,:,:] - n[:,:-1,:,:]
         q_nga, q_na, beta_ng = self.sess.run([self.q_nga, self.q_na, self.beta_ng], {
                 self.g : g,
                 self.state_input_n: n,
+                self.residual_state_input_n : residual_state_input_n
                 })
         max_q_ng = np.max(q_nga, 1) 
         max_q_n = np.max(q_na, 1)
