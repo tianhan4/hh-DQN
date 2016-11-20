@@ -162,7 +162,7 @@ class HDQLModel(BaseModel):
 self.learning_rate_decay,
                         staircase = True))
             q_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op)
-            qq_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op)
+            qq_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op*2)
             self.gvs, self.gvs2 = q_optim.compute_gradients(self.q_loss), qq_optim.compute_gradients(self.qq_loss)
             capped_gvs,capped_gvs2 = [(tf.clip_by_value(grad, self.min_delta, self.max_delta), var) for grad,
                                                                                                         var in

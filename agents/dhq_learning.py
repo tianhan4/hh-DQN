@@ -77,7 +77,6 @@ class Agent():
         if np.max(beta_sa)>0:
             self.betaCount[beta_sa>0.99] += 1
             print(beta_sa.nonzero()[0])
-            time.sleep(0.1)
         while self.stackIdx > 1:
             if random.random() <= beta or terminal==1:
                 self.memory.add(self.optionStack_state[self.stackIdx - 1], state, self.optionStack_r[
