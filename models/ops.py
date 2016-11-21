@@ -29,7 +29,7 @@ def conv2d(x,
 
   return out, w, b
 
-def linear(input_, output_size, mean = 0, stddev=0.02, bias_start=0.0, activation_fn=None, name='linear'):
+def linear(input_, output_size, mean = 0, stddev=0.01, bias_start=0.0, activation_fn=None, name='linear'):
   shape = input_.get_shape().as_list()
 
   with tf.variable_scope(name):

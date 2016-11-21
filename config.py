@@ -9,8 +9,8 @@ class AgentConfig(object):
     cnn_format = 'NHWC'
     discount = 0.99
     target_q_update_learn_step = 2 * scale
-    learning_rate = 0.005
-    learning_rate_minimum = 0.005
+    learning_rate = 0.025
+    learning_rate_minimum = 0.025
     learning_rate_decay = 0.96
     learning_rate_decay_step = 5 * scale
 
@@ -39,7 +39,7 @@ class AgentConfig(object):
 
 class EnvironmentConfig(object):
     #env_name = 'Breakout-v0'
-    env_name = "ALEEnvironment"
+    env_name = "StochasticMDPEnv3D"
     screen_width  = 84
     screen_height = 84
     max_reward = 100.
@@ -47,11 +47,10 @@ class EnvironmentConfig(object):
 
 class DQNConfig(object):
     model_name = 'HDQLModel'
-    max_stackDepth = 5
-    option_num = 15
-    goal_pho = 10
+    max_stackDepth = 10
+    option_num = 10
+    goal_pho = 1
     shut_step = 500
-    clip_prob = 0.75
 
 
 class M1(AgentConfig, EnvironmentConfig, DQNConfig):

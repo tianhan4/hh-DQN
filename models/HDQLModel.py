@@ -104,10 +104,11 @@ class HDQLModel(BaseModel):
             self.state_input_n_flat_ = tf.concat(1, [self.residual_input_n_flat,0.1 * self.state_input_n_flat])
             self.beta_na_, self.l1_b_w, self.l1_b_b = linear(self.state_input_n_flat_, self.config.option_num, stddev=0.1,
                                                          activation_fn=tf.nn.sigmoid, name="beta")
-            self.beta_na = tf.select(tf.greater(self.beta_na_, self.config.clip_prob), tf.ones_like(self.beta_na_,
+            self.beta_na = self.beta_na_
+            '''self.beta_na = tf.select(tf.greater(self.beta_na_, self.config.clip_prob), tf.ones_like(self.beta_na_,
                                                                                               tf.float32),
                                      tf.zeros_like(
-                self.beta_na_, tf.float32))
+                self.beta_na_, tf.float32))'''
             self.beta_ng = tf.reduce_sum(tf.mul(self.beta_na, tf.one_hot(self.g, self.config.option_num, 1.,
                                                                                   0., -1)), 1)
         with tf.variable_scope('pred_to_target'):
@@ -172,11 +173,6 @@ self.learning_rate_decay,
             self.q_optim = q_optim.apply_gradients(capped_gvs)
             self.qq_optim = qq_optim.apply_gradients(capped_gvs2)
 
-            self.beta_loss = (1 - self.ep) * tf.reduce_mean(tf.square(self.beta_na-tf.one_hot(tf.argmax(self.beta_na,1),
-                                                            self.config.option_num, 1., 0., -1))) + self.ep * \
-                                                            tf.reduce_mean(tf.square(self.beta_na-tf.one_hot(self.b,
-                                                            self.config.option_num, 1., 0., -1)))
-
             #self.beta_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op).minimize(self.beta_loss)
 
         '''
@@ -196,21 +192,22 @@ self.learning_rate_decay,
 
     def predict(self, state, goal, stackDepth, ep=None):
         #after ep_end_t steps, epsilon will be constant ep_end.
+        #after ep_end_t steps, epsilon will be constant ep_end.
+        #after ep_end_t steps, epsilon will be constant ep_end.
         ep = self.test_ep or (self.ep_end +
             max(0., (self.ep_start - self.ep_end)
               * (self.ep_end_t - max(0., self.learn_count.eval())) / self.ep_end_t))
-
-        if goal == -1:
-            if random.random() < ep:
-                action = random.randrange(0, self.action_num+self.option_num)
+        if random.random() < ep:
+            if random.random() < ep/2.:
+                action = random.randrange(0, self.option_num)
             else:
-                q_sa, = self.sess.run([self.q_sa],{self.state_input : [state]})
-                action = np.argmax(q_sa, axis=1)[0]
+                action = random.randrange(self.option_num, self.action_num+self.option_num)
         else:
-            if random.random() < ep**2+0.09:
-                action = random.randrange(0, self.action_num+self.option_num)
+            if goal == -1:
+                q_sa, = self.sess.run([self.q_na],{self.state_input_n : [state]})
+                action = np.argmax(q_sa, axis=1)[0]
             else:
-                q_sga, = self.sess.run([self.q_sga],{self.state_input : [state], self.g : [goal]})
+                q_sga, = self.sess.run([self.q_nga],{self.state_input_n : [state], self.g : [goal]})
                 q_sga[:,:self.option_num] *= (1 - stackDepth/self.config.max_stackDepth)
                 q_sga[:,goal] = -100
                 action = np.argmax(q_sga, axis=1)[0]
