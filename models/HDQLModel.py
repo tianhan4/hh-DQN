@@ -120,11 +120,9 @@ class HDQLModel(BaseModel):
 
         with tf.variable_scope("q"):
             #ori - q
-            self.max_q_n = tf.placeholder('float32', [None], name="max_q_n")
-            self.max_q_ng = tf.placeholder('float32', [None], name="max_q_ng")
-            self.beta_ng_input = tf.placeholder('float32', [None], name="beta_ng")
             self.q_na = self.ori_q_n
             self.q_sa = self.ori_q
+            self.max_q_n = tf.reduce_max(self.ori_q_n, 1)
             self.q_so = tf.reduce_sum(tf.mul(self.q_sa, tf.one_hot(self.o, self.config.option_num+self.config.action_num, 1., 0., -1)), 1)
             self.target_q_so = tf.stop_gradient(self.reward_st + (1 - self.terminals) * self.config.discount**self.k * \
                                                        self.max_q_n)
@@ -137,6 +135,8 @@ class HDQLModel(BaseModel):
             self.q_nga = tf.reduce_sum(tf.mul(self.q_naa,tf.expand_dims(tf.one_hot(self.g, self.config.option_num,
                                                                                    1., 0.,
                                                                          -1),1)), 2)
+
+            self.max_q_ng = tf.reduce_max(self.q_nga, 1)
             self.q_saa = tf.reshape(self.q,  [-1, (self.config.action_num+self.config.option_num),
                                               self.config.option_num])
             self.q_sga = tf.reduce_sum(tf.mul(self.q_saa,tf.expand_dims(tf.one_hot(self.g, self.config.option_num, 1., 0.,
@@ -145,8 +145,8 @@ class HDQLModel(BaseModel):
                                                                            fn, 1. ,0.,-1)), 1)
             self.target_q_sgo = tf.stop_gradient(self.reward_st + (1 - self.terminals) *
                                                  self.config.discount**self.k
-                                                 * (self.beta_ng_input * (self.config.goal_pho + self.max_q_n) +
-                                              (1- self.beta_ng_input) * self.max_q_ng))
+                                                 * (self.beta_ng * (self.config.goal_pho + self.max_q_n) +
+                                              (1- self.beta_ng) * self.max_q_ng))
 
         
         with tf.variable_scope("optimizer"):
@@ -199,12 +199,16 @@ self.learning_rate_decay,
         ep = self.test_ep or (self.ep_end +
             max(0., (self.ep_start - self.ep_end)
               * (self.ep_end_t - max(0., self.learn_count.eval())) / self.ep_end_t))
-        if random.random() < ep:
-            action = random.randrange(0, self.action_num+self.option_num)
-        else:
-            if goal == -1:
+
+        if goal == -1:
+            if random.random() < ep:
+                action = random.randrange(0, self.action_num+self.option_num)
+            else:
                 q_sa, = self.sess.run([self.q_sa],{self.state_input : [state]})
                 action = np.argmax(q_sa, axis=1)[0]
+        else:
+            if random.random() < ep**2+0.09:
+                action = random.randrange(0, self.action_num+self.option_num)
             else:
                 q_sga, = self.sess.run([self.q_sga],{self.state_input : [state], self.g : [goal]})
                 q_sga[:,:self.option_num] *= (1 - stackDepth/self.config.max_stackDepth)
@@ -219,29 +223,18 @@ self.learning_rate_decay,
             residual_state_input_n = n[:,:,:,1:] - n[:,:,:,:-1]
         else:
             residual_state_input_n =n[:,1:,:,:] - n[:,:-1,:,:]
-        q_nga, q_na, beta_ng = self.sess.run([self.q_nga, self.q_na, self.beta_ng], {
-                self.g : g,
-                self.state_input_n: n,
-                self.residual_state_input_n : residual_state_input_n
-                })
-        min_q_ng = np.min(q_nga, 1)
-        min_q_n = np.min(q_na, 1)
-        max_q_ng = np.max(q_nga, 1) 
-        max_q_n = np.max(q_na, 1)
-        _, _, q_loss, qq_loss, summary_str = self.sess.run([self.q_optim,self.qq_optim,
-                                                               self.q_loss, self.qq_loss,
-                                                 self.all_summary], {
+        _, _, q_loss, qq_loss = self.sess.run([self.q_optim,self.qq_optim,
+                                                               self.q_loss, self.qq_loss], {
                 self.g: g,
                 self.o: o,
+                self.state_input_n: n,
+                self.residual_state_input_n : residual_state_input_n,
                 self.reward_st : r,
                 self.terminals : terminals,
                 self.state_input : s,
-                self.k : k,
-                self.max_q_ng : max_q_ng,
-                self.max_q_n : max_q_n,
-                self.beta_ng_input : beta_ng
+                self.k : k
                 })
-        return q_loss, qq_loss, 0, summary_str
+        return q_loss, qq_loss
 
     def update_target_q_network(self):
         for name in self.w.keys():

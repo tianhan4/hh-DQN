@@ -1,6 +1,5 @@
 class AgentConfig(object):
     scale = 200 # 10000
-    display = False
 
     max_step = 5000 * scale
     memory_size = 100 * scale
@@ -48,11 +47,11 @@ class EnvironmentConfig(object):
 
 class DQNConfig(object):
     model_name = 'HDQLModel'
-    max_stackDepth = 10
+    max_stackDepth = 5
     option_num = 15
     goal_pho = 10
     shut_step = 500
-    clip_prob = 0.68
+    clip_prob = 0.75
 
 
 class M1(AgentConfig, EnvironmentConfig, DQNConfig):

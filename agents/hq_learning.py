@@ -269,7 +269,6 @@ class Agent():
     def q_learning_mini_batch(self):
         q_loss,qq_loss, summary_str = self.model.learn(*self.memory.sample_more())
         self.writer.add_summary(summary_str, self.step)
-        self.writer.flush()
         self.total_loss += q_loss
         self.update_count += 1
 
