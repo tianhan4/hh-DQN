@@ -161,7 +161,7 @@ class Agent():
                 time2 = time.time()
                 reward, state, terminal = self.env.step(action - self.option_num)
                 for i in range(1,self.stackIdx):
-                    self.optionStack_k[i] = 1
+                    self.optionStack_k[i] += 1
                     #self.optionStack_r[i] *= self.config.discount
                     self.optionStack_r[i] += reward
                 time3 = time.time()

@@ -157,8 +157,7 @@ class HDQLModel(BaseModel):
                                                                          -1),1)), 2)
             self.q_sgo = tf.reduce_sum(tf.mul(self.q, tf.one_hot(self.o * self.config.option_num + self.g,
                                                                            fn, 1. ,0.,-1)), 1)
-            self.target_q_sgo = tf.stop_gradient(self.reward_st + (self.terminals) * (-self.config.goal_pho)+(1 -
-                                                                                                    self.terminals) *
+            self.target_q_sgo = tf.stop_gradient(self.reward_st +(1 - self.terminals) *
                                                  self.config.discount**self.k
                                                  * (self.beta_ng * (self.config.goal_pho + self.max_q_n) +
                                               (1- self.beta_ng) * self.max_q_ng))
@@ -219,13 +218,15 @@ self.learning_rate_decay,
         else:
             if goal == -1:
                 q_sa, = self.sess.run([self.q_na],{self.state_input_n : [state],self.residual_state_input_n:[residual]})
-                action = np.argmax(q_sa, axis=1)[0]
+                action = np.argmax(q_sa, axis=1)[0] if np.max(q_sa)>0 else random.randrange(0,
+                                                                                                     self.action_num+self.option_num)
             else:
                 q_sga, = self.sess.run([self.q_nga],{self.state_input_n : [state],
                                                      self.residual_state_input_n: [residual], self.g : [goal]})
                 q_sga[:,:self.option_num] *= (1 - stackDepth/self.config.max_stackDepth)
                 q_sga[:,goal] = -100
-                action = np.argmax(q_sga, axis=1)[0]
+                action = np.argmax(q_sga, axis=1)[0] if np.max(q_sga)>0 else random.randrange(0,
+                                                                                                     self.action_num+self.option_num)
         return action
 
     def learn(self, s, res, o, r, n, res_n, terminals, g, k):
