@@ -44,14 +44,18 @@ class HDQLModel(BaseModel):
             else:
                 self.state_input_n = tf.placeholder("float32",[None, self.history_length, self.screen_height,
                                                               self.screen_width],name="state_input")
-            self.con_n = tf.concat(3,[self.state_input_n,self.residual_state_input_n])
-            shape = self.con_n.get_shape().as_list()
-            self.con_n_flat = tf.reshape(self.con_n, [-1, reduce(lambda x,y: x*y, shape[1:])])
-            self.l1_n_flat, self.t_w['l1_s_w'], self.t_w['l1_s_b'] = linear(self.con_n_flat, 1024,
-                                                                            activation_fn=activation_fn, name="l1_n")
-            self.l2_n_flat, self.t_w['l2_s_w'], self.t_w['l2_s_b'] = linear(self.l1_n_flat, 512,
-                                                                            activation_fn=activation_fn, name="l2_n")
-            self.l1_n_q, self.t_w['l1_q_w'], self.t_w['l1_q_b'] = linear(self.l2_n_flat, 512,
+            self.l1_n, self.t_w['l1_s_w'], self.t_w['l1_s_b'] = conv2d(tf.concat(3,[self.state_input_n,
+                                                                                    self.residual_state_input_n]), 32,
+                                                                                    [8,8], [4,4],
+                                                                       initializer,
+                                                                    activation_fn, self.cnn_format, name='l1_s')
+            self.l2_n, self.t_w['l2_s_w'], self.t_w['l2_s_b'] = conv2d(self.l1_n, 64, [4,4], [2,2], initializer,
+                                                                       activation_fn, self.cnn_format, name="l2_s")
+            self.l3_n, self.t_w['l3_s_w'], self.t_w['l3_s_b'] = conv2d(self.l2_n, 64, [3,3], [1,1], initializer,
+                                                                       activation_fn, self.cnn_format, name="l3_s")
+            shape = self.l3_n.get_shape().as_list()
+            self.l3_n_flat = tf.reshape(self.l3_n, [-1, reduce(lambda x,y: x*y, shape[1:])])
+            self.l1_n_q, self.t_w['l1_q_w'], self.t_w['l1_q_b'] = linear(self.l3_n_flat, 512,
                                                                        activation_fn=activation_fn, name="l1_q")
             self.ori_q_n, self.t_w['l2_q_w'], self.t_w['l2_q_b'] = linear(self.l1_n_q, self.config.option_num +
                                                                          self.config.action_num, name='ori_q')
@@ -72,22 +76,23 @@ class HDQLModel(BaseModel):
                                                   name="state_input")
             else:
                 self.state_input = tf.placeholder("float32",[None, self.history_length, self.screen_height, self.screen_width],name="state_input")
-            self.con_s = tf.concat(3,[self.state_input,self.residual_state_input_s])
-            shape = self.con_s.get_shape().as_list()
-            self.con_s_flat = tf.reshape(self.con_s, [-1, reduce(lambda x,y: x*y, shape[1:])])
-            self.l1_s_flat, self.w['l1_s_w'], self.w['l1_s_b'] = linear(self.con_s_flat, 1024, activation_fn=activation_fn, name="l1_s")
-            self.l2_s_flat, self.w['l2_s_w'], self.w['l2_s_b'] = linear(self.l1_s_flat, 512,
-                                                                        activation_fn=activation_fn, name="l2_s")
-            self.l1_q, self.w['l1_q_w'], self.w['l1_q_b'] = linear(self.l2_s_flat, 512, activation_fn=activation_fn, name="l1_q")
+            self.l1_s, self.w['l1_s_w'], self.w['l1_s_b'] = conv2d(tf.concat(3,[self.state_input,
+                                                                                    self.residual_state_input_s]),
+                                                                   32, [8,8], [4,4], initializer, activation_fn, self.cnn_format, name='l1_s')
+            self.l2_s, self.w['l2_s_w'], self.w['l2_s_b'] = conv2d(self.l1_s, 64, [4,4], [2,2], initializer, activation_fn, self.cnn_format, name="l2_s")
+            self.l3_s, self.w['l3_s_w'], self.w['l3_s_b'] = conv2d(self.l2_s, 64, [3,3], [1,1], initializer, activation_fn, self.cnn_format, name="l3_s")
+            shape = self.l3_s.get_shape().as_list()
+            self.l3_s_flat = tf.reshape(self.l3_s, [-1, reduce(lambda x,y: x*y, shape[1:])])
+            self.l1_q, self.w['l1_q_w'], self.w['l1_q_b'] = linear(self.l3_s_flat, 512, activation_fn=activation_fn, name="l1_q")
             self.ori_q, self.w['l2_q_w'], self.w['l2_q_b'] = linear(self.l1_q, self.config.option_num + self.config.action_num, name='ori_q')
 
         with tf.variable_scope("qq"):
-            self.l1_qq, self.w['l1_qq_w'], self.w['l1_qq_b'] = linear(self.l2_s_flat, 512, activation_fn=activation_fn, name="l1_qq")
+            self.l1_qq, self.w['l1_qq_w'], self.w['l1_qq_b'] = linear(self.l3_s_flat, 512, activation_fn=activation_fn, name="l1_qq")
             self.q, self.w['l2_qq_w'], self.w['l2_qq_b'] = linear(self.l1_qq, (self.config.action_num + self.config.option_num) * self.config.option_num, name='q')
 
 
         with tf.variable_scope("target_qq"):
-            self.l1_qq_n, self.t_w['l1_qq_w'], self.t_w['l1_qq_b'] = linear(self.l2_n_flat, 512,
+            self.l1_qq_n, self.t_w['l1_qq_w'], self.t_w['l1_qq_b'] = linear(self.l3_n_flat, 512,
                                                                        activation_fn=activation_fn, name="l1_qq")
             self.q_n, self.t_w['l2_qq_w'], self.t_w['l2_qq_b'] = linear(self.l1_qq_n, (self.config.action_num + self.config.option_num) * self.config.option_num, name='q')
 
