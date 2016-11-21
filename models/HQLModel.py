@@ -125,15 +125,7 @@ self.learning_rate_decay,
             self.qq_optim = tf.train.GradientDescentOptimizer(self.learning_rate_op * 2).minimize(self.qq_loss)
 
         with tf.variable_scope("summary"):
-            tags = np.empty((self.config.option_num,
-                                             (self.config.action_num+self.config.option_num),
-                                             self.config.state_num),dtype="<40U")
-            for i in range(tags.shape[0]):
-                for j in range(tags.shape[1]):
-                    for z in range(tags.shape[2]):
-                        tags[i,j,z] = "%s=%s/%s:g:%d-o:%d-s:%d"%(self.env_name, self.env_type, "q", i,j,z)
-            self.w_summary = tf.scalar_summary(tags, self.qs)
-            self.all_summary = tf.merge_summary([self.learn_count_summary, self.w_summary])
+            self.all_summary = tf.merge_summary([self.learn_count_summary])
 
     def predict(self, state, goal, stackDepth, ep=None):
         #after ep_end_t steps, epsilon will be constant ep_end.
@@ -154,26 +146,7 @@ self.learning_rate_decay,
         return action
 
     def learn(self, s, o, r, n, terminals, g, k):
-        self.learn_count_incre.eval()
-
-        #g = np.random.randint(0,self.config.option_num,(len(terminals)))
-        e1 = self.ori_qs.eval()[o[0],np.argmax(s)]
-        e2 = self.qs.eval()[g[0],o[0],np.argmax(s)]
-        if terminals[0]:
-            pass
-            #print("before learn. states:")
-            #print(self.qs.eval()[0])
-            #ss = np.eye(13,13).reshape((13,1,13))
-            #gg = [0,0,0,0,0,0,0,0,0,0,0,0,0]
-            #print(self.q_nga.eval({self.g_idx:gg,self.state_input_n:ss}))
-
-
-        q_nga, = self.sess.run([self.q_nga,], {
-                self.g : g,
-                self.state_input_n: n
-                })
-
-        _, _, q_loss, qq_loss, summary_str = self.sess.run([self.q_optim, self.qq_optim, self.q_loss, self.qq_loss,
+        _, _, q_loss, qq_loss, _,summary_str = self.sess.run([self.q_optim, self.qq_optim, self.q_loss, self.qq_loss, self.learn_count_incre,
                                                  self.all_summary], {
                 self.g: g,
                 self.o: o,
@@ -183,12 +156,4 @@ self.learning_rate_decay,
                 self.state_input_n : n,
                 self.k : k
                 })
-
-
-        e3 = self.ori_qs.eval()[o[0],np.argmax(s)]
-        e4 = self.qs.eval()[g[0],o[0],np.argmax(s)]
-        if terminals[0]:
-            pass
-            #print(self.qs.eval()[0])
-            #print("q_loss:",q_loss)
         return q_loss, qq_loss, summary_str

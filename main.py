@@ -26,7 +26,7 @@ FLAGS = flags.FLAGS
 
 # Set random seed
 tf.set_random_seed(FLAGS.random_seed)
-random.seed(FLAGS.random_seed)
+#random.seed(FLAGS.random_seed)
 
 if FLAGS.gpu_fraction == '':
   raise ValueError("--gpu_fraction should be defined")

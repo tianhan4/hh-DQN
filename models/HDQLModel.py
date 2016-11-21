@@ -29,22 +29,29 @@ class HDQLModel(BaseModel):
 
         with tf.variable_scope("target_ori_q"):
             if self.cnn_format=='NHWC':
+                self.residual_state_input_n = tf.placeholder("float32",[None, self.screen_height, self.screen_width,
+                                                              self.history_length],
+                                                  name="residual_state_input")
+            else:
+                self.residual_state_input_n = tf.placeholder("float32",[None, self.history_length,
+                                                                        self.screen_height,
+                                                             self.screen_width],
+                                                  name="residual_state_input")
+            if self.cnn_format=='NHWC':
                 self.state_input_n = tf.placeholder("float32",[None, self.screen_height, self.screen_width,
                                                               self.history_length],
                                                   name="state_input")
             else:
                 self.state_input_n = tf.placeholder("float32",[None, self.history_length, self.screen_height,
                                                               self.screen_width],name="state_input")
-            self.l1_n, self.t_w['l1_s_w'], self.t_w['l1_s_b'] = conv2d(self.state_input_n, 32, [8,8], [4,4],
-                                                                       initializer,
-                                                                    activation_fn, self.cnn_format, name='l1_s')
-            self.l2_n, self.t_w['l2_s_w'], self.t_w['l2_s_b'] = conv2d(self.l1_n, 64, [4,4], [2,2], initializer,
-                                                                       activation_fn, self.cnn_format, name="l2_s")
-            self.l3_n, self.t_w['l3_s_w'], self.t_w['l3_s_b'] = conv2d(self.l2_n, 64, [3,3], [1,1], initializer,
-                                                                       activation_fn, self.cnn_format, name="l3_s")
-            shape = self.l3_n.get_shape().as_list()
-            self.l3_n_flat = tf.reshape(self.l3_n, [-1, reduce(lambda x,y: x*y, shape[1:])])
-            self.l1_n_q, self.t_w['l1_q_w'], self.t_w['l1_q_b'] = linear(self.l3_n_flat, 512,
+            self.con_n = tf.concat(3,[self.state_input_n,self.residual_state_input_n])
+            shape = self.con_n.get_shape().as_list()
+            self.con_n_flat = tf.reshape(self.con_n, [-1, reduce(lambda x,y: x*y, shape[1:])])
+            self.l1_n_flat, self.t_w['l1_s_w'], self.t_w['l1_s_b'] = linear(self.con_n_flat, 1024,
+                                                                            activation_fn=activation_fn, name="l1_n")
+            self.l2_n_flat, self.t_w['l2_s_w'], self.t_w['l2_s_b'] = linear(self.l1_n_flat, 512,
+                                                                            activation_fn=activation_fn, name="l2_n")
+            self.l1_n_q, self.t_w['l1_q_w'], self.t_w['l1_q_b'] = linear(self.l2_n_flat, 512,
                                                                        activation_fn=activation_fn, name="l1_q")
             self.ori_q_n, self.t_w['l2_q_w'], self.t_w['l2_q_b'] = linear(self.l1_n_q, self.config.option_num +
                                                                          self.config.action_num, name='ori_q')
@@ -52,25 +59,35 @@ class HDQLModel(BaseModel):
 
         with tf.variable_scope("ori_q"):
             if self.cnn_format=='NHWC':
+                self.residual_state_input_s = tf.placeholder("float32",[None, self.screen_height, self.screen_width,
+                                                              self.history_length],
+                                                  name="residual_state_input")
+            else:
+                self.residual_state_input_s = tf.placeholder("float32",[None, self.history_length,
+                                                                        self.screen_height,
+                                                             self.screen_width],
+                                                  name="residual_state_input")
+            if self.cnn_format=='NHWC':
                 self.state_input = tf.placeholder("float32",[None, self.screen_height, self.screen_width, self.history_length],
                                                   name="state_input")
             else:
                 self.state_input = tf.placeholder("float32",[None, self.history_length, self.screen_height, self.screen_width],name="state_input")
-            self.l1_s, self.w['l1_s_w'], self.w['l1_s_b'] = conv2d(self.state_input, 32, [8,8], [4,4], initializer, activation_fn, self.cnn_format, name='l1_s')
-            self.l2_s, self.w['l2_s_w'], self.w['l2_s_b'] = conv2d(self.l1_s, 64, [4,4], [2,2], initializer, activation_fn, self.cnn_format, name="l2_s")
-            self.l3_s, self.w['l3_s_w'], self.w['l3_s_b'] = conv2d(self.l2_s, 64, [3,3], [1,1], initializer, activation_fn, self.cnn_format, name="l3_s")
-            shape = self.l3_s.get_shape().as_list()
-            self.l3_s_flat = tf.reshape(self.l3_s, [-1, reduce(lambda x,y: x*y, shape[1:])])
-            self.l1_q, self.w['l1_q_w'], self.w['l1_q_b'] = linear(self.l3_s_flat, 512, activation_fn=activation_fn, name="l1_q")
+            self.con_s = tf.concat(3,[self.state_input,self.residual_state_input_s])
+            shape = self.con_s.get_shape().as_list()
+            self.con_s_flat = tf.reshape(self.con_s, [-1, reduce(lambda x,y: x*y, shape[1:])])
+            self.l1_s_flat, self.w['l1_s_w'], self.w['l1_s_b'] = linear(self.con_s_flat, 1024, activation_fn=activation_fn, name="l1_s")
+            self.l2_s_flat, self.w['l2_s_w'], self.w['l2_s_b'] = linear(self.l1_s_flat, 512,
+                                                                        activation_fn=activation_fn, name="l2_s")
+            self.l1_q, self.w['l1_q_w'], self.w['l1_q_b'] = linear(self.l2_s_flat, 512, activation_fn=activation_fn, name="l1_q")
             self.ori_q, self.w['l2_q_w'], self.w['l2_q_b'] = linear(self.l1_q, self.config.option_num + self.config.action_num, name='ori_q')
 
         with tf.variable_scope("qq"):
-            self.l1_qq, self.w['l1_qq_w'], self.w['l1_qq_b'] = linear(self.l3_s_flat, 512, activation_fn=activation_fn, name="l1_qq")
+            self.l1_qq, self.w['l1_qq_w'], self.w['l1_qq_b'] = linear(self.l2_s_flat, 512, activation_fn=activation_fn, name="l1_qq")
             self.q, self.w['l2_qq_w'], self.w['l2_qq_b'] = linear(self.l1_qq, (self.config.action_num + self.config.option_num) * self.config.option_num, name='q')
 
 
         with tf.variable_scope("target_qq"):
-            self.l1_qq_n, self.t_w['l1_qq_w'], self.t_w['l1_qq_b'] = linear(self.l3_n_flat, 512,
+            self.l1_qq_n, self.t_w['l1_qq_w'], self.t_w['l1_qq_b'] = linear(self.l2_n_flat, 512,
                                                                        activation_fn=activation_fn, name="l1_qq")
             self.q_n, self.t_w['l2_qq_w'], self.t_w['l2_qq_b'] = linear(self.l1_qq_n, (self.config.action_num + self.config.option_num) * self.config.option_num, name='q')
 
@@ -87,15 +104,6 @@ class HDQLModel(BaseModel):
             self.reward_st = tf.placeholder("float32", [None], name="reward_st")
 
         with tf.variable_scope("beta"):
-            if self.cnn_format=='NHWC':
-                self.residual_state_input_n = tf.placeholder("float32",[None, self.screen_height, self.screen_width,
-                                                              self.history_length-1],
-                                                  name="residual_state_input")
-            else:
-                self.residual_state_input_n = tf.placeholder("float32",[None, self.history_length-1,
-                                                                        self.screen_height,
-                                                             self.screen_width],
-                                                  name="residual_state_input")
             shape = self.residual_state_input_n.get_shape().as_list()
             self.residual_input_n_flat = tf.reshape(self.residual_state_input_n, [-1, reduce(lambda x,y: x*y,
                                                                                             shape[1:])])
@@ -104,11 +112,11 @@ class HDQLModel(BaseModel):
             self.state_input_n_flat_ = tf.concat(1, [self.residual_input_n_flat,0.1 * self.state_input_n_flat])
             self.beta_na_, self.l1_b_w, self.l1_b_b = linear(self.state_input_n_flat_, self.config.option_num, stddev=0.1,
                                                          activation_fn=tf.nn.sigmoid, name="beta")
-            self.beta_na = self.beta_na_
-            '''self.beta_na = tf.select(tf.greater(self.beta_na_, self.config.clip_prob), tf.ones_like(self.beta_na_,
+            #self.beta_na = self.beta_na_
+            self.beta_na = tf.select(tf.greater(self.beta_na_, self.config.clip_prob), tf.ones_like(self.beta_na_,
                                                                                               tf.float32),
                                      tf.zeros_like(
-                self.beta_na_, tf.float32))'''
+                self.beta_na_, tf.float32))
             self.beta_ng = tf.reduce_sum(tf.mul(self.beta_na, tf.one_hot(self.g, self.config.option_num, 1.,
                                                                                   0., -1)), 1)
         with tf.variable_scope('pred_to_target'):
@@ -144,7 +152,8 @@ class HDQLModel(BaseModel):
                                                                          -1),1)), 2)
             self.q_sgo = tf.reduce_sum(tf.mul(self.q, tf.one_hot(self.o * self.config.option_num + self.g,
                                                                            fn, 1. ,0.,-1)), 1)
-            self.target_q_sgo = tf.stop_gradient(self.reward_st + (1 - self.terminals) *
+            self.target_q_sgo = tf.stop_gradient(self.reward_st + (self.terminals) * (-self.config.goal_pho)+(1 -
+                                                                                                    self.terminals) *
                                                  self.config.discount**self.k
                                                  * (self.beta_ng * (self.config.goal_pho + self.max_q_n) +
                                               (1- self.beta_ng) * self.max_q_ng))
@@ -190,7 +199,7 @@ self.learning_rate_decay,
         with tf.variable_scope("summary"):
             self.all_summary = tf.merge_summary([self.learn_count_summary])
 
-    def predict(self, state, goal, stackDepth, ep=None):
+    def predict(self, state, residual, goal, stackDepth, ep=None):
         #after ep_end_t steps, epsilon will be constant ep_end.
         #after ep_end_t steps, epsilon will be constant ep_end.
         #after ep_end_t steps, epsilon will be constant ep_end.
@@ -204,28 +213,25 @@ self.learning_rate_decay,
                 action = random.randrange(self.option_num, self.action_num+self.option_num)
         else:
             if goal == -1:
-                q_sa, = self.sess.run([self.q_na],{self.state_input_n : [state]})
+                q_sa, = self.sess.run([self.q_na],{self.state_input_n : [state],self.residual_state_input_n:[residual]})
                 action = np.argmax(q_sa, axis=1)[0]
             else:
-                q_sga, = self.sess.run([self.q_nga],{self.state_input_n : [state], self.g : [goal]})
+                q_sga, = self.sess.run([self.q_nga],{self.state_input_n : [state],
+                                                     self.residual_state_input_n: [residual], self.g : [goal]})
                 q_sga[:,:self.option_num] *= (1 - stackDepth/self.config.max_stackDepth)
                 q_sga[:,goal] = -100
                 action = np.argmax(q_sga, axis=1)[0]
         return action
 
-    def learn(self, s, o, r, n, terminals, g, k):
+    def learn(self, s, res, o, r, n, res_n, terminals, g, k):
         self.learn_count_incre.eval()
-
-        if self.cnn_format=='NHWC':
-            residual_state_input_n = n[:,:,:,1:] - n[:,:,:,:-1]
-        else:
-            residual_state_input_n =n[:,1:,:,:] - n[:,:-1,:,:]
         _, _, q_loss, qq_loss = self.sess.run([self.q_optim,self.qq_optim,
                                                                self.q_loss, self.qq_loss], {
                 self.g: g,
                 self.o: o,
                 self.state_input_n: n,
-                self.residual_state_input_n : residual_state_input_n,
+                self.residual_state_input_s : res,
+                self.residual_state_input_n : res_n,
                 self.reward_st : r,
                 self.terminals : terminals,
                 self.state_input : s,

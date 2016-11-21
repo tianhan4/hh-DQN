@@ -25,7 +25,7 @@ class ALEEnvironment():
 				pygame.init()
 				self.ale.setBool('sound', False) # Sound doesn't work on OSX
 			elif sys.platform.startswith('linux'):
-				self.ale.setBool('sound', True)
+				self.ale.setBool('sound', False)
 			self.ale.setBool('display_screen', True)
 
 		self.ale.setInt('frame_skip', config.frame_skip) # Whether skip frames or not
@@ -60,7 +60,7 @@ class ALEEnvironment():
 
 	def new_game(self):
 		state,terminal = self.reset()
-		for _ in range(self.history_length):
+		for _ in range(self.history_length+1):
 			self.history.add(state)
 		return state, terminal, list(range(len(self.actions)))
 

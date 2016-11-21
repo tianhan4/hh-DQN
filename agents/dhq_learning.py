@@ -55,32 +55,38 @@ class Agent():
         if config.cnn_format == 'NHWC':
             self.optionStack_state = np.empty((self.config.max_stackDepth, self.config.screen_height,
                                                self.config.screen_width,self.config.history_length),dtype="float16")
+            self.optionStack_res = np.empty((self.config.max_stackDepth, self.config.screen_height,
+                                               self.config.screen_width,self.config.history_length),dtype="float16")
+
         else:
             self.optionStack_state = np.empty((self.config.max_stackDepth, self.config.history_length, self.config.screen_height, self.config.screen_width),dtype="float16")
+            self.optionStack_res = np.empty((self.config.max_stackDepth, self.config.history_length,
+                                           self.config.screen_height, self.config.screen_width),dtype="float16")
         self.optionStack_k = np.zeros((self.max_stackDepth), dtype="int32")
         self.optionStack_r = np.zeros((self.max_stackDepth), dtype="float32")
         self.optionStack = np.zeros((self.max_stackDepth), dtype="int32")
         self.stackIdx = 1 # 0 for global
             
 
-    def observe(self, state, reward, action, terminal):
+    def observe(self, state, residual, reward, action, terminal):
         #continuous terminal
         beta = 1 #primitive action first
-
-        if self.cnn_format=='NHWC':
-            residual_state_input_n = state[:,:,1:] - state[:,:,:-1]
-        else:
-            residual_state_input_n =state[1:,:,:] - state[:-1,:,:]
         beta_sa, = self.sess.run([self.model.beta_na,], {self.model.state_input_n: [state],
                                         self.model.g: [self.optionStack[self.stackIdx-1]],
-                                        self.model.residual_state_input_n : [residual_state_input_n]})[0]
+                                        self.model.residual_state_input_n : [residual]})[0]
         self.betaCount[beta_sa>0.99] += 1
             #print(beta_sa.nonzero()[0])
         while self.stackIdx > 1:
             if random.random() <= beta or terminal==1:
-                self.memory.add(self.optionStack_state[self.stackIdx - 1], state, self.optionStack_r[
-                    self.stackIdx - 1], self.optionStack[self.stackIdx - 1], terminal, self.optionStack[
-                    self.stackIdx-2],self.optionStack_k[self.stackIdx - 1])
+                j = 1
+                if self.optionStack_r[self.stackIdx - 1]>0:
+                    j=100
+                for i in range(j):
+                    self.memory.add(self.optionStack_state[self.stackIdx - 1],self.optionStack_res[self.stackIdx -1],
+                    state, residual,
+                                                                                                    self.optionStack_r[
+                        self.stackIdx - 1], self.optionStack[self.stackIdx - 1], terminal, self.optionStack[
+                        self.stackIdx-2],self.optionStack_k[self.stackIdx - 1])
                 self.stackIdx -= 1
             elif self.optionStack_k[self.stackIdx - 1] > self.config.shut_step:
                 self.stackIdx -= 1
@@ -138,7 +144,10 @@ class Agent():
 
                 time1 = time.time()
                 while True:
-                    action = self.model.predict(self.env.history.get(), self.optionStack[self.stackIdx-1], self.stackIdx-1)
+                    action = self.model.predict(self.env.history.get(), self.env.history.getResidual(),
+                                                self.optionStack[
+                        self.stackIdx-1],
+                                                 self.stackIdx-1)
                     if self.stackIdx == self.max_stackDepth - 1 and action < self.option_num:
                         #print("almost full")
                         action = self.option_num + random.choice(self.config.actions)
@@ -152,11 +161,11 @@ class Agent():
                 time2 = time.time()
                 reward, state, terminal = self.env.step(action - self.option_num)
                 for i in range(1,self.stackIdx):
-                    self.optionStack_k[i] += 1
+                    self.optionStack_k[i] = 1
                     #self.optionStack_r[i] *= self.config.discount
                     self.optionStack_r[i] += reward
                 time3 = time.time()
-                self.observe(state, reward, action, terminal)
+                self.observe(state, self.env.history.getResidual(), reward, action, terminal)
                 time4 = time.time()
                 predict_times.append(time2-time1)
                 step_times.append(time3-time2)
@@ -245,7 +254,7 @@ class Agent():
                 current_reward = 0
 
                 for t in tqdm(range(self.n_step), ncols=70):
-                    action = self.model.predict(self.env.history.get(),self.test_ep)
+                    action = self.model.predict(self.env.history.get(), self.env.history.getResidual(), self.test_ep)
                     reward, state, terminal = self.env.step(action)
                     current_reward += reward
                     if terminal:

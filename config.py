@@ -4,13 +4,13 @@ class AgentConfig(object):
     max_step = 5000 * scale
     memory_size = 100 * scale
 
-    batch_size = 20
+    batch_size = 32
     random_start = 30
     cnn_format = 'NHWC'
     discount = 0.99
     target_q_update_learn_step = 2 * scale
-    learning_rate = 0.025
-    learning_rate_minimum = 0.025
+    learning_rate = 0.0025
+    learning_rate_minimum = 0.0025
     learning_rate_decay = 0.96
     learning_rate_decay_step = 5 * scale
 
@@ -28,7 +28,7 @@ class AgentConfig(object):
     double_q = True
     dueling = False
 
-    _test_step = 50 * scale
+    _test_step = 500 * scale
     _save_step = _test_step * 10
     random_seed = 0
     is_train = True
@@ -51,6 +51,7 @@ class DQNConfig(object):
     option_num = 10
     goal_pho = 1
     shut_step = 500
+    clip_prob = 0.82
 
 
 class M1(AgentConfig, EnvironmentConfig, DQNConfig):
