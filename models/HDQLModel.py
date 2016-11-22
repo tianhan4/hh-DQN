@@ -210,16 +210,19 @@ self.learning_rate_decay,
         ep = self.test_ep or (self.ep_end +
             max(0., (self.ep_start - self.ep_end)
               * (self.ep_end_t - max(0., self.learn_count.eval())) / self.ep_end_t))
-        if random.random() < ep:
-            if random.random() < ep/2.:
+
+
+        if goal == -1:
+            if random.random() < ep:
                 action = random.randrange(0, self.option_num)
             else:
-                action = random.randrange(self.option_num, self.action_num+self.option_num)
-        else:
-            if goal == -1:
                 q_sa, = self.sess.run([self.q_na],{self.state_input_n : [state],self.residual_state_input_n:[residual]})
                 action = np.argmax(q_sa, axis=1)[0] if np.max(q_sa)>0 else random.randrange(0,
                                                                                                      self.action_num+self.option_num)
+
+        else:
+            if random.random() < ep/2.:
+                action = random.randrange(self.option_num, self.action_num+self.option_num)
             else:
                 q_sga, = self.sess.run([self.q_nga],{self.state_input_n : [state],
                                                      self.residual_state_input_n: [residual], self.g : [goal]})
