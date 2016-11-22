@@ -115,7 +115,7 @@ class Agent():
     def run(self):
         if self.config.is_train:
             num_game, ep_reward = 0, 0.
-            total_reward, self.total_loss, total_q = 0.,0.,0.
+            total_reward, self.total_loss, total_q,self.total_qq_loss = 0.,0.,0.,0.
             self.total_beta_loss = 0.
             max_avg_ep_reward = 0
             ep_rewards = []
@@ -136,7 +136,7 @@ class Agent():
                 if self.step == self.learn_start:
                     self.update_count = 0
                     num_game= 0
-                    total_reward, self.total_loss, total_q = 0.,0.,0.
+                    total_reward, self.total_loss, self.total_qq_loss, total_q = 0.,0.,0.,0.
                     self.total_beta_loss = 0.
                     max_avg_ep_reward = 0
                     ep_rewards,actions = [],[]
@@ -192,6 +192,7 @@ class Agent():
                         self.betaCount = np.zeros((self.config.option_num))
                         avg_reward = total_reward/self.test_step
                         avg_loss = self.total_loss/self.update_count
+                        avg_qq_loss = self.total_qq_loss/self.update_count
                         avg_beta_loss = self.total_beta_loss/self.update_count
                         avg_optionDepth = 0 if num_game==0 else optionDepths/num_game
 
@@ -202,9 +203,9 @@ class Agent():
                         except:
                             max_ep_reward,min_ep_reward,avg_ep_reward = 0.,0.,0.
                         print("predict time : %f, step time: %f observe time %f" % (np.mean(predict_times), np.mean(step_times), np.mean(observe_times)))
-                        print ('\navg_r: %.4f, avg_l: %.6f, avg_ep_r: %.4f, max_ep_r: %.4f, min_ep_r: %.4f, '
+                        print ('\navg_r: %.4f, avg_l: %.6f, avg_loss: %.6f, avg_ep_r: %.4f, max_ep_r: %.4f, min_ep_r: %.4f, '
                                'avg_b_l: %.4f, avg_opDepth: %.4f # game: %d' \
-                          % (avg_reward, avg_loss, avg_ep_reward, max_ep_reward, min_ep_reward, avg_beta_loss,
+                          % (avg_reward, avg_loss, avg_qq_loss, avg_ep_reward, max_ep_reward, min_ep_reward, avg_beta_loss,
                              avg_optionDepth,
                              num_game))
 
@@ -229,6 +230,7 @@ class Agent():
                         num_game = 0
                         total_reward = 0.
                         self.total_loss = 0.
+                        self.total_qq_loss = 0.
                         self.total_beta_loss = 0.
                         optionDepths = 0.
                         self.total_q = 0.
@@ -289,6 +291,7 @@ class Agent():
     def q_learning_mini_batch(self):
         q_loss,qq_loss = self.model.learn(*self.memory.sample_more())
         self.total_loss += q_loss
+        self.total_qq_loss += qq_loss
         self.update_count += 1
 
                                 
