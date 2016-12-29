@@ -52,6 +52,25 @@ class HReplayMemory:
             ks.append(self.ks[index])
         return self.prestates, actions, rewards, self.poststates, terminals, goals, ks
 
+    def sample_states(self, batch_size, neg_sample):
+        negstates = []
+        i = 0
+        while i < batch_size:
+            index = random.randint(0, self.count - 1)
+            if self.ks[index] == 1:
+                self.prestates[i, ...] = self.start_states[index]
+                self.poststates[i, ...] = self.next_states[index]
+                i += 1
+        while len(negstates) < neg_sample:
+            #index = random.randint(0, self.count - 1)
+            #negstates.append(self.start_states[index])
+            a = np.zeros((1,13))
+            a[0,random.randint(0,12)] = 1
+            negstates.append(a)
+        return self.prestates[:batch_size], negstates, self.poststates[:batch_size]
+
+
+
 class NoSampleError(Exception):
     def __init__(self, value):
         self.value = value

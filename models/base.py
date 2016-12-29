@@ -14,6 +14,7 @@ class BaseModel(object):
   """Abstract object representing an Reader model."""
   def __init__(self, config):
     self._saver = None
+    self._pre_saver = None
     self.config = config
 
     try:
@@ -23,6 +24,7 @@ class BaseModel(object):
 
     self.config = config
 
+    pp(self._attrs)
     for attr in self._attrs:
       name = attr if not attr.startswith('_') else attr[1:]
       setattr(self, name, getattr(self.config, attr))
@@ -35,9 +37,16 @@ class BaseModel(object):
       os.makedirs(self.checkpoint_dir)
     self.saver.save(self.sess, self.checkpoint_dir, global_step=step)
 
+  def save_pre_model(self, step=None):
+    print(" [*] Saving pre_model...")
+    model_name = type(self).__name__
+
+    if not os.path.exists(self.pre_model_dir):
+      os.makedirs(self.pre_model_dir)
+    self.pre_saver.save(self.sess, self.pre_model_dir, global_step=step)
+
   def load_model(self):
     print(" [*] Loading checkpoints...")
-
     ckpt = tf.train.get_checkpoint_state(self.checkpoint_dir)
     if ckpt and ckpt.model_checkpoint_path:
       ckpt_name = os.path.basename(ckpt.model_checkpoint_path)
@@ -49,15 +58,40 @@ class BaseModel(object):
       print(" [!] Load FAILED: %s" % self.checkpoint_dir)
       return False
 
+  def load_pre_model(self):
+    print(" [*] Loading pre_model...")
+    ckpt = tf.train.get_checkpoint_state(self.pre_model_dir)
+    if ckpt and ckpt.model_checkpoint_path:
+      ckpt_name = os.path.basename(ckpt.model_checkpoint_path)
+      fname = os.path.join(self.pre_model_dir, ckpt_name)
+      self.pre_saver.restore(self.sess, fname)
+      print(" [*] Load PRE-MODEL SUCCESS: %s" % fname)
+      return True
+    else:
+      print(" [!] Load PRE-MODEL FAILED: %s" % self.checkpoint_dir)
+      return False
+
   @property
   def checkpoint_dir(self):
     return os.path.join('checkpoints', self.model_dir)
 
   @property
+  def pre_model_dir(self):
+    return os.path.join('pre_model', self.model_dir)
+
+  @property
   def model_dir(self):
     model_dir = self.config.env_name
     for k, v in sorted(self._attrs.items()):
-      if not k.startswith('_') and k not in ['display']:
+      if not k.startswith('_') and k not in ['display',
+                                             'is_pre_model',
+                                             'is_save',
+                                             'is_train',
+                                             '_test_step',
+                                             'test_goal',
+                                             'test_ep',
+                                             'n_episode',
+                                             'n_step']:
         model_dir += "/%s-%s" % (k, ",".join([str(i) for i in v])
             if type(v) == list else v)
     return model_dir + '/'
@@ -67,3 +101,11 @@ class BaseModel(object):
     if self._saver == None:
       self._saver = tf.train.Saver(max_to_keep=10)
     return self._saver
+
+
+  @property
+  def pre_saver(self):
+    if self._pre_saver == None:
+      self._pre_saver = tf.train.Saver(max_to_keep=1)
+    return self._pre_saver
+
