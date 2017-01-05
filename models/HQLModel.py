@@ -133,7 +133,7 @@ class HQLModel():
                                                          + self.o, fn, 1., 0., -1)), 1)
             self.max_q_ng_index = tf.argmax(self.q_nga, 1)
             self.max_q_ng = tf.reduce_max(self.q_nga, 1)
-            self.subgoal_reward = tf.reduce_sum(tf.mul(tf.nn.embedding_lookup(self.random_subgoal,
+            self.subgoal_reward = 1+tf.reduce_sum(tf.mul(tf.nn.embedding_lookup(self.random_subgoal,
                                                                                                  self.g),
                                     tf.nn.l2_normalize(tf.matmul(self.l2_n, self.state_vector), 1)), 1)
             self.target_q_sgo = tf.stop_gradient(self.config.subgoal_discount**self.k * tf.maximum(self.max_q_ng,

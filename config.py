@@ -5,14 +5,14 @@ class AgentConfig(object):
     pre_learn_step = 5000 * scale
     memory_size = 100 * scale
 
-    meta_shut_step = 10000
+    meta_shut_step = 5000
     batch_size = 32
     random_start = 30
     cnn_format = 'NHWC'
     discount = 0.99
     target_q_update_learn_step = 2 * scale
-    learning_rate = 0.025
-    learning_rate_minimum = 0.025
+    learning_rate = 0.0025
+    learning_rate_minimum = 0.0025
     learning_rate_decay = 0.96
     learning_rate_decay_step = 5 * scale
     ep_end = 0.1
@@ -26,22 +26,22 @@ class AgentConfig(object):
 
     #w2v part
     s2v_batch_size = 1
-    s2v_learning_rate = 0.025
-    s2v_learning_rate_minimum = 0.001
+    s2v_learning_rate = 0.0025
+    s2v_learning_rate_minimum = 0.0001
     s2v_learning_rate_decay = 0.95
     s2v_learning_rate_decay_step = 3000 * scale
-    s2v_train_frequency = 5
-    state_dim = 100
-    window = 5 #TODO: history capacity should be the maximum of history_length and window. for History class.
-    neg_sample = 1
+    s2v_train_frequency = 6
+    state_dim = 50
+    window = 6 #TODO: history capacity should be the maximum of history_length and window. for History class.
+    neg_sample = 5
 
     #subgoal part
-    shut_step = 10000
+    shut_step = 5000
     option_num = 15
     #phase1
-    subgoal_learning_rate = 0.01
+    subgoal_learning_rate = 0.001
     subgoal_discount = 0.95
-    subgoal_learning_rate_minimum = 0.01
+    subgoal_learning_rate_minimum = 0.001
     subgoal_learning_rate_decay = 0.95
     subgoal_learning_rate_decay_step = 5 * scale
     subgoal_train_frequency = 4
@@ -52,8 +52,8 @@ class AgentConfig(object):
     subgoal_ep_start = 1
     subgoal_ep_end_t = scale * 1000
     #phase2
-    subgoal_learning_rate2 = 0.01
-    subgoal_learning_rate_minimum2 = 0.001
+    subgoal_learning_rate2 = 0.001
+    subgoal_learning_rate_minimum2 = 0.0001
     subgoal_learning_rate_decay2 = 0.96
     subgoal_learning_rate_decay_step2 = 500 * scale
     subgoal_train_frequency2 = 4

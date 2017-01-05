@@ -29,29 +29,31 @@ class HDQLModel():
         pass
         #self.state_vector_history.close()
 
-    def _state2vec(self, state):
+    def _state2vec(self, state, tag, mode):
         #auxillary method for _construct_state2vec
-        if len(self.s2v_w) == 0:
-            l1_s, self.s2v_w['l1_s_w'], self.s2v_w['l1_s_b'] = conv2d(state, 32, [8,8], [4,4], data_format=self.config.cnn_format,
-                                                                      name='l1_s')
-            l2_s, self.s2v_w['l2_s_w'], self.s2v_w['l2_s_b'] = conv2d(l1_s, 32, [4,4], [1,1],
+        if len(self.s2v_w[mode]) == 0:
+            self.s2v_w[mode][tag+"l1_s"], self.s2v_w[mode]['l1_s_w'], self.s2v_w[mode]['l1_s_b'] = conv2d(state, 32, [8,8], [4,4],
+                                                                   data_format=self.config.cnn_format,
+                                                                      name='l1_s'+mode)
+            self.s2v_w[mode][tag+"l2_s"], self.s2v_w[mode]['l2_s_w'], self.s2v_w[mode]['l2_s_b'] = conv2d( self.s2v_w[mode][tag+"l1_s"], 32,
+                                                                                         [4,4], [2,2],
                                                                       data_format=self.config.cnn_format,
-                                                                      name="l2_s")
-            shape = l2_s.get_shape().as_list()
-            l2_flat = tf.reshape(l2_s, [-1, reduce(lambda x, y: x * y, shape[1:])])
-            l1_v, self.s2v_w['l1_v_w'], self.s2v_w['l1_v_b'] = linear(l2_flat, self.config.state_dim,
-                                                                       activation_fn=tf.nn.relu, name="l1_v")
+                                                                      name="l2_s"+mode)
+            shape = self.s2v_w[mode][tag+"l2_s"].get_shape().as_list()
+            self.s2v_w[mode][tag+"l2_flat"] = tf.reshape(self.s2v_w[mode][tag+"l2_s"], [-1, reduce(lambda x, y: x * y, shape[1:])])
+            self.s2v_w[mode][tag+"l1_v"], self.s2v_w[mode]['l1_v_w'], self.s2v_w[mode]['l1_v_b'] = linear(self.s2v_w[mode][tag+"l2_flat"],
+                                                                                      self.config.state_dim, name="l1_v"+mode)
         else:
-            l1_s, _, _ = conv2d(state, 32, [8,8], [4,4], data_format=self.config.cnn_format,
-                                                                      name='l1_s',w=self.s2v_w['l1_s_w'], b=self.s2v_w['l1_s_b'])
-            l2_s, _, _  = conv2d(l1_s, 32, [4,4], [1,1],
+            self.s2v_w[mode][tag+"l1_s"], _, _ = conv2d(state, 32, [8,8], [4,4], data_format=self.config.cnn_format,
+                                                                      name='l1_s'+mode,w=self.s2v_w[mode]['l1_s_w'], b=self.s2v_w[mode]['l1_s_b'])
+            self.s2v_w[mode][tag+"l2_s"], _, _  = conv2d(self.s2v_w[mode][tag+"l1_s"], 32, [4,4], [2,2],
                                                                       data_format=self.config.cnn_format,
-                                                                      name="l2_s", w=self.s2v_w['l2_s_w'], b=self.s2v_w['l2_s_b'])
-            shape = l2_s.get_shape().as_list()
-            l2_flat = tf.reshape(l2_s, [-1, reduce(lambda x, y: x * y, shape[1:])])
-            l1_v, _, _ = linear(l2_flat, self.config.state_dim,w=self.s2v_w['l1_v_w'], b=self.s2v_w['l1_v_b'],
-                                                                       activation_fn=tf.nn.relu, name="l1_v")
-        return l1_v
+                                                                      name="l2_s"+mode, w=self.s2v_w[mode]['l2_s_w'], b=self.s2v_w[mode]['l2_s_b'])
+            shape = self.s2v_w[mode][tag+"l2_s"].get_shape().as_list()
+            self.s2v_w[mode][tag+"l2_flat"] = tf.reshape(self.s2v_w[mode][tag+"l2_s"], [-1, reduce(lambda x, y: x * y, shape[1:])])
+            self.s2v_w[mode][tag+"l1_v"], _, _ = linear(self.s2v_w[mode][tag+"l2_flat"], self.config.state_dim,
+                                                  w=self.s2v_w[mode]['l1_v_w'], b=self.s2v_w[mode]['l1_v_b'], name="l1_v"+mode)
+        return self.s2v_w[mode][tag+"l1_v"]
 
 
 
@@ -61,9 +63,9 @@ class HDQLModel():
             self.random_subgoal = tf.stop_gradient(tf.get_variable("random_subgoal", [self.config.option_num,
                                                                                       self.config.state_dim],
                                                   tf.float32, initializer=tf.random_uniform_initializer(
-                    minval=-0.5/self.config.state_dim, maxval=0.5/self.config.state_dim)))
+                    minval=-0.5, maxval=0.5)))
         with tf.variable_scope("state2vec") as scope:
-            self.s2v_w = {}
+            self.s2v_w = {"t":{}, "n":{}}
             if self.config.cnn_format=='NHWC':
                 self.pos_state = tf.placeholder("float32", shape=[None, self.config.screen_height, self.config.screen_width,
                                                               self.config.history_length],
@@ -91,9 +93,9 @@ class HDQLModel():
                                                                   self.config.screen_width],
                                                 name="target_state_index")
 
-            self.target_vector = self._state2vec(self.target_state)
-            self.pos_vector = self._state2vec(self.pos_state)
-            self.neg_vector = self._state2vec(self.neg_state)
+            self.target_vector = self._state2vec(self.target_state, tag="target",mode="t")
+            self.pos_vector = self._state2vec(self.pos_state, tag="pos",mode="n")
+            self.neg_vector = self._state2vec(self.neg_state, tag="neg",mode="n")
 
             self.true_logits = tf.reduce_sum(tf.mul(self.target_vector, self.pos_vector), 1)
             self.sampled_logits = tf.matmul(self.target_vector, self.neg_vector, transpose_b=True)
@@ -167,7 +169,6 @@ class HDQLModel():
             self.l1_qq, self.w['l1_qq_w'], self.w['l1_qq_b'] = linear(self.l3_s_flat, 512, activation_fn=activation_fn, name="l1_qq")
             self.q, self.w['l2_qq_w'], self.w['l2_qq_b'] = linear(self.l1_qq, (self.config.action_num + self.config.option_num) * self.config.option_num, name='q')
 
-
         with tf.variable_scope("target_qq"):
             self.l1_qq_n, self.t_w['l1_qq_w'], self.t_w['l1_qq_b'] = linear(self.l3_n_flat, 512,
                                                                        activation_fn=activation_fn, name="l1_qq")
@@ -182,8 +183,9 @@ class HDQLModel():
             self.g = tf.placeholder('int64', [None], name="g")
         with tf.variable_scope("reward"):
             self.reward_st = tf.placeholder("float32", [None], name="reward_st")
-            self.subgoal_reward = tf.reduce_sum(tf.mul(tf.nn.embedding_lookup(self.random_subgoal, self.g),
-                                    tf.nn.l2_normalize(self._state2vec(self.state_input_n), 1)), 1)
+            self.subgoal_reward = tf.exp(tf.reduce_sum(tf.mul(tf.nn.embedding_lookup(self.random_subgoal, self.g),
+                                    tf.nn.l2_normalize(self._state2vec(self.state_input_n,tag="state_input_n",mode="t"),
+                                                       1)), 1))
 
         with tf.variable_scope('pred_to_target'):
             self.t_w_input = {}
@@ -221,7 +223,7 @@ class HDQLModel():
                                                                                                     self.terminals)
                                                                                                    * self.max_q_ng,
                                                             self.subgoal_reward))
-        
+
         with tf.variable_scope("optimizer"):
             self.q_delta = self.target_q_so - self.q_so
             self.qq_delta = self.target_q_sgo - self.q_sgo
@@ -369,6 +371,9 @@ class HDQLModel():
             self.neg_state : neg_state,
             self.target_state : target_state
         })
+        if np.isnan(nce_loss):
+            print('asfd')
+
         #pickle.dump(state_vector, self.state_vector_history)
         return nce_loss
 

@@ -58,6 +58,15 @@ class ReplayMemory:
             ks.append(self.ks[index])
         return self.prestates, actions, rewards, self.poststates, terminals, goals, ks
 
+    def sample_states(self, neg_sample):
+        negstates = []
+        while len(negstates) < neg_sample:
+            index = random.randint(0, self.count - 1)
+            negstates.append(self.start_states[index])
+        return negstates
+
+
+
 
 class NoSampleError(Exception):
     def __init__(self, value):

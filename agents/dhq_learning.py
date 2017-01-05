@@ -72,8 +72,10 @@ class Agent(BaseModel):
 
             if self.is_pre and self.step % self.s2v_train_frequency == 0:
                 #states, neg_states, target_states = self.memory2.sample_states(self.s2v_batch_size, self.neg_sample)
-                states, neg_states, target_states = self.env.history.getStateTransition()
-                self.model.s2v_learn(states, neg_states, target_states)
+                states, _, target_states = self.env.history.getStateTransition()
+                neg_states = self.memory2.sample_states(self.neg_sample)
+                loss = self.model.s2v_learn(states, neg_states, target_states)
+                self.total_nce_loss += loss
                 self.s2v_update_count += 1
 
             if self.step % self.subgoal_train_frequency == 0:
@@ -230,7 +232,7 @@ class Agent(BaseModel):
                 time3 = time.time()
                 reward, state, terminal = self.env.step(action - self.option_num)
                 if terminal: #connecting start with end , for s2v learning
-                    self.env.ale.reset_game()
+                    self.env.reset()
                     self.env.history.add(self.env.getScreen())
                 for i in range(0, self.stackIdx):
                     self.optionStack_k[i] += 1
@@ -336,6 +338,7 @@ class Agent(BaseModel):
                         goals = []
 
         else:
+            self.is_pre = self.config.is_pre_model
             if self.test_ep == None:
                 self.test_ep = 0
             
