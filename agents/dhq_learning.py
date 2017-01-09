@@ -59,10 +59,14 @@ class Agent(BaseModel):
 
         self._saver = tf.train.Saver(max_to_keep=30)
 
+        self.stateSamplingFile = open("stateSamplingFile","wr")
         if self.config.is_pre_model:
             self.load_pre_model()
         elif not self.config.is_train:
             self.load_model()
+
+    def __del__(self):
+        self.stateSamplingFile.close()
 
     def observe_train(self):
         if self.step - self.init_step > self.learn_start:
@@ -235,8 +239,8 @@ class Agent(BaseModel):
                     self.env.reset()
                     self.env.history.add(self.env.getScreen())
                 for i in range(0, self.stackIdx):
-                    self.optionStack_k[i] += 1
-                    self.optionStack_r[i] += reward * self.config.discount ** (self.optionStack_k[i]-1)
+                    self.optionStack_k[i] = 1
+                    self.optionStack_r[i] += reward# * self.config.discount ** (self.optionStack_k[i]-1)
                 time4 = time.time()
                 self.observe_train()
                 time5 = time.time()
@@ -321,13 +325,13 @@ class Agent(BaseModel):
 
                         num_game = 0
                         total_reward = 0.
-                        self.subgoal_total_loss
+                        self.subgoal_total_loss = 0
+                        self.s2v_avg_loss = 0
                         self.total_loss = 0.
                         optionDepths = 0.
                         self.total_q = 0.
                         self.update_count = 0
                         self.subgoal_update_count = 0
-                        self.s2v_update_count = 0
                         self.s2v_update_count = 0
                         collect_times = []
                         predict_times = []

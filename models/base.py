@@ -92,7 +92,8 @@ class BaseModel(object):
                                              'test_ep',
                                              'n_episode',
                                              'n_step',
-                                             'display_screen']:
+                                             'display_screen',
+                                             "random_seed"]:
         model_dir += "/%s-%s" % (k, ",".join([str(i) for i in v])
             if type(v) == list else v)
     return model_dir + '/'

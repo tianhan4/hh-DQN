@@ -24,6 +24,8 @@ class HQLModel():
         self.state_vector_history = open("state_vector_history", "wb")
         if self.config.test_ep == None:
             self.config.test_ep = 0
+        self.shut_array = np.zeros((self.config.option_num, self.config.state_num), dtype="int16")
+        self.subgoal_max_state = np.zeros((self.config.option_num), dtype="int16")
 
     def __del__(self):
         self.state_vector_history.close()
@@ -31,10 +33,14 @@ class HQLModel():
 
     def _construct_state2vec(self, config):
         with tf.variable_scope("random_subgoal"):
+
+            self.subgoal_max_value = tf.get_variable('subgoal_max_value', [self.config.option_num], initializer=tf.constant_initializer(0.0))
+            self.subgoal_max_value_input = tf.placeholder('float32', shape=[self.config.option_num])
+            self.subgoal_max_value_op = tf.assign(self.subgoal_max_value, self.subgoal_max_value_input)
             self.random_subgoal = tf.stop_gradient(tf.get_variable("random_subgoal", [self.config.option_num,
                                                                                       self.config.state_dim],
-                                                  tf.float32, initializer=tf.random_uniform_initializer(
-                    minval=-0.5/self.config.state_dim, maxval=0.5/self.config.state_dim)))
+                                                  tf.float32, initializer=tf.random_normal_initializer(
+                    stddev=0.5)))
         with tf.variable_scope("state2vec"):
             self.pos_state = tf.placeholder("float32", shape=[None, self.config.history_length, self.config.state_num],
                                              name="pos_state_index")
@@ -46,12 +52,10 @@ class HQLModel():
 
             self.state_vector = tf.get_variable('vector', [self.config.history_length * self.config.state_num,
                                                            self.config.state_dim], tf.float32,
-                tf.random_uniform_initializer(maxval=0.5/self.config.state_dim,
-                                              minval=-0.5/self.config.state_dim))
+                tf.random_normal_initializer(stddev=0.5/self.config.state_dim))
             self.neg_state_vector = tf.get_variable('neg_vector', [self.config.history_length * self.config.state_num,
                                                            self.config.state_dim], tf.float32,
-                tf.random_uniform_initializer(maxval=0.5/self.config.state_dim,
-                                              minval=-0.5/self.config.state_dim))
+                tf.random_normal_initializer(stddev=0.5/self.config.state_dim))
             target_vector = tf.matmul(self.target_state_, self.state_vector)
             pos_vector = tf.matmul(self.pos_state_, self.neg_state_vector)
             neg_vector = tf.matmul(self.neg_state_, self.neg_state_vector)
@@ -117,9 +121,10 @@ class HQLModel():
 
         with tf.variable_scope("goal"):
             #ori - q
-            self.q_na = tf.matmul(self.l2_n, self.ori_qs, transpose_b=True)
+            self.q_na_ori = tf.matmul(self.l2_n, self.ori_qs, transpose_b=True)
+            self.q_na = tf.slice(self.q_na_ori, (0, self.config.option_num), (-1,-1))
             self.q_so = tf.reduce_sum(tf.mul(tf.gather(self.ori_qs, self.o), self.l2_s), 1)
-            self.max_q_n_index = tf.argmax(self.q_na, 1)
+            self.max_q_n_index = tf.argmax(self.q_na, 1) + self.config.option_num
             self.max_q_n = tf.reduce_max(self.q_na, 1)
             self.target_q_so = tf.stop_gradient(self.reward_st + (1 - self.terminals) * self.config.discount**self.k * \
                                                        self.max_q_n)
@@ -127,17 +132,21 @@ class HQLModel():
             #g - q
             action_num = self.config.action_num+self.config.option_num
             fn = (self.config.option_num)*(self.config.action_num+self.config.option_num)
-            self.q_nga = tf.squeeze(tf.batch_matmul(tf.gather(self.qs, self.g), tf.expand_dims(self.l2_n, 2)), [2])
+            self.q_nga_ori = tf.squeeze(tf.batch_matmul(tf.gather(self.qs, self.g), tf.expand_dims(self.l2_n, 2)), [2])
+            self.q_nga = tf.slice(self.q_nga_ori, (0, self.config.option_num), (-1,-1))
             self.q_sgo = tf.reduce_sum(tf.mul(tf.matmul(self.l2_s,tf.transpose(self.flat_qs)),
                                               tf.one_hot(self.g * ((self.config.action_num+self.config.option_num))
                                                          + self.o, fn, 1., 0., -1)), 1)
-            self.max_q_ng_index = tf.argmax(self.q_nga, 1)
+            self.max_q_ng_index = tf.argmax(self.q_nga, 1) + self.config.option_num
             self.max_q_ng = tf.reduce_max(self.q_nga, 1)
-            self.subgoal_reward = 1+tf.reduce_sum(tf.mul(tf.nn.embedding_lookup(self.random_subgoal,
+            self.subgoal_reward = tf.exp(tf.reduce_sum(tf.mul(tf.nn.embedding_lookup(self.random_subgoal,
                                                                                                  self.g),
-                                    tf.nn.l2_normalize(tf.matmul(self.l2_n, self.state_vector), 1)), 1)
-            self.target_q_sgo = tf.stop_gradient(self.config.subgoal_discount**self.k * tf.maximum(self.max_q_ng,
-                                                            self.subgoal_reward))
+                                    tf.nn.l2_normalize(tf.matmul(self.l2_n, self.state_vector), 1)), 1))
+            self.subgoal_rewards = tf.exp(tf.reduce_sum(tf.mul(self.random_subgoal,
+                                    tf.nn.l2_normalize(tf.matmul(self.l2_n, self.state_vector), 1)), 1))
+            self.target_q_sgo = tf.stop_gradient(self.config.subgoal_discount**self.k *
+                                                                     tf.maximum(self.max_q_ng,
+                                                            self.reward_st))
 
         
         with tf.variable_scope("optimizer"):
@@ -184,56 +193,81 @@ class HQLModel():
             ep = self.config.test_ep if not self.config.is_train else (self.config.beta_ep_end2 +
                 max(0., (self.config.beta_ep_start2 - self.config.beta_ep_end2)
                   * (self.config.beta_ep_end_t2 - max(0., self.subgoal_learn_count2.eval())) / self.config.beta_ep_end_t2))
-        r1, q_nga = self.sess.run([self.subgoal_reward, self.q_nga],
-                                     {self.state_input_n: [state], self.g : [goal]})
-        q_nga = q_nga[0]
-        q_nga[:self.config.option_num] = -100
-        r2 = np.max(q_nga)
-        ridx = np.argmax(q_nga)
-        if r1[0] > r2 and random.random() > ep:
-            return -1
-        else:
-            return ridx
-
-
-    def predict(self, state, goal, stackDepth, is_pre, is_start, default_action = None):
-        #after ep_end_t steps, epsilon will be constant ep_end.
-        ep1 = self.config.test_ep if not self.config.is_train else (self.config.ep_end +
-            max(0., (self.config.ep_start - self.config.ep_end)
-              * (self.config.ep_end_t - max(0., self.learn_count.eval())) / self.config.ep_end_t))
-        if is_pre:
-            ep2 = self.config.test_ep if not self.config.is_train else (self.config.subgoal_ep_end +
-                max(0., (self.config.subgoal_ep_start - self.config.subgoal_ep_end)
-                  * (self.config.subgoal_ep_end_t - max(0., self.subgoal_learn_count.eval())) / self.config.subgoal_ep_end_t))
-        else:
-            ep2 = self.config.test_ep if not self.config.is_train else (self.config.subgoal_ep_end2 +
-                max(0., (self.config.subgoal_ep_start2 - self.config.subgoal_ep_end2)
-                  * (self.config.subgoal_ep_end_t2 - max(0., self.subgoal_learn_count2.eval())) / self.config.subgoal_ep_end_t2))
-
+        r1, = self.sess.run([self.subgoal_rewards],
+                                     {self.state_input_n: [state]})
+        subgoal_max_value = self.subgoal_max_value.eval()
+        flag = False
+        for i in range(self.config.option_num):
+            if r1[i] >= subgoal_max_value[i]:
+                if r1[i] > subgoal_max_value[i] and is_pre:
+                    subgoal_max_value[i] = r1[i]
+                    self.subgoal_max_state[i] = np.argmax(state)
+                if i == goal:
+                    flag = True
+                    self.shut_array[goal, np.argmax(state)] += 1
+                self.subgoal_max_value_op.eval({self.subgoal_max_value_input:subgoal_max_value})
         if goal == -1:
+            return 0, 0
+        elif flag:
+            return -1, r1[goal]
+        else:
+            return 0, 0
+
+
+    def predict(self, state, goal, stackDepth, is_pre, is_start, forbiddenList = []):
+        #after ep_end_t steps, epsilon will be constant ep_end.
+        if goal == -1:
+            ep1 = self.config.test_ep if not self.config.is_train else (self.config.ep_end +
+                max(0., (self.config.ep_start - self.config.ep_end)
+                  * (self.config.ep_end_t - max(0., self.learn_count.eval())) / self.config.ep_end_t))
             if random.random() < ep1:
                 if is_start:
-                    action = random.randrange(0, self.config.action_num + self.config.option_num)
+                    if is_pre:
+                        action = random.randrange(0, self.config.option_num)
+                    else:
+                        while True:
+                            action = random.randrange(-1, self.config.option_num)
+                            if action not in forbiddenList:
+                                break
+                        if action == -1:
+                            action = random.randrange(self.config.option_num, self.config.action_num + self.config.option_num)
                 else:
                     action = random.randrange(self.config.option_num, self.config.action_num + self.config.option_num)
             else:
-                q_na, = self.sess.run([self.q_na], {self.state_input_n : [state]})
+                q_na, = self.sess.run([self.q_na_ori], {self.state_input_n : [state]})
+                q_na[:,forbiddenList] = -100
                 if not is_start:
                     q_na[:,:self.config.option_num] = -100
                 action = np.argmax(q_na[0])
         else:
+            if is_pre:
+                #stair epsilon
+                #subgoal_ep_end_t = self.config.subgoal_ep_end_t * ((goal+1.0)/self.config.option_num)
+                ep2 = self.config.test_ep if not self.config.is_train else (self.config.subgoal_ep_end +
+                    max(0., (self.config.subgoal_ep_start - self.config.subgoal_ep_end)
+                      * (self.config.subgoal_ep_end_t - max(0., self.subgoal_learn_count.eval())) /
+                        self.config.subgoal_ep_end_t))
+            else:
+                ep2 = self.config.test_ep if not self.config.is_train else (self.config.subgoal_ep_end2 +
+                    max(0., (self.config.subgoal_ep_start2 - self.config.subgoal_ep_end2)
+                      * (self.config.subgoal_ep_end_t2 - max(0., self.subgoal_learn_count2.eval())) / self.config.subgoal_ep_end_t2))
             if random.random() < ep2:
                 if is_start:
-                    action = random.randrange(0, self.config.action_num+self.config.option_num)
+                    while True:
+                        action = random.randrange(-1, self.config.option_num)
+                        if action not in forbiddenList:
+                            break
+                    if action == -1:
+                        action = random.randrange(self.config.option_num, self.config.action_num + self.config.option_num)
                 else:
                     action = random.randrange(self.config.option_num, self.config.action_num + self.config.option_num)
-            elif default_action >= 0:
-                return default_action
             else:
-                q_nga, = self.sess.run([self.q_nga], {self.state_input_n : [state], self.g : [goal]})
+                q_nga, = self.sess.run([self.q_nga_ori], {self.state_input_n : [state], self.g : [goal]})
+                q_nga[:,forbiddenList] = -100
                 if not is_start:
-                    q_nga[:,:self.config.option_num] = -100
+                    q_nga[:, :self.config.option_num] = -100
                 action = np.argmax(q_nga[0])
+        assert is_start or action >= self.config.option_num
         return action
 
     def goal_learn(self, s, o, r, n, terminals, k):
@@ -247,17 +281,18 @@ class HQLModel():
                 })
         return q_loss, summary_str
 
-    def subgoal_learn(self, s, o, n, terminals, g, k, is_pre):
-        for i in range(s.shape[0]):
-            if g[i]==1 and s[i,0,4]==1:
-                a.append(o[i])
+    def subgoal_learn(self, s, o, r, n, terminals, g, k, is_pre):
+        #for i in range(s.shape[0]):
+        #    if g[i]==1 and s[i,0,4]==1:
+        #        a.append(o[i])
         if is_pre:
             _, qq_loss, summary_str = self.sess.run([self.subgoal_optim, self.qq_loss, self.all_summary], {
                     self.g : g,
                     self.o: o,
                     self.state_input : s,
                     self.state_input_n : n,
-                    self.k : k
+                    self.k : k,
+                    self.reward_st : r
                     })
         else:
             _, qq_loss, summary_str = self.sess.run([self.subgoal_optim2, self.qq_loss, self.all_summary], {
@@ -265,7 +300,8 @@ class HQLModel():
                     self.o: o,
                     self.state_input : s,
                     self.state_input_n : n,
-                    self.k : k
+                    self.k : k,
+                    self.reward_st : r
                     })
         return qq_loss, summary_str
 
@@ -275,5 +311,5 @@ class HQLModel():
             self.neg_state : neg_state,
             self.target_state : target_state
         })
-        #pickle.dump(state_vector, self.state_vector_history)
+        pickle.dump(state_vector, self.state_vector_history)
         return nce_loss

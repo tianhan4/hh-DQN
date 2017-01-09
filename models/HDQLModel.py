@@ -310,7 +310,10 @@ class HDQLModel():
         if goal == -1:
             if random.random() < ep1:
                 if is_start:
-                    action = random.randrange(0, self.config.action_num + self.config.option_num)
+                    if is_pre:
+                        action = random.randrange(0, self.config.option_num)
+                    else:
+                        action = random.randrange(0, self.config.action_num + self.config.option_num)
                 else:
                     action = random.randrange(self.config.option_num, self.config.action_num + self.config.option_num)
             else:

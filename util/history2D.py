@@ -29,7 +29,7 @@ class History2D:
             #index = random.randint(0, self.count - 1)
             #negstates.append(self.start_states[index])
             a = np.zeros((self.history_length,13))
-            a[0,random.randint(0,12)] = 1
+            #a[0,random.randint(0,12)] = 1
             neg_states.append(a)
         return states, neg_states, target_states
 

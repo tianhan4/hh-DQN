@@ -1,19 +1,19 @@
 import random
 import tensorflow as tf
-from agents.dhq_learning import Agent
+from agents.hq_learning import Agent
 from config import get_config
 
 flags = tf.app.flags
 
 # Model
-flags.DEFINE_string('model_name', 'HDQLModel', 'Type of model')
+flags.DEFINE_string('model_name', 'HQLModel', 'Type of model')
 flags.DEFINE_boolean('dueling', False, 'Whether to use dueling deep q-network')
 flags.DEFINE_boolean('double_q', True, 'Whether to use double q-learning')
 flags.DEFINE_boolean('init_step', 0, 'init_step for intermediate start.')
 
 # Environment
 #flags.DEFINE_string('env_name', 'Breakout-v0', 'The name of gym environment to use')
-flags.DEFINE_string('env_name', 'ALEEnvironment', 'The name of gym environment to use')
+flags.DEFINE_string('env_name', 'StochasticMDPEnv', 'The name of gym environment to use')
 flags.DEFINE_integer('action_repeat', 4, 'The number of action to be repeated')
 
 # Etc
@@ -21,7 +21,7 @@ flags.DEFINE_boolean('use_gpu', False, 'Whether to use gpu or not')
 flags.DEFINE_string('gpu_fraction', '1/30', 'idx / # of gpu fraction e.g. 1/3, 2/3, 3/3')
 flags.DEFINE_boolean('display_screen', False, 'Whether to do display the game screen or not')
 flags.DEFINE_boolean('is_train', True, 'Whether to do training or testing')
-flags.DEFINE_integer('random_seed', 203, 'Value of random seed')
+flags.DEFINE_integer('random_seed', 403, 'Value of random seed')
 flags.DEFINE_boolean('is_pre_model', False, 'load_pre_model')
 flags.DEFINE_boolean('is_save', True, 'is_save')
 flags.DEFINE_integer('test_goal', -1, 'test_goal')
