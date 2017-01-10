@@ -24,31 +24,39 @@ class HDQLModel():
         self.state_len = self.config.screen_height*self.config.screen_width*self.config.history_length
         if self.config.test_ep == None:
             self.config.test_ep = 0
+        self.shut_array = np.zeros((self.config.option_num), dtype="int16")
+        self.subgoal_change_state = np.zeros((self.config.option_num), dtype="int16")
 
     def __del__(self):
         pass
         #self.state_vector_history.close()
 
     def _state2vec(self, state, tag, mode):
-        #auxillary method for _construct_state2vec
+        initializer = tf.random_normal_initializer(stddev=0.02)
         if len(self.s2v_w[mode]) == 0:
             self.s2v_w[mode][tag+"l1_s"], self.s2v_w[mode]['l1_s_w'], self.s2v_w[mode]['l1_s_b'] = conv2d(state, 32, [8,8], [4,4],
                                                                    data_format=self.config.cnn_format,
-                                                                      name='l1_s'+mode)
+                                                                      name='l1_s'+mode, initializer=initializer)
             self.s2v_w[mode][tag+"l2_s"], self.s2v_w[mode]['l2_s_w'], self.s2v_w[mode]['l2_s_b'] = conv2d( self.s2v_w[mode][tag+"l1_s"], 32,
                                                                                          [4,4], [2,2],
                                                                       data_format=self.config.cnn_format,
-                                                                      name="l2_s"+mode)
+                                                                      name="l2_s"+mode, initializer=initializer)
             shape = self.s2v_w[mode][tag+"l2_s"].get_shape().as_list()
             self.s2v_w[mode][tag+"l2_flat"] = tf.reshape(self.s2v_w[mode][tag+"l2_s"], [-1, reduce(lambda x, y: x * y, shape[1:])])
             self.s2v_w[mode][tag+"l1_v"], self.s2v_w[mode]['l1_v_w'], self.s2v_w[mode]['l1_v_b'] = linear(self.s2v_w[mode][tag+"l2_flat"],
                                                                                       self.config.state_dim, name="l1_v"+mode)
         else:
             self.s2v_w[mode][tag+"l1_s"], _, _ = conv2d(state, 32, [8,8], [4,4], data_format=self.config.cnn_format,
-                                                                      name='l1_s'+mode,w=self.s2v_w[mode]['l1_s_w'], b=self.s2v_w[mode]['l1_s_b'])
+                                                        name='l1_s'+mode,
+                                                        w=self.s2v_w[mode]['l1_s_w'],
+                                                        b=self.s2v_w[mode]['l1_s_b'],
+                                                        initializer=initializer)
             self.s2v_w[mode][tag+"l2_s"], _, _  = conv2d(self.s2v_w[mode][tag+"l1_s"], 32, [4,4], [2,2],
-                                                                      data_format=self.config.cnn_format,
-                                                                      name="l2_s"+mode, w=self.s2v_w[mode]['l2_s_w'], b=self.s2v_w[mode]['l2_s_b'])
+                                                         data_format=self.config.cnn_format,
+                                                         name="l2_s"+mode,
+                                                         w=self.s2v_w[mode]['l2_s_w'],
+                                                         b=self.s2v_w[mode]['l2_s_b'],
+                                                         initializer=initializer)
             shape = self.s2v_w[mode][tag+"l2_s"].get_shape().as_list()
             self.s2v_w[mode][tag+"l2_flat"] = tf.reshape(self.s2v_w[mode][tag+"l2_s"], [-1, reduce(lambda x, y: x * y, shape[1:])])
             self.s2v_w[mode][tag+"l1_v"], _, _ = linear(self.s2v_w[mode][tag+"l2_flat"], self.config.state_dim,
@@ -58,37 +66,40 @@ class HDQLModel():
 
 
     def _construct_state2vec(self, config):
+        self.subgoal_max_value = tf.get_variable('subgoal_max_value', [self.config.option_num], initializer=tf.constant_initializer(0.0))
+        self.subgoal_max_value_input = tf.placeholder('float32', shape=[self.config.option_num])
+        self.subgoal_max_value_op = tf.assign(self.subgoal_max_value, self.subgoal_max_value_input)
+
         self.s2v_w = {}
         with tf.variable_scope("random_subgoal"):
             self.random_subgoal = tf.stop_gradient(tf.get_variable("random_subgoal", [self.config.option_num,
                                                                                       self.config.state_dim],
-                                                  tf.float32, initializer=tf.random_uniform_initializer(
-                    minval=-0.5, maxval=0.5)))
+                                                  tf.float32, initializer=tf.random_normal_initializer(stddev=0.5)))
         with tf.variable_scope("state2vec") as scope:
             self.s2v_w = {"t":{}, "n":{}}
             if self.config.cnn_format=='NHWC':
                 self.pos_state = tf.placeholder("float32", shape=[None, self.config.screen_height, self.config.screen_width,
-                                                              self.config.history_length],
+                                                              self.config.s2v_history_length],
                                                 name="pos_state_index")
                 self.neg_state = tf.placeholder("float32", shape=[None, self.config.screen_height,
                                                                 self.config.screen_width,
-                                                              self.config.history_length],
+                                                              self.config.s2v_history_length],
                                                 name="neg_state_index")
                 self.target_state = tf.placeholder("float32", shape=[None, self.config.screen_height,
                                                                 self.config.screen_width,
-                                                              self.config.history_length],
+                                                              self.config.s2v_history_length],
                                                 name="target_state_index")
 
             else:
-                self.pos_state = tf.placeholder("float32", shape=[None, self.config.history_length,
+                self.pos_state = tf.placeholder("float32", shape=[None, self.config.s2v_history_length,
                                                                   self.config.screen_height,
                                                                   self.config.screen_width],
                                                 name="pos_state_index")
-                self.neg_state = tf.placeholder("float32", shape=[None, self.config.history_length,
+                self.neg_state = tf.placeholder("float32", shape=[None, self.config.s2v_history_length,
                                                                   self.config.screen_height,
                                                                   self.config.screen_width],
                                                 name="neg_state_index")
-                self.target_state = tf.placeholder("float32", shape=[None, self.config.history_length,
+                self.target_state = tf.placeholder("float32", shape=[None, self.config.s2v_history_length,
                                                                   self.config.screen_height,
                                                                   self.config.screen_width],
                                                 name="target_state_index")
@@ -131,9 +142,16 @@ class HDQLModel():
                 self.state_input_n = tf.placeholder("float32",[None, self.config.screen_height, self.config.screen_width,
                                                               self.config.history_length],
                                                   name="state_input")
+                self.state_input_n_s2v = tf.slice(self.state_input_n,
+                                                  (0, 0, 0, self.config.history_length-self.config.s2v_history_length),
+                                                  (-1, -1, -1, -1))
             else:
                 self.state_input_n = tf.placeholder("float32",[None, self.config.history_length, self.config.screen_height,
                                                               self.config.screen_width],name="state_input")
+
+                self.state_input_n_s2v = tf.slice(self.state_input_n,
+                                                  (0, self.config.history_length-self.config.s2v_history_length, 0, 0,),
+                                                  (-1, -1, -1, -1))
             self.l1_n, self.t_w['l1_s_w'], self.t_w['l1_s_b'] = conv2d(self.state_input_n, 32,
                                                                                     [8,8], [4,4],
                                                                        initializer,
@@ -184,8 +202,14 @@ class HDQLModel():
         with tf.variable_scope("reward"):
             self.reward_st = tf.placeholder("float32", [None], name="reward_st")
             self.subgoal_reward = tf.exp(tf.reduce_sum(tf.mul(tf.nn.embedding_lookup(self.random_subgoal, self.g),
-                                    tf.nn.l2_normalize(self._state2vec(self.state_input_n,tag="state_input_n",mode="t"),
+                                    tf.nn.l2_normalize(self._state2vec(self.state_input_n_s2v,
+                                                                       tag="state_input_n",
+                                                                       mode="t"),
                                                        1)), 1))
+
+            self.subgoal_rewards = tf.exp(tf.reduce_sum(tf.mul(self.random_subgoal,
+                                                               tf.nn.l2_normalize(self.s2v_w["t"]["state_input_n"+"l1_v"],
+                                                                                  1)), 1))
 
         with tf.variable_scope('pred_to_target'):
             self.t_w_input = {}
@@ -197,9 +221,11 @@ class HDQLModel():
 
         with tf.variable_scope("q"):
             #ori - q
-            self.q_na = self.ori_q_n
+            self.q_na_ori = self.ori_q_n
+            self.q_na = tf.slice(self.q_na_ori, (0, self.config.option_num), (-1,-1))
+
             self.q_sa = self.ori_q
-            self.max_q_n = tf.reduce_max(self.ori_q_n, 1)
+            self.max_q_n = tf.reduce_max(self.q_na, 1)
             self.q_so = tf.reduce_sum(tf.mul(self.q_sa, tf.one_hot(self.o, self.config.option_num+self.config.action_num, 1., 0., -1)), 1)
             self.target_q_so = tf.stop_gradient(self.reward_st + (1 - self.terminals) * self.config.discount**self.k * \
                                                        self.max_q_n)
@@ -208,10 +234,10 @@ class HDQLModel():
 
             self.q_naa = tf.reshape(self.q_n,  [-1, (self.config.action_num+self.config.option_num),
                                               self.config.option_num])
-            self.q_nga = tf.reduce_sum(tf.mul(self.q_naa,tf.expand_dims(tf.one_hot(self.g, self.config.option_num,
+            self.q_nga_ori = tf.reduce_sum(tf.mul(self.q_naa,tf.expand_dims(tf.one_hot(self.g, self.config.option_num,
                                                                                    1., 0.,
                                                                          -1),1)), 2)
-
+            self.q_nga = tf.slice(self.q_nga_ori, (0, self.config.option_num), (-1,-1))
             self.max_q_ng = tf.reduce_max(self.q_nga, 1)
             self.q_saa = tf.reshape(self.q,  [-1, (self.config.action_num+self.config.option_num),
                                               self.config.option_num])
@@ -219,10 +245,9 @@ class HDQLModel():
                                                                          -1),1)), 2)
             self.q_sgo = tf.reduce_sum(tf.mul(self.q, tf.one_hot(self.o * self.config.option_num + self.g,
                                                                            fn, 1. ,0.,-1)), 1)
-            self.target_q_sgo = tf.stop_gradient(self.config.subgoal_discount**self.k * tf.maximum((1 -
-                                                                                                    self.terminals)
-                                                                                                   * self.max_q_ng,
-                                                            self.subgoal_reward))
+            self.target_q_sgo = tf.stop_gradient(self.config.subgoal_discount**self.k *
+                                                                     tf.maximum((1 - self.terminals) * self.max_q_ng,
+                                                                                self.reward_st))
 
         with tf.variable_scope("optimizer"):
             self.q_delta = self.target_q_so - self.q_so
@@ -282,58 +307,79 @@ class HDQLModel():
             ep = self.config.test_ep if not self.config.is_train else (self.config.beta_ep_end2 +
                 max(0., (self.config.beta_ep_start2 - self.config.beta_ep_end2)
                   * (self.config.beta_ep_end_t2 - max(0., self.subgoal_learn_count2.eval())) / self.config.beta_ep_end_t2))
-        r1, q_nga = self.sess.run([self.subgoal_reward, self.q_nga],
-                                     {self.state_input_n: [state], self.g : [goal]})
-        q_nga = q_nga[0]
-        q_nga[:self.config.option_num] = -100
-        r2 = np.max(q_nga)
-        ridx = np.argmax(q_nga)
-        if r1[0] > r2 and random.random() > ep:
-            return -1
+        r1, = self.sess.run([self.subgoal_rewards],
+                                     {self.state_input_n: [state]})
+        subgoal_max_value = self.subgoal_max_value.eval()
+        flag = False
+        for i in range(self.config.option_num):
+            if r1[i] >= subgoal_max_value[i]:
+                if r1[i] > subgoal_max_value[i] and is_pre:
+                    subgoal_max_value[i] = r1[i]
+                    self.subgoal_change_state[i] += 1
+                if i == goal:
+                    flag = True
+                    self.shut_array[goal] += 1
+                self.subgoal_max_value_op.eval({self.subgoal_max_value_input:subgoal_max_value})
+        if goal == -1:
+            return 0, 0
+        elif flag:
+            return -1, r1[goal]
         else:
-            return ridx
+            return 0, 0
 
-    def predict(self, state, goal, stackDepth, is_pre, is_start, default_action = None):
+    def predict(self, state, goal, stackDepth, is_pre, is_start, forbiddenList = []):
         #after ep_end_t steps, epsilon will be constant ep_end.
-        ep1 = self.config.test_ep if not self.config.is_train else (self.config.ep_end +
+        if goal == -1:
+            ep1 = self.config.test_ep if not self.config.is_train else (self.config.ep_end +
             max(0., (self.config.ep_start - self.config.ep_end)
               * (self.config.ep_end_t - max(0., self.learn_count.eval())) / self.config.ep_end_t))
-        if is_pre:
-            ep2 = self.config.test_ep if not self.config.is_train else (self.config.subgoal_ep_end +
-                max(0., (self.config.subgoal_ep_start - self.config.subgoal_ep_end)
-                  * (self.config.subgoal_ep_end_t - max(0., self.subgoal_learn_count.eval())) / self.config.subgoal_ep_end_t))
-        else:
-            ep2 = self.config.test_ep if not self.config.is_train else (self.config.subgoal_ep_end2 +
-                max(0., (self.config.subgoal_ep_start2 - self.config.subgoal_ep_end2)
-                  * (self.config.subgoal_ep_end_t2 - max(0., self.subgoal_learn_count2.eval())) / self.config.subgoal_ep_end_t2))
-
-        if goal == -1:
             if random.random() < ep1:
                 if is_start:
                     if is_pre:
                         action = random.randrange(0, self.config.option_num)
                     else:
-                        action = random.randrange(0, self.config.action_num + self.config.option_num)
+                        while True:
+                            action = random.randrange(-1, self.config.option_num)
+                            if action not in forbiddenList:
+                                break
+                        if action == -1:
+                            action = random.randrange(self.config.option_num, self.config.action_num + self.config.option_num)
                 else:
                     action = random.randrange(self.config.option_num, self.config.action_num + self.config.option_num)
             else:
-                q_na, = self.sess.run([self.q_na], {self.state_input_n : [state]})
+                q_na, = self.sess.run([self.q_na_ori], {self.state_input_n : [state]})
+                q_na[:,forbiddenList] = -100
                 if not is_start:
                     q_na[:,:self.config.option_num] = -100
                 action = np.argmax(q_na[0])
         else:
+            if is_pre:
+                ep2 = self.config.test_ep if not self.config.is_train else (self.config.subgoal_ep_end +
+                    max(0., (self.config.subgoal_ep_start - self.config.subgoal_ep_end)
+                      * (self.config.subgoal_ep_end_t - max(0., self.subgoal_learn_count.eval())) / self.config.subgoal_ep_end_t))
+            else:
+                ep2 = self.config.test_ep if not self.config.is_train else (self.config.subgoal_ep_end2 +
+                    max(0., (self.config.subgoal_ep_start2 - self.config.subgoal_ep_end2)
+                      * (self.config.subgoal_ep_end_t2 - max(0., self.subgoal_learn_count2.eval())) / self.config.subgoal_ep_end_t2))
+
             if random.random() < ep2:
                 if is_start:
-                    action = random.randrange(0, self.config.action_num+self.config.option_num)
+                    while True:
+                        action = random.randrange(-1, self.config.option_num)
+                        if action not in forbiddenList:
+                            break
+                    if action == -1:
+                        action = random.randrange(self.config.option_num, self.config.action_num + self.config.option_num)
                 else:
                     action = random.randrange(self.config.option_num, self.config.action_num + self.config.option_num)
-            elif default_action >= 0:
-                return default_action
+
             else:
-                q_nga, = self.sess.run([self.q_nga], {self.state_input_n : [state], self.g : [goal]})
+                q_nga, = self.sess.run([self.q_nga_ori], {self.state_input_n : [state], self.g : [goal]})
+                q_nga[:, forbiddenList] = -100
                 if not is_start:
-                    q_nga[:,:self.config.option_num] = -100
+                    q_nga[:, :self.config.option_num] = -100
                 action = np.argmax(q_nga[0])
+        assert is_start or action >= self.config.option_num
         return action
 
     def goal_learn(self, s, o, r, n, terminals, k):
@@ -347,7 +393,7 @@ class HDQLModel():
                 })
         return q_loss, summary_str
 
-    def subgoal_learn(self, s, o, n, terminals, g, k, is_pre):
+    def subgoal_learn(self, s, o, r, n, terminals, g, k, is_pre):
         if is_pre:
             _, qq_loss, summary_str = self.sess.run([self.subgoal_optim, self.qq_loss, self.all_summary], {
                     self.g : g,
@@ -355,7 +401,8 @@ class HDQLModel():
                     self.state_input : s,
                     self.state_input_n : n,
                     self.k : k,
-                    self.terminals: terminals
+                    self.terminals: terminals,
+                    self.reward_st : r
                     })
         else:
             _, qq_loss, summary_str = self.sess.run([self.subgoal_optim2, self.qq_loss, self.all_summary], {
@@ -364,7 +411,8 @@ class HDQLModel():
                     self.state_input : s,
                     self.state_input_n : n,
                     self.k : k,
-                    self.terminals: terminals
+                    self.terminals: terminals,
+                    self.reward_st : r
                     })
         return qq_loss, summary_str
 

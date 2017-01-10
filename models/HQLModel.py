@@ -124,7 +124,6 @@ class HQLModel():
             self.q_na_ori = tf.matmul(self.l2_n, self.ori_qs, transpose_b=True)
             self.q_na = tf.slice(self.q_na_ori, (0, self.config.option_num), (-1,-1))
             self.q_so = tf.reduce_sum(tf.mul(tf.gather(self.ori_qs, self.o), self.l2_s), 1)
-            self.max_q_n_index = tf.argmax(self.q_na, 1) + self.config.option_num
             self.max_q_n = tf.reduce_max(self.q_na, 1)
             self.target_q_so = tf.stop_gradient(self.reward_st + (1 - self.terminals) * self.config.discount**self.k * \
                                                        self.max_q_n)
@@ -137,7 +136,6 @@ class HQLModel():
             self.q_sgo = tf.reduce_sum(tf.mul(tf.matmul(self.l2_s,tf.transpose(self.flat_qs)),
                                               tf.one_hot(self.g * ((self.config.action_num+self.config.option_num))
                                                          + self.o, fn, 1., 0., -1)), 1)
-            self.max_q_ng_index = tf.argmax(self.q_nga, 1) + self.config.option_num
             self.max_q_ng = tf.reduce_max(self.q_nga, 1)
             self.subgoal_reward = tf.exp(tf.reduce_sum(tf.mul(tf.nn.embedding_lookup(self.random_subgoal,
                                                                                                  self.g),

@@ -59,6 +59,7 @@ class Agent(BaseModel):
 
         self._saver = tf.train.Saver(max_to_keep=30)
 
+        self.forbiddenList = []
         self.stateSamplingFile = open("stateSamplingFile","wr")
         if self.config.is_pre_model:
             self.load_pre_model()
@@ -73,7 +74,7 @@ class Agent(BaseModel):
 
             if self.step % self.target_q_update_learn_step == 0:
                 self.model.update_target_q_network()
-
+            '''
             if self.is_pre and self.step % self.s2v_train_frequency == 0:
                 #states, neg_states, target_states = self.memory2.sample_states(self.s2v_batch_size, self.neg_sample)
                 states, _, target_states = self.env.history.getStateTransition()
@@ -81,15 +82,16 @@ class Agent(BaseModel):
                 loss = self.model.s2v_learn(states, neg_states, target_states)
                 self.total_nce_loss += loss
                 self.s2v_update_count += 1
+            '''
 
-            if self.step % self.subgoal_train_frequency == 0:
+            if self.step % self.subgoal_train_frequency == 0 and self.memory2.count>0:
                 s, o, r, n, terminals, g, k = self.memory2.sample_more()
-                qq_loss, summary_str = self.model.subgoal_learn(s, o, n, terminals, g, k, self.is_pre)
+                qq_loss, summary_str = self.model.subgoal_learn(s, o, r, n, terminals, g, k, self.is_pre)
                 #self.writer.add_summary(summary_str, self.step)
                 self.subgoal_total_loss += qq_loss
                 self.subgoal_update_count += 1
 
-            if not self.is_pre and self.step % self.train_frequency == 0:
+            if (not self.is_pre) and self.step % self.train_frequency == 0 and self.memory.count>0:
                 s, o, r, n, terminals, g, k = self.memory.sample_more()
                 q_loss, summary_str = self.model.goal_learn(s, o, r, n, terminals, k)
                 #self.writer.add_summary(summary_str, self.step)
@@ -104,38 +106,34 @@ class Agent(BaseModel):
         #        print("action", action)
         #        print('terminal', terminal)
         #continuous terminal
-        #beta = 1 #primitive action first
         action = -1
-        while self.stackIdx > 1:
-            if self.optionStack_k[self.stackIdx-1] > self.shut_step:
-                self.stackIdx -= 1
-                continue
-            elif terminal:
-                action = -1
-            elif self.optionStack[self.stackIdx-1] >= self.option_num:
-                action = -1
-            else:
-                action = self.model.predictB(state, self.optionStack[self.stackIdx - 1],
-                                             self.is_pre)
-            if action == -1:
-                if self.is_train:
-                    if self.stackIdx > 2:
-                        self.memory2.add(self.optionStack_state[self.stackIdx - 1], state, self.optionStack_r[
-                            self.stackIdx - 1], self.optionStack[self.stackIdx - 1], terminal, self.optionStack[
-                            self.stackIdx - 2], self.optionStack_k[self.stackIdx - 1])
-                    if self.stackIdx > 3:
-                        self.memory2.add(self.optionStack_state[self.stackIdx - 1], state, self.optionStack_r[
-                            self.stackIdx - 1], self.optionStack[self.stackIdx - 1], terminal, self.optionStack[
-                            self.stackIdx - 3], self.optionStack_k[self.stackIdx - 1])
-                    if self.stackIdx <= 3 and (self.step - self.init_step < self.learn_start or not self.is_pre):
-                        self.memory.add(self.optionStack_state[self.stackIdx - 1], state, self.optionStack_r[
-                            self.stackIdx - 1], self.optionStack[self.stackIdx - 1], terminal, -1, self.optionStack_k[
-                            self.stackIdx - 1])
-                self.stackIdx -= 1
-            else:
-                break
+        if self.stackIdx == 1:
+            return action
+        assert(self.optionStack[self.stackIdx - 1]>=self.config.option_num)
+        while self.stackIdx > 1 and (action == -1 or terminal):
+            action, reward = self.model.predictB(state, self.optionStack[self.stackIdx - 2],
+                                     self.is_pre)
+            if self.is_train:
+                # k is always 1
+                if self.stackIdx > 2:
+                    self.memory2.add(self.optionStack_state[self.stackIdx - 1], state, reward,
+                                     self.optionStack[self.stackIdx - 1], terminal, self.optionStack[
+                        self.stackIdx - 2], 1)
+                if self.stackIdx > 3:
+                    self.memory2.add(self.optionStack_state[self.stackIdx - 1], state, reward,
+                                     self.optionStack[self.stackIdx - 1], terminal, self.optionStack[
+                        self.stackIdx - 3], 1)
+                if self.stackIdx <= 3 and (self.step - self.init_step < self.learn_start or not self.is_pre):
+                    self.memory.add(self.optionStack_state[self.stackIdx - 1], state, self.optionStack_r[
+                        self.stackIdx - 1], self.optionStack[self.stackIdx - 1], terminal, -1, 1)
+            self.stackIdx -= 1
+
+        while self.optionStack_k[self.stackIdx - 1] > self.shut_step and self.stackIdx > 1:
+            if (not self.is_pre) and self.optionStack[self.stackIdx - 1] not in self.forbiddenList:
+                self.forbiddenList.append(self.optionStack[self.stackIdx - 1])
+            self.stackIdx -= 1
+            action = -1
         return action
-        #continuous interrupting(unavailable now.)
 
         
 
@@ -195,13 +193,8 @@ class Agent(BaseModel):
                     optionDepths = 0.
                 time1 = time.time()
                 #1. judge termination
-                best_action = self.observe_stop(state, terminal)
+                self.observe_stop(state, terminal)
                 time2 = time.time()
-                if (self.stackIdx == 1 and self.is_pre) or self.optionStack_k[0] > self.meta_shut_step:
-                    state, terminal = self.env.reset()
-                    self.stackIdx = 1
-                    self.optionStack_k[0] = 0
-                    is_start = True
                 if terminal:
                     self.optionStack_k[0] = 0
                     state, terminal = self.env.reset()
@@ -212,13 +205,22 @@ class Agent(BaseModel):
                     num_game += 1
                     ep_rewards.append(ep_reward)
                     ep_reward = 0.
+                    actions = []
+                    goals = []
+                if self.optionStack_k[self.stackIdx - 1] > self.meta_shut_step:
+                    state, terminal = self.env.reset()
+                    self.stackIdx = 1
+                    self.optionStack_k[self.stackIdx - 1] = 0
+                    is_start = True
+                    if self.stackIdx - 1 == 0:
+                        actions = []
+                        goals = []
 
                 #2. predict and act
                 while True:
                     action = self.model.predict(self.env.history.get(), self.optionStack[self.stackIdx-1],
                                                     self.stackIdx-1, self.is_pre,
-                                                    is_start,
-                                                    best_action)
+                                                    is_start)
                     while action == self.optionStack[self.stackIdx-1] or (self.stackIdx == self.max_stackDepth - 1 and action < self.option_num):
                         if self.stackIdx == self.max_stackDepth - 1:
                             action = self.option_num + random.choice(self.config.actions)
@@ -235,12 +237,13 @@ class Agent(BaseModel):
                 is_start = False
                 time3 = time.time()
                 reward, state, terminal = self.env.step(action - self.option_num)
+                self.optionStack_k[self.stackIdx - 2] += 1
                 if terminal: #connecting start with end , for s2v learning
                     self.env.reset()
                     self.env.history.add(self.env.getScreen())
                 for i in range(0, self.stackIdx):
-                    self.optionStack_k[i] = 1
-                    self.optionStack_r[i] += reward# * self.config.discount ** (self.optionStack_k[i]-1)
+                    self.optionStack_k[i] += 1
+                    self.optionStack_r[i] += reward * self.config.discount ** (self.optionStack_k[i]-1)
                 time4 = time.time()
                 self.observe_train()
                 time5 = time.time()
@@ -269,6 +272,10 @@ class Agent(BaseModel):
                         print("Finishing subgoal learning steps: %d" % self.model.subgoal_learn_count.eval())
                         print("Finishing subgoal learning2 steps: %d" % self.model.subgoal_learn_count2.eval())
                         print("Finishing s2v learning steps: %d" % self.model.s2v_learn_count.eval())
+                        print("shut_array",self.model.shut_array)
+                        print("shut_change_state",self.model.subgoal_change_state)
+                        print("forbiddenList", self.forbiddenList)
+                        self.model.shut_array *= 0
                         try:
                             max_ep_reward = np.max(ep_rewards)
                             min_ep_reward = np.min(ep_rewards)
@@ -326,7 +333,6 @@ class Agent(BaseModel):
                         num_game = 0
                         total_reward = 0.
                         self.subgoal_total_loss = 0
-                        self.s2v_avg_loss = 0
                         self.total_loss = 0.
                         optionDepths = 0.
                         self.total_q = 0.
@@ -362,9 +368,9 @@ class Agent(BaseModel):
                 self.optionStack_k[0] = 0
 
                 for t in range(self.n_step):
-                    best_action = self.observe_stop(self.env.history.get(), terminal)
+                    self.observe_stop(self.env.history.get(), terminal)
                     if self.optionStack[0] != -1 and self.stackIdx == 1:
-                        best_action =  self.model.predictB(self.env.history.get(), self.optionStack[0], False)
+                        best_action, _ =  self.model.predictB(self.env.history.get(), self.optionStack[0], False)
                         if best_action == -1:
                             break
                     if self.optionStack_k[0] > self.meta_shut_step:
@@ -372,8 +378,7 @@ class Agent(BaseModel):
                     while True:
                         action = self.model.predict(self.env.history.get(), self.optionStack[self.stackIdx-1],
                                                         self.stackIdx-1, False,
-                                                        is_start,
-                                                        best_action)
+                                                        is_start)
                         while action == self.optionStack[self.stackIdx-1] or (self.stackIdx == self.max_stackDepth - 1 and action < self.option_num):
                             if self.stackIdx == self.max_stackDepth - 1:
                                 action = self.option_num + random.choice(self.config.actions)
